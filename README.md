@@ -136,3 +136,6 @@ Distributed under the MIT License. See LICENSE for more information.
 ---
 
 # Visit our [website](https://sweg2012-batch-secb-g2.github.io/Supermarket-Management-System-Website/index) for more information.
+
+
+# **🙏 Thank You!** 🙏
