@@ -4,7 +4,9 @@
 ---
 <!-- img src = "https://cdn.dribbble.com/users/1090020/screenshots/7399732/media/98fc3253b0b90fdd568257012249149e.png" width=800px height=600px -->
 <video src = "https://cdn.dribbble.com/users/2008861/screenshots/15331428/media/3ffb82783575a29710f6c81fe4e9c837.mp4" width=800px height=600px>
+
 ---
+
 ## **Project Overview:**
 
 The project is a Supermarket Management System. A system placed in hopes of making the daily purchase and transaction easier. The main advantage of this system will be to convert the manual work such as billing calculations, organizing stock items' data and employee management.
