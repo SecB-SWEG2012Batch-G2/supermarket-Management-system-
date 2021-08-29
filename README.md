@@ -88,6 +88,40 @@ The choice of programing language is C++ and will be used to maintain all the da
 
 ---
 
+## **Contribute to our project**
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+> 1. Fork the Project
+
+![Fork](https://www.earthdatascience.org/images/earth-analytics/git-version-control/githubguides-bootcamp-fork.png)
+
+> 2. Create your Feature Branch 
+```bash
+  git checkout -b contributions/AmazingFeature
+```
+
+> 3. Commit your Changes
+```bash
+  git commit -m 'Added some AmazingFeature'
+```
+
+> 4. Push to the Branch (git push origin contributions/AmazingFeature)
+```bash
+  git checkout -b contributions/AmazingFeature
+```
+
+> 5. Open a Pull Request
+
+![Pull Request](https://guides.github.com/activities/hello-world/create-pr.png)
+---
+
+## **License**
+
+Distributed under the MIT License. See LICENSE for more information.
+
+---
+
 ## **Group Members:**
 
 | Number | Team Members | ID |
