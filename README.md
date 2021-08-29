@@ -2,7 +2,7 @@
 
 ## Hello 👋,  This is a team effort at trying to build a Supermarket Management System by Group 2, Section B students of 2012 AASTU Batch.
 ---
-<img src = "https://cdn.dribbble.com/users/1090020/screenshots/7399732/media/98fc3253b0b90fdd568257012249149e.png" width=600px height=400px>
+<img src = "https://cdn.dribbble.com/users/1090020/screenshots/7399732/media/98fc3253b0b90fdd568257012249149e.png" width=800px height=600px>
 
 ---
 ## **Project Overview:**
