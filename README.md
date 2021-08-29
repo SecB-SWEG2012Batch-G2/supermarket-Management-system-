@@ -69,7 +69,7 @@ The choice of programing language is C++ and will be used to maintain all the da
   git clone https://github.com/SWEG2012-BATCH-SECB-G2/supermarket-Management-system-.git
 ```
 
-> Navigate to the cloned repo and open main.exe
+> Navigate to the cloned repo and open main.cpp
 
 --- 
 
