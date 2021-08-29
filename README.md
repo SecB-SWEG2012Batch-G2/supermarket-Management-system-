@@ -2,9 +2,12 @@
 
 ![SupermarketLogo](https://cdn.dribbble.com/users/992274/screenshots/12021931/media/d0a8c1449b59baa923797cfafc409f20.jpg?compress=1&resize=800x600)
 
-## Hello 👋,  This is a team effort at trying to build a Supermarket Management System by Group 2, Section B students of 2012 AASTU Batch.
+## Hello 👋,  
+## This is a team effort at trying to build a Supermarket Management System by Group 2, Section B students of 2012 AASTU Batch.
 
 ---
+## **Project Overview:**
+
 The project is a Supermarket Management System. A system placed in hopes of making the daily purchase and transaction easier. The main advantage of this system will be to convert the manual work such as billing calculations, organizing stock items' data and employee management.
 
 The choice of programing language is C++ and will be used to maintain all the data. It is the upmost important for the group to include rich feature sets and thorough design; we believe we will be able to build the entire system from ground up, adequately and effectively.
@@ -12,14 +15,7 @@ The choice of programing language is C++ and will be used to maintain all the da
 ---
 ## **Languages and tools used**
 
-![CPP](https://raw.githubusercontent.com/Benio101/cpp-logo/master/cpp_logo.png) 
-
-![Code Blocks](https://www.codeblocks.org/docs/cb_splash.png) 
-
-![VS Code](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png) 
-
-
-![Markdown Language](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/350px-Markdown-mark.svg.png)
+![CPP](https://raw.githubusercontent.com/Benio101/cpp-logo/master/cpp_logo.png) ![Code Blocks](https://www.codeblocks.org/docs/cb_splash.png) ![VS Code](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png) ![Markdown Language](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/350px-Markdown-mark.svg.png)
 ---
 
 ### **The project will possibly be able to capture the following data**
