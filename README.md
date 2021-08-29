@@ -15,7 +15,8 @@ The choice of programing language is C++ and will be used to maintain all the da
 ---
 ## **Languages and tools used**
 
-![CPP](https://raw.githubusercontent.com/Benio101/cpp-logo/master/cpp_logo.png) ![Code Blocks](https://www.codeblocks.org/docs/cb_splash.png) ![VS Code](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png) ![Markdown Language](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/350px-Markdown-mark.svg.png)
+![CPP](https://raw.githubusercontent.com/Benio101/cpp-logo/master/cpp_logo.png)![Code Blocks](https://www.codeblocks.org/docs/cb_splash.png)![VS Code](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png)![Markdown Language](https://img.icons8.com/color/452/markdown.png)
+
 ---
 
 ### **The project will possibly be able to capture the following data**
