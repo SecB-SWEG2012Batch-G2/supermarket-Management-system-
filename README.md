@@ -1,7 +1,6 @@
 # Supermarket Management System
 
-## Hello 👋,  
-## This is a team effort at trying to build a Supermarket Management System by Group 2, Section B students of 2012 AASTU Batch.
+## Hello 👋,  This is a team effort at trying to build a Supermarket Management System by Group 2, Section B students of 2012 AASTU Batch.
 ---
 <img src = "https://cdn.dribbble.com/users/1090020/screenshots/7399732/media/98fc3253b0b90fdd568257012249149e.png" width=600px height=400px>
 
@@ -14,10 +13,7 @@ The choice of programing language is C++ and will be used to maintain all the da
 
 ---
 ## **Languages and tools used**
-<img src = "https://img.icons8.com/color/452/markdown.png" width=100px height=100px>
-<img src = "https://raw.githubusercontent.com/Benio101/cpp-logo/master/cpp_logo.png" width=100px height=100px>
-<img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png" width=100px height=100px>
-<img src = "https://www.codeblocks.org/docs/cb_splash.png" width=200px height=100px>
+<img src = "https://img.icons8.com/color/452/markdown.png" width=100px height=100px> <img src = "https://raw.githubusercontent.com/Benio101/cpp-logo/master/cpp_logo.png" width=100px height=100px> <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png" width=100px height=100px> <img src = "https://www.codeblocks.org/docs/cb_splash.png" width=200px height=100px>
 ---
 
 ### **The project will possibly be able to capture the following data**
