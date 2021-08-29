@@ -1,4 +1,4 @@
-![SupermarketLogo](https://cdn.dribbble.com/users/1785433/screenshots/14254107/media/01230f0e6550bf7b2e18fbb22aaacc1d.gif)
+![SupermarketLogo](https://cdn.dribbble.com/users/992274/screenshots/12021931/media/d0a8c1449b59baa923797cfafc409f20.jpg?compress=1&resize=800x600)
 # Supermarket Management System
 
 ## This is a Super Market Management system project by Group 2, Section B students of 2012 Batch.
