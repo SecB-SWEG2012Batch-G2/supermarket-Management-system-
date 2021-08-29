@@ -73,20 +73,7 @@ struct HealthandBodyCare{
     float Price;
     Date ExpireDate;
 };
-/* int GetChoice(){
-while(!std::cin.good())
-{
 
-
-std::cout<<"Error:Incorrect Input!Try Again.";
-std::cin.clear();
-std::cin.ignore(INT_MAX, '\n');
-std::cout<<"Type: ";
-std::cin>>;
-return Type;
-}
-}
-*/
 int main(){
     Tea[54].SerialNumber=1111;
     Candy[80].SerialNumber=1234;
