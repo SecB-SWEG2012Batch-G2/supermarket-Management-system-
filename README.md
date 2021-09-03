@@ -114,7 +114,7 @@ Contributions are what make the open source community such an amazing place to l
 
 > 5. Open a Pull Request
 
-<img src="https://guides.github.com/activities/hello-world/create-pr.png" width=500 height=200>
+<img src="https://guides.github.com/activities/hello-world/create-pr.png" width=550 height=300>
 ---
 
 ## **License**
