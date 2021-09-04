@@ -40,6 +40,6 @@ struct HealthAndBodyCare{
 int main()
 {
     /* PROJECT START */
-    cout << "HELLO" << endl;
+    cout << "HELLO, SUPERMARKET!" << endl;
     return 0;
 }
