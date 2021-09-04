@@ -95,14 +95,28 @@ Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21}
 
 int ProductNumberSearch;//Search Key
 Search:cout<<"Enter the Product number of the item you would like to seach."<<endl;
-cout<<"Product Number: "; cin>>ProductNumberSearch;
+       cout<<"Product Number: "; 
+
+while(!(cin>>ProductNumberSearch)){
+        cout<< "Invalid input.\n\n";
+        cin.clear();
+        cin.ignore(20, '\n');
+        cout<<"Re-enter Product Number: ";
+}
 
 Search(ProductNumberSearch);//Calling Search function
 
 int Choice, InvalidChoiceCounter= 0;
 Option:cout<<"\n1. Search For another product. "<<endl;
        cout<<"2. Exit "<<endl;
-       cout<<"Choice: "; cin>>Choice;
+       cout<<"Choice: "; 
+
+while(!(cin>>Choice)){
+        cout<< "Invalid input.\n\n";
+        cin.clear();
+        cin.ignore(20, '\n');
+        goto Option;
+}
 
 switch(Choice){
     case 1:
