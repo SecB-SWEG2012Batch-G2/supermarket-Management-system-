@@ -69,7 +69,7 @@ The choice of programing language is C++ and will be used to maintain all the da
   git clone https://github.com/SWEG2012-BATCH-SECB-G2/supermarket-Management-system-.git
 ```
 
-> Navigate to the cloned repo and open main.exe
+> Navigate to the cloned repo and open main.cpp
 
 --- 
 
@@ -114,7 +114,7 @@ Contributions are what make the open source community such an amazing place to l
 
 > 5. Open a Pull Request
 
-![Pull Request](https://guides.github.com/activities/hello-world/create-pr.png)
+<img src="https://guides.github.com/activities/hello-world/create-pr.png" width=550 height=300>
 ---
 
 ## **License**
@@ -135,7 +135,7 @@ Distributed under the MIT License. See LICENSE for more information.
 
 ---
 
-# Visit our [website](https://sweg2012-batch-secb-g2.github.io/Supermarket-Management-System-Website/index) for more information.
+# Visit our [website](https://secb-sweg2012batch-g2.github.io/Supermarket-Management-System-Website/) for more information.
 
 
 # **🙏 Thank You!** 🙏
