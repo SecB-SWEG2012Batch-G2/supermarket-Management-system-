@@ -63,39 +63,39 @@ Products[5] = {5 ,"Difo Dabo ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21
 Products[6] = {6 ,"White Bread ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafes ",3 ,2.8 };
 Products[7] = {7 ,"Carrot Cake ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafes ",20 ,4.1 };
 Products[8] = {8 ,"Bagels ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200," Loafes",12 ,3.9 };
-Products[9] = {9 ,"Chocolate Chip ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21},200 ,"Killograms ",30 ,4.8 };
-Products[10] = {10 ,"Shortbead Cookie ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21}, 200,"Killograms ",28 ,4 };
-Products[11] = {11 ,"Peanut Butter200 ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21},200 ,"Killograms ",28 ,2.5 };
+Products[9] = {9 ,"Chocolate Chip ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",30 ,4.8 };
+Products[10] = {10 ,"Shortbead Cookie ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21}, 200,"Kilogram ",28 ,4 };
+Products[11] = {11 ,"Peanut Butter200 ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",28 ,2.5 };
 
-//Initialising Pasta and rice sample data
-Products[12] = {12,"Short Pasta ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Killograms ",25 ,4.3 };
-Products[13] = {13,"Long Pasta ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Killograms ",25 ,4.3 };
-Products[14] = {14,"Macaroni ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Killograms ",24 ,4 };
-Products[15] = {15,"Fettuccine", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21},100 ,"Killograms ",28 ,2.5 };
-Products[16] = {16,"Lasagna", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Killograms ",32 ,5 };
-Products[17] = {17,"Spaghetti", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100," Killograms",30 ,4.9 };
-Products[18] = {18,"Brown Rice ", "Pasta and Rice ", "Rice ",{6,9,21}, {10,9,21}, 100,"Killograms ",30 ,4.7 };
-Products[19] = {19,"White Rice ", "Pasta and Rice ", "Rice ",{6,9,21}, {10,9,21},100 ," Killograms",27 ,2.5 };
+//Initializing Pasta and rice sample data
+Products[12] = {12,"Short Pasta ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
+Products[13] = {13,"Long Pasta ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
+Products[14] = {14,"Macaroni ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",24 ,4 };
+Products[15] = {15,"Fettuccine", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21},100 ,"Kilogram ",28 ,2.5 };
+Products[16] = {16,"Lasagna", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",32 ,5 };
+Products[17] = {17,"Spaghetti", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100," Kilogram",30 ,4.9 };
+Products[18] = {18,"Brown Rice ", "Pasta and Rice ", "Rice ",{6,9,21}, {10,9,21}, 100,"Kilogram ",30 ,4.7 };
+Products[19] = {19,"White Rice ", "Pasta and Rice ", "Rice ",{6,9,21}, {10,9,21},100 ," Kilogram",27 ,2.5 };
 
-//Initialising Dairy and meat sample data
-Products[20] = {20 ,"Beef ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Killogram ",250 ,4.9 };
-Products[21] = {21 ,"Pork ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Killogram ", 200,2.5 };
-Products[22] = {22 ,"Mutton ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Killogram ",260 , 4.4};
-Products[23] = {23 ,"Chicken ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Killogram ",300 ,4.9 };
-Products[24] = {24 ,"Turkey", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Killogram ",280 ,3.9 };
-Products[25] = {25 ,"Butter ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Killograms ",450 ,5 };
+//Initializing Dairy and meat sample data
+Products[20] = {20 ,"Beef ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",250 ,4.9 };
+Products[21] = {21 ,"Pork ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ", 200,2.5 };
+Products[22] = {22 ,"Mutton ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",260 , 4.4};
+Products[23] = {23 ,"Chicken ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
+Products[24] = {24 ,"Turkey", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",280 ,3.9 };
+Products[25] = {25 ,"Butter ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",450 ,5 };
 Products[26] = {26 ,"Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21}, 100,"Liters ",40 ,4.9 };
-Products[27] = {27 ,"Mozzarella ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Killogram ",320 ,4.5 };
-Products[28] = {28 ,"Cheddar ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Killogram ",300 ,4.9 };
-Products[29] = {29 ,"Parmesan ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Killogram ",360 ,4.4 };
-Products[30] = {30 ,"Gouda ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Killogram ",380 ,5 };
+Products[27] = {27 ,"Mozzarella ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",320 ,4.5 };
+Products[28] = {28 ,"Cheddar ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
+Products[29] = {29 ,"Parmesan ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",360 ,4.4 };
+Products[30] = {30 ,"Gouda ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",380 ,5 };
 Products[31] = {31 ,"Yoghurt ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Litres ",60 ,4.9 };
-Products[32] = {32 ,"Powdered Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Killogram ",1200 ,4.6 };
-Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Killogram ",300 ,5 };
+Products[32] = {32 ,"Powdered Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",1200 ,4.6 };
+Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,5 };
 
 int ProductNumberSearch;//Search Key
 Search:cout<<"Enter the Product number of the item you would like to seach."<<endl;
-       cout<<"Product Number: "; 
+       cout<<"Product Number: ";
 
 while(!(cin>>ProductNumberSearch)){
         cout<< "Invalid input.\n\n";
@@ -109,7 +109,7 @@ Search(ProductNumberSearch);//Calling Search function
 int Choice, InvalidChoiceCounter= 0;
 Option:cout<<"\n1. Search For another product. "<<endl;
        cout<<"2. Exit "<<endl;
-       cout<<"Choice: "; 
+       cout<<"Choice: ";
 
 while(!(cin>>Choice)){
         cout<< "Invalid input.\n\n";
