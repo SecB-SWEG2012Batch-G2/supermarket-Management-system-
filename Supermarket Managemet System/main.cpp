@@ -10,7 +10,7 @@ using namespace std;
 // Global Variables
 int NumberOfProducts = 62;
 char MenuChoice[11];
-char ChosenFunction[31];
+int ChosenFunction;
 
 //Global structure Date
 struct Date{
@@ -395,7 +395,8 @@ void Manager(){
             cout << "\t*" << setfill('*') << setw(50) << "*" << endl;
             cout << endl;
 
-            cin.getline(ChosenFunction, 30);
+            cout<<"Your choice:";
+	    cin>>ChosenFunction;
             // My Samples
             Products[0] = {0,"Spoon","Kitchen Utensils","Spoon",{10,11,2017},{14,10,2020},40,"Items",30.45,2.5};
             Products[1] = {1,"Napkins","Sanitary","Baby Wipes",{20,12,2018},{15,11,2021},12,"Packages",40.00,4.5};
@@ -448,8 +449,9 @@ void Employee(){
     cout << "\t*" << setfill(' ') << setw(50) << "*" << endl;
     cout << "\t*" << setfill('*') << setw(50) << "*" << endl;
     cout << endl;
-
-    cin.getline(ChosenFunction, 30);
+	
+	cout<<"Your choice:";
+	cin>>ChosenFunction;
 
 }
 
@@ -547,7 +549,7 @@ void MainMenu(){
 
     ProfitCalculator();
     home:welcomeScreen();
-
+    cout<<"Account: ";
     cin.getline(MenuChoice,10);
     system("cls");
      while(strcmp(MenuChoice, "Manager")==0 || strcmp(MenuChoice, "manager")==0){
