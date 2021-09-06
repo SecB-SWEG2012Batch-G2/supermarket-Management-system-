@@ -8,7 +8,7 @@
 using namespace std;
 
 // Global Variables
-int NumberOfProducts = 33, FlagDelete = 0, FlagEdit = 0;
+int NumberOfProducts = 63, FlagDelete = 0, FlagEdit = 0;
 
 
 // Resizes the console window
@@ -263,18 +263,28 @@ edit:cout << endl << " What would you like to edit?" << endl;
             cin.clear();
             cin.ignore(20, '\n');
 
-}
+            }
 
             break;
         case 9:
             cout << " Enter New Rating: ";
-            cin >> Item->Rating;
+            while(!(cin>>Item->Rating)){
+            cout<< "**********Invalid Day.**********\n";
+            cout << " Enter New Rating: ";
+            cin.clear();
+            cin.ignore(20, '\n');
 
+            }
             break;
         case 10:
             cout << " Enter New Sale ";
-            cin >> Item->Sales;
+            while(!(cin>>Item->Sales)){
+            cout<< "**********Invalid Day.**********\n";
+            cout << " Enter New Rating: ";
+            cin.clear();
+            cin.ignore(20, '\n');
 
+            }
 
             break;
     }
@@ -373,10 +383,42 @@ Products[30] = {30 ,"Gouda ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},1
 Products[31] = {31 ,"Yoghurt ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Liters ",60 ,4.9 };
 Products[32] = {32 ,"Powdered Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",1200 ,4.6 };
 Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,5 };
+
+ //Initializing Beverage and soft Drinks sample data
+Products[34] = {34,"Beer ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {0,0,0},103,"Milliliter ", 200,2.5 };
+Products[35] = {35,"Cider ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,21},103,"Milliliter ",260, 4.4};
+Products[36] = {36,"Hard Soda ", "Beverage and Soft Drinks ", "Beverage ",{3,12,21}, {10,9,21},100,"Milliliter ",300,4.9 };
+Products[37] = {37,"Wine", "Beverage and Soft Drinks ", "Beverage ",{10,12,21}, {10,9,21},102,"Milliliter ",280,3.9 };
+Products[38] = {38,"Barley ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,26},101,"Milliliters ",450,5 };
+Products[39] = {39,"Turkish ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,27}, 106,"Liters ",40,4.9 };
+Products[40] = {40,"Moka ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,25},100,"Milliliter ",320,4.5 };
+Products[41] = {41,"Kamora ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},107,"Milliliter ",300,4.9 };
+Products[42] = {42,"Amarula ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,20}, {10,9,21},108,"Milliliter ",360,4.4 };
+Products[43] = {43,"Carolans ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},109,"Milliliter ",380,5 };
+Products[44] = {44,"Rosolio ", "Beverage and Soft Drinks ", "Soft Drinks ",{3,9,21}, {10,9,21},234,"Litres ",60,4.9 };
+Products[45] = {45,"Aurum ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},257,"Milliliter ",1200,4.6 };
+Products[46] = {46,"Cointreau", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},234,"Milliliter ",300,5};
+//Initializing Snacks sample data
+Products[47] = {47,"Milky Way ", "Snack ", "Snack ",{6,9,21}, {10,9,17},100,"Milliliter ", 270,2.5 };
+Products[48] = {48,"Sun Chips ", "Snack ", "Snack ",{1,9,21}, {10,9,21},100,"Milliliter ",290, 4.4};
+Products[49] = {49,"Suncake ", "Snack ", "Snack ",{6,9,20}, {10,9,15},100,"Milliliter ",700,4.9 };
+Products[50] = {50,"Vadai", "Snack ", "Snack ",{6,9,19}, {10,9,21},100,"Milliliter ",340,3.9 };
+Products[51] = {51,"Popcorn ", "Snack ", "Snack ",{10,9,17}, {10,9,13},100,"Milliliters ",240,5 };
+Products[52] = {52,"Candy ", "Snack ", "Snack ",{6,9,19}, {10,9,24}, 100,"Liters ",40,4.9 };
+Products[53] = {53,"Fruit ", "Snack ", "Snack ",{6,9,18}, {10,9,21},100,"Milliliter ",30,4.5 };
+Products[54] = {54,"Pretzels ", "Snack ", "Snack ",{7,9,21}, {10,9,21},100,"Milliliter ",10,4.9 };
+Products[55] = {55,"Doughnuts ", "Snack ", "Snack ",{6,9,21}, {10,9,15},100,"Milliliter ",30,4.4 };
+Products[56] = {56,"Peanuts ", "Snack ", "Snack ",{6,9,21}, {10,9,16},100,"Milliliter ",40,5 };
+Products[57] = {57,"Poha ", "Snack ", "Snack ",{2,9,21}, {10,9,20},100,"Litres ",60,4.9 };
+Products[58] = {58,"Momos ", "Snack ", "Snack ",{9,9,21}, {10,9,21},100,"Milliliter ",120,4.6 };
+Products[59] = {59,"Khaman", "Snack ", "Snack ",{8,9,21}, {10,9,21},100,"Milliliter ",15,5 };
+
 //Utensils
-Products[34] = {34,"Spoon","Kitchen Utensils","Spoon",{10,11,2017},{14,10,2020},40,"Items",30.45,2.5};
-Products[35] = {35,"Napkins","Sanitary","Baby Wipes",{20,12,2018},{15,11,2021},12,"Packages",40.00,4.5};
-Products[36] = {36,"Lotion","Health And Bodycare","Nivea",{30,10,2019},{16,12,2022},10,"Bottle",99.39,5.0};
+Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,2017},{14,10,2020},40,"Items",30.45,2.5};
+Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,2018},{15,11,2021},12,"Packages",40.00,4.5};
+Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,2019},{16,12,2022},10,"Bottle",99.39,5.0};
+
+
 int Choice, InvalidChoiceCounter= 0;
 Menu:cout<<"1. Print all Products. "<<endl;
        cout<<"2. Search for product. "<<endl;
@@ -401,7 +443,7 @@ switch(Choice){
     case 2:
         system("cls");
         int ProductNumberSearch;//Search Key
-Search:cout<<"Enter the Product number of the item you would like to search."<<endl;
+       cout<<"Enter the Product number of the item you would like to search."<<endl;
        cout<<"Product Number: ";
 
        while(!(cin>>ProductNumberSearch)){
@@ -440,9 +482,6 @@ Search:cout<<"Enter the Product number of the item you would like to search."<<e
 }
 
 
-/*ResizeWindow();
-PrintTableDividers();
-PrintTableHeader();*/
 }
 
 
