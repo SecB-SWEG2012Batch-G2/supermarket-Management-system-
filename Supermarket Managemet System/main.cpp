@@ -4,12 +4,12 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
 // Global Variables
 int NumberOfProducts = 63, FlagDelete = 0, FlagEdit = 0;
-
 
 // Resizes the console window
 void ResizeWindow(){
@@ -318,10 +318,16 @@ void DeleteItem(){
     if( !(FlagDelete)){
     Product *Item = &Products[SerialNumber];
     cout << endl << " Are you sure you want to delete this item? (Y/N): ";
+    cout<< endl << "1. Yes.";
+    cout<< endl << "2. No.";
     system("color 0C");
-    char ConfirmDeletion;
-    cin >> ConfirmDeletion;
-    if(ConfirmDeletion == 'Y'){
+    int ConfirmDeletion;
+    while(!(cin>>ConfirmDeletion)){   // INPUT VALIDATION FOR
+        cout<< "\nInvalid input.\n\n";
+        cin.clear();
+        cin.ignore(20, '\n');
+    }
+    if(ConfirmDeletion == 1){
         for(int i = SerialNumber; i < NumberOfProducts - 1; i++){
             Products[i] = Products[i+1];
         }
@@ -334,70 +340,181 @@ void DeleteItem(){
         cout << endl << " \t ---- \t Item Deleted Successfully! \t ----" << endl << endl;
         system("pause");
         system("cls");
-    } else if (ConfirmDeletion == 'N'){
+    } else if (ConfirmDeletion == 2){
         system("color 0E");
-        goto AskDeletion;
+        //goto AskDeletion;
     }
     }
+FlagDelete = 0;
 system("color 0F");
 }
 
+bool CompareUsingUnitPriceAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.UnitPrice < SecondProduct.UnitPrice)
+        return 1;
+    else
+        return 0;
+}
 
+//Used to Compare products using there unit price in descending order
+bool CompareUsingUnitPriceDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.UnitPrice > SecondProduct.UnitPrice)
+        return 1;
+    else
+        return 0;
+}
 
-int main(){
+//Used to Compare products using there rating in ascending order
+bool CompareUsingRatingAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Rating < SecondProduct.Rating)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there rating in descending order
+bool CompareUsingRatingDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Rating > SecondProduct.Rating)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there production date in ascending order
+bool CompareUsingProductionDateAscending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ProductionDate.Year < SecondProduct.ProductionDate.Year)||((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month < SecondProduct.ProductionDate.Month))||(((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month == SecondProduct.ProductionDate.Month))&&(FirstProduct.ProductionDate.Day < SecondProduct.ProductionDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there production date in descending order
+bool CompareUsingProductionDateDescending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ProductionDate.Year > SecondProduct.ProductionDate.Year)||((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month > SecondProduct.ProductionDate.Month))||(((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month == SecondProduct.ProductionDate.Month))&&(FirstProduct.ProductionDate.Day > SecondProduct.ProductionDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there expiration date in ascending order
+bool CompareUsingExpirationDateAscending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ExpireDate.Year < SecondProduct.ExpireDate.Year)||
+       ((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&
+        (FirstProduct.ExpireDate.Month < SecondProduct.ExpireDate.Month))||
+       (((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&
+         (FirstProduct.ExpireDate.Month == SecondProduct.ExpireDate.Month))&&
+        (FirstProduct.ExpireDate.Day < SecondProduct.ExpireDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there expiration date in descending order
+bool CompareUsingExpirationDateDescending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ExpireDate.Year > SecondProduct.ExpireDate.Year)||((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&(FirstProduct.ExpireDate.Month > SecondProduct.ExpireDate.Month))||(((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&(FirstProduct.ExpireDate.Month == SecondProduct.ExpireDate.Month))&&(FirstProduct.ExpireDate.Day > SecondProduct.ExpireDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there quantity in ascending order
+bool CompareUsingQuantityAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Quantity < SecondProduct.Quantity)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there quantity in descending order
+bool CompareUsingQuantityDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Quantity > SecondProduct.Quantity)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there sales in ascending order
+bool CompareUsingSalesAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Sales < SecondProduct.Sales)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there sales in descending order
+bool CompareUsingSalesDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Sales > SecondProduct.Sales)
+        return 1;
+    else
+        return 0;
+}
+
+void ProductSampleData(){
 //Initializing Bread and Bakery sample data
-Products[1] = {1 ,"Banana Bread ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",22 ,4.9 };
-Products[2] = {2 ,"Whole Wheat ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs ",3 ,2.5 };
-Products[3] = {3 ,"Sourdough ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",4 ,4.7 };
-Products[4] = {4 ,"Baguette ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs ",10 ,3 };
-Products[5] = {5 ,"Difo Dabo ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",20 ,4.9 };
-Products[6] = {6 ,"White Bread ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",3 ,2.8 };
-Products[7] = {7 ,"Carrot Cake ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs ",20 ,4.1 };
-Products[8] = {8 ,"Bagels ", "Bread and Bakery ", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",12 ,3.9 };
-Products[9] = {9 ,"Chocolate Chip ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",30 ,4.8 };
-Products[10] = {10 ,"Shortbread Cookie ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21}, 200,"Kilogram ",28 ,4 };
-Products[11] = {11 ,"Peanut Butter ", "Bread and Bakery ", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",28 ,2.5 };
+Products[1] = {1 ,"Banana Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",22 ,4.9 };
+Products[2] = {2 ,"Whole Wheat ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",3 ,2.5 };
+Products[3] = {3 ,"Sourdough ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs",4 ,4.7 };
+Products[4] = {4 ,"Baguette ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",10 ,3 };
+Products[5] = {5 ,"Difo Dabo ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",20 ,4.9 };
+Products[6] = {6 ,"White Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs",3 ,2.8 };
+Products[7] = {7 ,"Carrot Cake ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",20 ,4.1 };
+Products[8] = {8 ,"Bagels ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",12 ,3.9 };
+Products[9] = {9 ,"Chocolate Chip ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",30 ,4.8 };
+Products[10] = {10 ,"Shortbread Cookie ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21}, 200,"Kilogram ",28 ,4 };
+Products[11] = {11 ,"Peanut Butter ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",28 ,2.5 };
 
 //Initializing Pasta and rice sample data
-Products[12] = {12,"Short Pasta ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
-Products[13] = {13,"Long Pasta ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
-Products[14] = {14,"Macaroni ", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",24 ,4 };
-Products[15] = {15,"Fettuccine", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21},100 ,"Kilogram ",28 ,2.5 };
-Products[16] = {16,"Lasagna", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",32 ,5 };
-Products[17] = {17,"Spaghetti", "Pasta and Rice ", "Pasta ",{6,9,21}, {10,9,21}, 100," Kilogram",30 ,4.9 };
-Products[18] = {18,"Brown Rice ", "Pasta and Rice ", "Rice ",{6,9,21}, {10,9,21}, 100,"Kilogram ",30 ,4.7 };
-Products[19] = {19,"White Rice ", "Pasta and Rice ", "Rice ",{6,9,21}, {10,9,21},100 ," Kilogram",27 ,2.5 };
+Products[12] = {12,"Short Pasta ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
+Products[13] = {13,"Long Pasta ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
+Products[14] = {14,"Macaroni ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",24 ,4 };
+Products[15] = {15,"Fettuccine", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21},100 ,"Kilogram ",28 ,2.5 };
+Products[16] = {16,"Lasagna", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",32 ,5 };
+Products[17] = {17,"Spaghetti", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100," Kilogram",30 ,4.9 };
+Products[18] = {18,"Brown Rice ", "Pasta and Rice", "Rice ",{6,9,21}, {10,9,21}, 100,"Kilogram ",30 ,4.7 };
+Products[19] = {19,"White Rice ", "Pasta and Rice", "Rice ",{6,9,21}, {10,9,21},100 ," Kilogram",27 ,2.5 };
 
 //Initializing Dairy and meat sample data
-Products[20] = {20 ,"Beef ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",250 ,4.9 };
-Products[21] = {21 ,"Pork ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ", 200,2.5 };
-Products[22] = {22 ,"Mutton ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",260 , 4.4};
-Products[23] = {23 ,"Chicken ", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
-Products[24] = {24 ,"Turkey", "Dairy and Meat ", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",280 ,3.9 };
-Products[25] = {25 ,"Butter ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",450 ,5 };
+Products[20] = {20 ,"Beef ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",250 ,4.9 };
+Products[21] = {21 ,"Pork ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ", 200,2.5 };
+Products[22] = {22 ,"Mutton ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",260 , 4.4};
+Products[23] = {23 ,"Chicken ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
+Products[24] = {24 ,"Turkey", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",280 ,3.9 };
+Products[25] = {25 ,"Butter ", "Dairy and Meat", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",450 ,5 };
 Products[26] = {26 ,"Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21}, 100,"Liters ",40 ,4.9 };
 Products[27] = {27 ,"Mozzarella ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",320 ,4.5 };
 Products[28] = {28 ,"Cheddar ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
-Products[29] = {29 ,"Parmesan ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",360 ,4.4 };
+Products[29] = {29 ,"Parmesan ", "Dairy and Meat", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",360 ,4.4 };
 Products[30] = {30 ,"Gouda ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",380 ,5 };
 Products[31] = {31 ,"Yoghurt ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Liters ",60 ,4.9 };
 Products[32] = {32 ,"Powdered Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",1200 ,4.6 };
 Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,5 };
 
- //Initializing Beverage and soft Drinks sample data
-Products[34] = {34,"Beer ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {0,0,0},103,"Milliliter ", 200,2.5 };
-Products[35] = {35,"Cider ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,21},103,"Milliliter ",260, 4.4};
-Products[36] = {36,"Hard Soda ", "Beverage and Soft Drinks ", "Beverage ",{3,12,21}, {10,9,21},100,"Milliliter ",300,4.9 };
-Products[37] = {37,"Wine", "Beverage and Soft Drinks ", "Beverage ",{10,12,21}, {10,9,21},102,"Milliliter ",280,3.9 };
-Products[38] = {38,"Barley ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,26},101,"Milliliters ",450,5 };
-Products[39] = {39,"Turkish ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,27}, 106,"Liters ",40,4.9 };
-Products[40] = {40,"Moka ", "Beverage and Soft Drinks ", "Beverage ",{6,9,21}, {10,9,25},100,"Milliliter ",320,4.5 };
-Products[41] = {41,"Kamora ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},107,"Milliliter ",300,4.9 };
-Products[42] = {42,"Amarula ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,20}, {10,9,21},108,"Milliliter ",360,4.4 };
-Products[43] = {43,"Carolans ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},109,"Milliliter ",380,5 };
-Products[44] = {44,"Rosolio ", "Beverage and Soft Drinks ", "Soft Drinks ",{3,9,21}, {10,9,21},234,"Litres ",60,4.9 };
-Products[45] = {45,"Aurum ", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},257,"Milliliter ",1200,4.6 };
-Products[46] = {46,"Cointreau", "Beverage and Soft Drinks ", "Soft Drinks ",{6,9,21}, {10,9,21},234,"Milliliter ",300,5};
+ //Initializing Beverages and Drinkssample data
+Products[34] = {34,"Beer ", "Beverages and Drinks", "Beverage ",{6,9,21}, {0,0,0},103,"Milliliter ", 200,2.5 };
+Products[35] = {35,"Cider ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,21},103,"Milliliter ",260, 4.4};
+Products[36] = {36,"Hard Soda ", "Beverages and Drinks", "Beverage ",{3,12,21}, {10,9,21},100,"Milliliter ",300,4.9 };
+Products[37] = {37,"Wine", "Beverages and Drinks", "Beverage ",{10,12,21}, {10,9,21},102,"Milliliter ",280,3.9 };
+Products[38] = {38,"Barley ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,26},101,"Milliliters ",450,5 };
+Products[39] = {39,"Turkish ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,27}, 106,"Liters ",40,4.9 };
+Products[40] = {40,"Moka ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,25},100,"Milliliter ",320,4.5 };
+Products[41] = {41,"Kamora ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},107,"Milliliter ",300,4.9 };
+Products[42] = {42,"Amarula ", "Beverages and Drinks", "Soft Drinks ",{6,9,20}, {10,9,21},108,"Milliliter ",360,4.4 };
+Products[43] = {43,"Carolans ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},109,"Milliliter ",380,5 };
+Products[44] = {44,"Rosolio ", "Beverages and Drinks", "Soft Drinks ",{3,9,21}, {10,9,21},234,"Litres ",60,4.9 };
+Products[45] = {45,"Aurum ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},257,"Milliliter ",1200,4.6 };
+Products[46] = {46,"Cointreau", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},234,"Milliliter ",300,5};
 //Initializing Snacks sample data
 Products[47] = {47,"Milky Way ", "Snack ", "Snack ",{6,9,21}, {10,9,17},100,"Milliliter ", 270,2.5 };
 Products[48] = {48,"Sun Chips ", "Snack ", "Snack ",{1,9,21}, {10,9,21},100,"Milliliter ",290, 4.4};
@@ -414,17 +531,22 @@ Products[58] = {58,"Momos ", "Snack ", "Snack ",{9,9,21}, {10,9,21},100,"Millili
 Products[59] = {59,"Khaman", "Snack ", "Snack ",{8,9,21}, {10,9,21},100,"Milliliter ",15,5 };
 
 //Utensils
-Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,2017},{14,10,2020},40,"Items",30.45,2.5};
-Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,2018},{15,11,2021},12,"Packages",40.00,4.5};
-Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,2019},{16,12,2022},10,"Bottle",99.39,5.0};
+Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,17},{14,10,20},40,"Items",30.45,2.5};
+Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,18},{15,11,21},12,"Packages",40.00,4.5};
+Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,19},{16,12,22},10,"Bottle",99.39,5.0};
 
+}
+
+int main(){
+ProductSampleData();
 
 int Choice, InvalidChoiceCounter= 0;
 Menu:cout<<"1. Print all Products. "<<endl;
        cout<<"2. Search for product. "<<endl;
        cout<<"3. Delete Item from Stock. "<<endl;
        cout<<"4. Edit a Product "<<endl;
-        cout<<"5. Exit "<<endl;
+        cout<<"5. Sorting Functions "<<endl;
+        cout<<"6. Exit "<<endl;
        cout<<"Choice: ";
 
 while(!(cin>>Choice)){
@@ -472,6 +594,136 @@ switch(Choice){
     EditItem();
     goto Menu;
     case 5:
+    system("cls");
+    ReturnToChoice:
+    cout<<"Choose how you want to sort: "<<endl;
+    cout<<"1. Unit Price"<<endl;
+    cout<<"2. Rating"<<endl;
+    cout<<"3. Production date"<<endl;
+    cout<<"4. Expire date"<<endl;
+    cout<<"5. Quantity"<<endl;
+    cout<<"6. Sales"<<endl;
+    int Choice,OrderChoice;
+    cout<<"Your choice: ";
+    cin>>Choice;
+ReturnToOrderChoice:
+    cout<<"Choose Order"<<endl;
+    cout<<"1. Ascending Order"<<endl;
+    cout<<"2. Descending Order"<<endl;
+    cout<<"Your choice: ";
+    cin>>OrderChoice;
+        switch(Choice)
+    {
+    case 1:
+        if(OrderChoice == 1)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == 2)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case 2:
+        if(OrderChoice == 1)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingRatingAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == 2)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingRatingDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case 3:
+        if(OrderChoice == 1)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingProductionDateAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == 2)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingProductionDateDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case 4:
+        if(OrderChoice == 1)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == 2)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case 5:
+        if(OrderChoice == 1)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingQuantityAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == 2)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingQuantityDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case 6:
+        if(OrderChoice == 1)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingSalesAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == 2)
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingSalesDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    default:
+        cout<<"Invalid Choice! Try Again";
+        system("cls");
+        goto ReturnToChoice;
+    }
+    goto Menu;
+
+    case 6:
         return 0;//We can make it go to the main menu when we merge it all
     break;
     default:
