@@ -8,7 +8,7 @@
 using namespace std;
 
 // Global Variables
-int NumberOfProducts = 3;
+int NumberOfProducts = 62;
 char MenuChoice[11];
 char ChosenFunction[31];
 
@@ -453,11 +453,101 @@ void Employee(){
 
 }
 
+void ProfitCalculator(){
+    double totalProfit = 0;
+    // Sets sample sales
+    for(int i = 0; i < NumberOfProducts; i++){
+        Products[i].Sales = i;
+        totalProfit += i;
+    }
+    cout << "Total Profit: " << totalProfit << endl;
+    totalProfit = 0;
+    // Calculates total sale profit
+    for(int i = 0; i < NumberOfProducts; i++){
+        totalProfit += (Products[i].Sales * Products[i].Quantity) * 0.03;
+    }
+    cout << "Total Profit: " << totalProfit << endl;
+}
+
+
 //
 void MainMenu(){
+    //Initializing Bread and Bakery sample data
+    Products[1] = {1 ,"Banana Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",22 ,4.9, 10};
+    Products[2] = {2 ,"Whole Wheat ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",3 ,2.5 , 10};
+    Products[3] = {3 ,"Sourdough ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs",4 ,4.7 , 10};
+    Products[4] = {4 ,"Baguette ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",10 ,3 , 10};
+    Products[5] = {5 ,"Difo Dabo ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",20 ,4.9 , 10};
+    Products[6] = {6 ,"White Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs",3 ,2.8 , 10};
+    Products[7] = {7 ,"Carrot Cake ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",20 ,4.1 , 10};
+    Products[8] = {8 ,"Bagels ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",12 ,3.9 , 10};
+    Products[9] = {9 ,"Chocolate Chip ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",30 ,4.8 , 10};
+    Products[10] = {10 ,"Shortbread Cookie ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21}, 200,"Kilogram ",28 ,4 , 10};
+    Products[11] = {11 ,"Peanut Butter ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",28 ,2.5 , 10};
 
+    //Initializing Pasta and rice sample data
+    Products[12] = {12,"Short Pasta ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 , 10};
+    Products[13] = {13,"Long Pasta ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 , 10};
+    Products[14] = {14,"Macaroni ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",24 ,4 , 10};
+    Products[15] = {15,"Fettuccine", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21},100 ,"Kilogram ",28 ,2.5 , 10};
+    Products[16] = {16,"Lasagna", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",32 ,5 , 10};
+    Products[17] = {17,"Spaghetti", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100," Kilogram",30 ,4.9 , 10};
+    Products[18] = {18,"Brown Rice ", "Pasta and Rice", "Rice ",{6,9,21}, {10,9,21}, 100,"Kilogram ",30 ,4.7 , 10};
+    Products[19] = {19,"White Rice ", "Pasta and Rice", "Rice ",{6,9,21}, {10,9,21},100 ," Kilogram",27 ,2.5 , 10};
 
+    //Initializing Dairy and meat sample data
+    Products[20] = {20 ,"Beef ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",250 ,4.9 , 10};
+    Products[21] = {21 ,"Pork ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ", 200,2.5 , 10};
+    Products[22] = {22 ,"Mutton ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",260 , 4.4, 10};
+    Products[23] = {23 ,"Chicken ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 , 10};
+    Products[24] = {24 ,"Turkey", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",280 ,3.9 , 10};
+    Products[25] = {25 ,"Butter ", "Dairy and Meat", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",450 ,5 , 10};
+    Products[26] = {26 ,"Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21}, 100,"Liters ",40 ,4.9 , 10};
+    Products[27] = {27 ,"Mozzarella ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",320 ,4.5 , 10};
+    Products[28] = {28 ,"Cheddar ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 , 10};
+    Products[29] = {29 ,"Parmesan ", "Dairy and Meat", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",360 ,4.4 , 10};
+    Products[30] = {30 ,"Gouda ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",380 ,5 , 10};
+    Products[31] = {31 ,"Yoghurt ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Liters ",60 ,4.9 , 10};
+    Products[32] = {32 ,"Powdered Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",1200 ,4.6 , 10};
+    Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,5 , 10};
+
+    //Initializing Beverages and Drinkssample data
+    Products[34] = {34,"Beer ", "Beverages and Drinks", "Beverage ",{6,9,21}, {0,0,0},103,"Milliliter ", 200,2.5 , 10};
+    Products[35] = {35,"Cider ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,21},103,"Milliliter ",260, 4.4, 10};
+    Products[36] = {36,"Hard Soda ", "Beverages and Drinks", "Beverage ",{3,12,21}, {10,9,21},100,"Milliliter ",300,4.9 , 10};
+    Products[37] = {37,"Wine", "Beverages and Drinks", "Beverage ",{10,12,21}, {10,9,21},102,"Milliliter ",280,3.9 , 10};
+    Products[38] = {38,"Barley ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,26},101,"Milliliters ",450,5 , 10};
+    Products[39] = {39,"Turkish ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,27}, 106,"Liters ",40,4.9 , 10};
+    Products[40] = {40,"Moka ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,25},100,"Milliliter ",320,4.5 , 10};
+    Products[41] = {41,"Kamora ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},107,"Milliliter ",300,4.9 , 10};
+    Products[42] = {42,"Amarula ", "Beverages and Drinks", "Soft Drinks ",{6,9,20}, {10,9,21},108,"Milliliter ",360,4.4 , 10};
+    Products[43] = {43,"Carolans ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},109,"Milliliter ",380,5 , 10};
+    Products[44] = {44,"Rosolio ", "Beverages and Drinks", "Soft Drinks ",{3,9,21}, {10,9,21},234,"Litres ",60,4.9 , 10};
+    Products[45] = {45,"Aurum ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},257,"Milliliter ",1200,4.6 , 10};
+    Products[46] = {46,"Cointreau", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},234,"Milliliter ",300,5, 10};
+    //Initializing Snacks sample data
+    Products[47] = {47,"Milky Way ", "Snack ", "Snack ",{6,9,21}, {10,9,17},100,"Milliliter ", 270,2.5 , 10};
+    Products[48] = {48,"Sun Chips ", "Snack ", "Snack ",{1,9,21}, {10,9,21},100,"Milliliter ",290, 4.4, 10};
+    Products[49] = {49,"Suncake ", "Snack ", "Snack ",{6,9,20}, {10,9,15},100,"Milliliter ",700,4.9 , 10};
+    Products[50] = {50,"Vadai", "Snack ", "Snack ",{6,9,19}, {10,9,21},100,"Milliliter ",340,3.9 , 10};
+    Products[51] = {51,"Popcorn ", "Snack ", "Snack ",{10,9,17}, {10,9,13},100,"Milliliters ",240,5 , 10};
+    Products[52] = {52,"Candy ", "Snack ", "Snack ",{6,9,19}, {10,9,24}, 100,"Liters ",40,4.9 }, 10;
+    Products[53] = {53,"Fruit ", "Snack ", "Snack ",{6,9,18}, {10,9,21},100,"Milliliter ",30,4.5 , 10};
+    Products[54] = {54,"Pretzels ", "Snack ", "Snack ",{7,9,21}, {10,9,21},100,"Milliliter ",10,4.9 , 10};
+    Products[55] = {55,"Doughnuts ", "Snack ", "Snack ",{6,9,21}, {10,9,15},100,"Milliliter ",30,4.4 , 10};
+    Products[56] = {56,"Peanuts ", "Snack ", "Snack ",{6,9,21}, {10,9,16},100,"Milliliter ",40,5 , 10};
+    Products[57] = {57,"Poha ", "Snack ", "Snack ",{2,9,21}, {10,9,20},100,"Litres ",60,4.9 , 10};
+    Products[58] = {58,"Momos ", "Snack ", "Snack ",{9,9,21}, {10,9,21},100,"Milliliter ",120,4.6 , 10};
+    Products[59] = {59,"Khaman", "Snack ", "Snack ",{8,9,21}, {10,9,21},100,"Milliliter ",15,5 , 10};
+
+    //Utensils
+    Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,17},{14,10,20},40,"Items",30.45,2.5};
+    Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,18},{15,11,21},12,"Packages",40.00,4.5};
+    Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,19},{16,12,22},10,"Bottle",99.39,5.0};
+
+    ProfitCalculator();
     home:welcomeScreen();
+
     cin.getline(MenuChoice,10);
     system("cls");
      while(strcmp(MenuChoice, "Manager")==0 || strcmp(MenuChoice, "manager")==0){
