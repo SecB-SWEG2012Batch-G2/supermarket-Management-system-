@@ -9,14 +9,6 @@ using namespace std;
 // Global Variables
 int NumberOfProducts = 59;
 
-// Resizes the console window
-void ResizeWindow()
-{
-    HWND console = GetConsoleWindow();
-    RECT ConsoleRect;
-    GetWindowRect(console, &ConsoleRect);
-    MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 1600, 800, TRUE);
-}
 struct Date
 {
     int Day,Month,Year;
@@ -36,79 +28,6 @@ struct Product
     float Rating;
     int Sales=0;
 } Products[9999];
-
-//Product *Products = new Product[NumberOfProducts];
-
-// Function to Print Table Dividers " +--+ "
-void PrintTableDividers()
-{
-    cout << setw(2) << " +---------------+";
-    cout << setw(24) << "--------------------------+";
-    cout << setw(24) << "--------------------------+";
-    cout << setw(24) << "--------------------------+";
-    cout << setw(15) << "-----------------+";
-    cout << setw(15) << "-----------------+";
-    cout << setw(8) << "----------+";
-    cout << setw(16) << "------------------+";
-    cout << setw(10) << "------------+";
-    cout << setw(6) << "--------+";
-    cout << setw(5) << "-------+";
-    cout << endl;
-}
-// Function to Print Table Headers (Product Name, Price)
-void PrintTableHeader()
-{
-    // Table Headers
-    cout << setw(2) << " | Serial Number" << " | ";
-    cout << setw(24) << "Product Name" << " | ";
-    cout << setw(24) << "Category" << " | ";
-    cout << setw(24) << "Product Type" << " | ";
-    cout << setw(15) << "Production Date" << " | ";
-    cout << setw(15) << "Expire Date" << " | ";
-    cout << setw(8) << "Quantity" << " | ";
-    cout << setw(16) << "Measurement Unit" << " | ";
-    cout << setw(10) << "Unit Price" << " | ";
-    cout << setw(6) << "Rating" << " | ";
-    cout << setw(5) << "Sales" << " | ";
-    cout << endl;
-}
-// This Functions Prints the details of the passed product structure
-void PrintInItemValue(Product Item)
-{
-    // Table Values
-    string ProductionDate = to_string(Item.ProductionDate.Day) + "/" + to_string(Item.ProductionDate.Month) + "/" + to_string(Item.ProductionDate.Year);
-    string ExpirationDate = to_string(Item.ExpireDate.Day) + "/" + to_string(Item.ExpireDate.Month) + "/" + to_string(Item.ExpireDate.Year);
-    cout << " | " << setw(13) << Item.ProductNumber << " | ";
-    cout << setw(24) << Item.ProductName << " | ";
-    cout << setw(24) << Item.Category << " | ";
-    cout << setw(24) << Item.ProductType << " | ";
-    cout << setw(15) << ProductionDate << " | ";
-    cout << setw(15) << ExpirationDate << " | ";
-    cout << setw(8) << Item.Quantity << " | ";
-    cout << setw(16) << Item.MeasurementUnit << " | ";
-    cout << setw(10) << Item.UnitPrice << " | ";
-    cout << setw(6) << Item.Rating << " | ";
-    cout << setw(5) << Item.Sales << " | ";
-    cout << endl;
-}
-// Print In Table Format Function
-void PrintInTableFormat()
-{
-    // Initialization
-    ResizeWindow();
-    // Print Full Table For reference to edit
-    cout << endl << " Here's a list of all products... " << endl << endl;
-    // Print In Table Format Function
-    PrintTableDividers();
-    PrintTableHeader();
-    // Loop Through the samples to print the details in table format
-    for(int i = 0; i < NumberOfProducts; i++)
-    {
-        PrintTableDividers();
-        PrintInItemValue(Products[i]);
-    }
-    PrintTableDividers();
-}
 
 //Used to Compare products using there unit price in ascending order
 bool CompareUsingUnitPriceAscending( Product FirstProduct, Product SecondProduct)
