@@ -83,17 +83,14 @@ Products[328]={328,};
 Products[329]={329,};
 Products[330]={330,};
 }
-class ManagerAccount{
-    public:
-string UserName;
-string Password;
-}ManAccounts[3];
+struct Account{
+    string UserName;
+    string Password;
+};
 
-class CashierAccount{
-    public:
-string UserName;
-string Password;
-}Cashaccounts[5];
+Account ManAccounts[3];
+Account Cashaccounts[5];
+
 void ManagerAccount(){
     cout<<"Successful";
 }
@@ -236,29 +233,27 @@ int main(){
     Cashaccounts[3].UserName="cashier";
     Cashaccounts[3].Password="password";
     int UserLoginChoice;
-cout<<"1. Manager \n";
-cout<<"2.Employee\n";
-cout<<"3.Cashier\n";
-LoginChoice:
-cout<<"Choice "; cin>>UserLoginChoice;
- switch(UserLoginChoice){
-    case 1:
-        system("cls");
-        ManagerLogin();
-        break;
-    case 2:
-        system("cls");
-        EmployeeAccount();
-        break;
-    case 3:
-        system("cls");
-        CashierLogin();
-        break;
-    default:
-        cout<<"Invalid Choice\n";
-        goto LoginChoice;
-
-
+    cout<<"1. Manager \n";
+    cout<<"2.Employee\n";
+    cout<<"3.Cashier\n";
+    LoginChoice:
+    cout<<"Choice "; cin>>UserLoginChoice;
+    switch(UserLoginChoice){
+        case 1:
+            system("cls");
+            ManagerLogin();
+            break;
+        case 2:
+            system("cls");
+            EmployeeAccount();
+            break;
+        case 3:
+            system("cls");
+            CashierLogin();
+            break;
+        default:
+            cout<<"Invalid Choice\n";
+            goto LoginChoice;
  }
 
     return 0;
