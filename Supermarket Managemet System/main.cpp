@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
@@ -719,10 +718,10 @@ void ProductSampleData()
 }
 int MainMenu()
 {
-    system("cls");
     int Choice, InvalidChoiceCounter= 0;
 
 Menu:
+    system("cls");
     cout<<"1. Print all Products. "<<endl;
     cout<<"2. Search for product. "<<endl;
     cout<<"3. Delete Item from Stock. "<<endl;
@@ -930,3 +929,5 @@ int main()
     ProductSampleData();
     MainMenu();
 }
+
+
