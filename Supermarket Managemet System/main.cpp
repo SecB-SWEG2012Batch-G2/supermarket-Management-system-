@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ int ChosenFunction;
 
 //Global structure Date
 struct Date{
-    int DD, MM, YY;
+    int Day, Month, Year;
 };
 
 
@@ -61,30 +62,30 @@ struct Product{
         cin>>ProductType;
 
         cout<<"\n Please Enter The Production Date : ";
-        cin>>ProductionDate.DD;
+        cin>>ProductionDate.Day;
 
-        if(ProductionDate.DD == 0){ //In case of  a null value on Production Date
-            ProductionDate.MM=0;
-            ProductionDate.YY=0;
+        if(ProductionDate.Day == 0){ //In case of  a null value on Production Date
+            ProductionDate.Month=0;
+            ProductionDate.Year=0;
         }
 
         else{
-            cin>>ProductionDate.MM;
-            cin>>ProductionDate.YY;
+            cin>>ProductionDate.Month;
+            cin>>ProductionDate.Year;
         }
 
         cout<<"\n Please Enter The Expired Date : ";
-        cin>>ExpireDate.DD;
+        cin>>ExpireDate.Day;
 
-        if(ExpireDate.DD == 0){ //In case of  a null value on Expire Date
-            ExpireDate.MM=0;
-            ExpireDate.YY=0;
+        if(ExpireDate.Day == 0){ //In case of  a null value on Expire Date
+            ExpireDate.Month=0;
+            ExpireDate.Year=0;
         }
 
 
         else{
-            cin>>ExpireDate.MM;
-            cin>>ExpireDate.YY;
+            cin>>ExpireDate.Month;
+            cin>>ExpireDate.Year;
         }
 
         cout<<"\n Please Enter The Quantity: ";
@@ -154,7 +155,7 @@ void PrintTableHeader(){
 // This Functions Prints the details of the passed product structure
 void PrintInItemValue(Product Item) {
     // Table Values
-    string ProductionDate = to_string(Item.ProductionDate.DD) + "/" + to_string(Item.ProductionDate.MM) + "/" + to_string(Item.ProductionDate.YY);
+    string ProductionDate = to_string(Item.ProductionDate.Day) + "/" + to_string(Item.ProductionDate.Month) + "/" + to_string(Item.ProductionDate.Year);
     cout << " | " << setw(13) << Item.ProductNumber << " | ";
     cout << setw(24) << Item.ProductName << " | ";
     cout << setw(24) << Item.Category << " | ";
@@ -222,20 +223,20 @@ void EditItem(){
         case 4:
             cout << " Enter New Production Date" << endl;
             cout << "\t New Day: ";
-            cin >> Item->ProductionDate.DD;
+            cin >> Item->ProductionDate.Day;
             cout << "\t New Month: ";
-            cin >> Item->ProductionDate.MM;
+            cin >> Item->ProductionDate.Month;
             cout << "\t New Year: ";
-            cin >> Item->ProductionDate.YY;
+            cin >> Item->ProductionDate.Year;
             break;
         case 5:
             cout << " Enter New Expire Date: ";
             cout << "\t New Day: ";
-            cin >> Item->ExpireDate.DD;
+            cin >> Item->ExpireDate.Day;
             cout << "\t New Month: ";
-            cin >> Item->ExpireDate.MM;
+            cin >> Item->ExpireDate.Month;
             cout << "\t New Year: ";
-            cin >> Item->ExpireDate.YY;
+            cin >> Item->ExpireDate.Year;
             break;
         case 6:
             cout << " Enter New Quantity: ";
@@ -431,6 +432,244 @@ void Manager(){
     }
 }
 
+//Used to Compare products using there unit price in ascending order
+bool CompareUsingUnitPriceAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.UnitPrice < SecondProduct.UnitPrice)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there unit price in descending order
+bool CompareUsingUnitPriceDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.UnitPrice > SecondProduct.UnitPrice)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there rating in ascending order
+bool CompareUsingRatingAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Rating < SecondProduct.Rating)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there rating in descending order
+bool CompareUsingRatingDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Rating > SecondProduct.Rating)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there production date in ascending order
+bool CompareUsingProductionDateAscending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ProductionDate.Year < SecondProduct.ProductionDate.Year)||((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month < SecondProduct.ProductionDate.Month))||(((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month == SecondProduct.ProductionDate.Month))&&(FirstProduct.ProductionDate.Day < SecondProduct.ProductionDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there production date in descending order
+bool CompareUsingProductionDateDescending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ProductionDate.Year > SecondProduct.ProductionDate.Year)||((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month > SecondProduct.ProductionDate.Month))||(((FirstProduct.ProductionDate.Year == SecondProduct.ProductionDate.Year)&&(FirstProduct.ProductionDate.Month == SecondProduct.ProductionDate.Month))&&(FirstProduct.ProductionDate.Day > SecondProduct.ProductionDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there expiration date in ascending order
+bool CompareUsingExpirationDateAscending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ExpireDate.Year < SecondProduct.ExpireDate.Year)||((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&(FirstProduct.ExpireDate.Month < SecondProduct.ExpireDate.Month))||(((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&(FirstProduct.ExpireDate.Month == SecondProduct.ExpireDate.Month))&&(FirstProduct.ExpireDate.Day < SecondProduct.ExpireDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there expiration date in descending order
+bool CompareUsingExpirationDateDescending( Product FirstProduct, Product SecondProduct)
+{
+    if((FirstProduct.ExpireDate.Year > SecondProduct.ExpireDate.Year)||((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&(FirstProduct.ExpireDate.Month > SecondProduct.ExpireDate.Month))||(((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&(FirstProduct.ExpireDate.Month == SecondProduct.ExpireDate.Month))&&(FirstProduct.ExpireDate.Day > SecondProduct.ExpireDate.Day)))
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there quantity in ascending order
+bool CompareUsingQuantityAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Quantity < SecondProduct.Quantity)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there quantity in descending order
+bool CompareUsingQuantityDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Quantity > SecondProduct.Quantity)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there sales in ascending order
+bool CompareUsingSalesAscending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Sales < SecondProduct.Sales)
+        return 1;
+    else
+        return 0;
+}
+
+//Used to Compare products using there sales in descending order
+bool CompareUsingSalesDescending( Product FirstProduct, Product SecondProduct)
+{
+    if(FirstProduct.Sales > SecondProduct.Sales)
+        return 1;
+    else
+        return 0;
+}
+
+void SortProduct(){
+    ReturnToChoice:
+    cout<<"Choose how you want to sort: "<<endl;
+    cout<<"1. Unit Price"<<endl;
+    cout<<"2. Rating"<<endl;
+    cout<<"3. Production date"<<endl;
+    cout<<"4. Expire date"<<endl;
+    cout<<"5. Quantity"<<endl;
+    cout<<"6. Sales"<<endl;
+    char Choice,OrderChoice;
+    cout<<"Your choice: ";
+    cin>>Choice;
+ReturnToOrderChoice:
+    cout<<"Choose Order"<<endl;
+    cout<<"1. Ascending Order"<<endl;
+    cout<<"2. Descending Order"<<endl;
+    cout<<"Your choice: ";
+    cin>>OrderChoice;
+
+    switch(Choice)
+    {
+    case '1':
+        if(OrderChoice == '1')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == '2')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case '2':
+        if(OrderChoice == '1')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingRatingAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == '2')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingRatingDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case '3':
+        if(OrderChoice == '1')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingProductionDateAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == '2')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingProductionDateDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case '4':
+        if(OrderChoice == '1')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == '2')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case '5':
+        if(OrderChoice == '1')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingQuantityAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == '2')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingQuantityDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    case '6':
+        if(OrderChoice == '1')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingSalesAscending);
+            PrintInTableFormat();
+        }
+        else if(OrderChoice == '2')
+        {
+            sort(Products, Products+NumberOfProducts, CompareUsingSalesDescending);
+            PrintInTableFormat();
+        }
+        else
+        {
+            cout<<"Invalid Choice! Try Again";
+            goto ReturnToOrderChoice;
+        }
+        break;
+    default:
+        cout<<"Invalid Choice! Try Again";
+        system("cls");
+        goto ReturnToChoice;
+    }
+}
+
 //Employee's Account
 void Employee(){
 
@@ -449,9 +688,18 @@ void Employee(){
     cout << "\t*" << setfill(' ') << setw(50) << "*" << endl;
     cout << "\t*" << setfill('*') << setw(50) << "*" << endl;
     cout << endl;
-	
+
 	cout<<"Your choice:";
 	cin>>ChosenFunction;
+	switch(ChosenFunction){
+    case '1':
+        break;
+    case '2':
+        break;
+    case '3':
+        SortProduct();
+        break;
+	}
 
 }
 
@@ -472,8 +720,8 @@ void ProfitCalculator(){
 }
 
 
-//
-void MainMenu(){
+//Initializing product sample data
+void ProductInitilizer(){
     //Initializing Bread and Bakery sample data
     Products[1] = {1 ,"Banana Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",22 ,4.9, 10};
     Products[2] = {2 ,"Whole Wheat ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",3 ,2.5 , 10};
@@ -546,7 +794,11 @@ void MainMenu(){
     Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,17},{14,10,20},40,"Items",30.45,2.5};
     Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,18},{15,11,21},12,"Packages",40.00,4.5};
     Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,19},{16,12,22},10,"Bottle",99.39,5.0};
+}
 
+
+void MainMenu(){
+    ProductInitilizer();
     ProfitCalculator();
     home:welcomeScreen();
     cout<<"Account: ";
@@ -568,4 +820,3 @@ void MainMenu(){
 
     cout << endl << endl;
 }
-
