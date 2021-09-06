@@ -9,6 +9,9 @@
 using namespace std;
 
 // Global Variables
+float Quantity[100],TotalPrice = 0,Cash;
+    int NumberofBoughtItems,ProductNo[100],amount,Location[100];
+    bool ProductFound;
 int NumberOfProducts = 63, FlagDelete = 0, FlagEdit = 0;
 
 // Resizes the console window
@@ -35,8 +38,6 @@ struct Product{
     float Rating;
     int Sales = 0;
 } Products[9999];
-
-
 
 void PrintTableDividers(){
     cout << setw(2) << " +---------------+";
@@ -85,6 +86,34 @@ void PrintInItemValue(Product Item) {
     cout << endl;
 }
 
+void welcomeScreen(){
+    cout << R"(
+
+
+
+                        ,ad8888ba,                                     ad88888ba   88
+                       d8"'    `"8b                            ,d     d8"     "8b  88
+                      d8'                                      88     Y8,          88
+                      88             ,adPPYYba,  8b,dPPYba,  MM88MMM  `Y8aaaaa,    88,dPPYba,    ,adPPYba,   8b,dPPYba,
+                      88             ""     `Y8  88P'   "Y8    88       `"""""8b,  88P'    "8a  a8"     "8a  88P'    "8a
+                      Y8,            ,adPPPPP88  88            88             `8b  88       88  8b       d8  88       d8
+                       Y8a.    .a8P  88,    ,88  88            88,    Y8a     a8P  88       88  "8a,   ,a8"  88b,   ,a8"
+                        `"Y8888Y"'   `"8bbdP"Y8  88            "Y888   "Y88888P"   88       88   `"YbbdP"'   88`YbbdP"'
+                                                                                                             88
+                                                                                                             88
+
+    )" << endl;
+    cout << endl;
+    cout << "\t*" << setfill('*') << setw(50) << "*" << endl;
+    cout << "\t*" << setfill(' ') << setw(50) << "*" << endl;
+    cout << "\t*" << setfill(' ') << setw(32) << "W E L C O M E !" << setfill(' ') << setw(18) << "*" << endl;
+    cout << "\t*" << setfill(' ') << setw(50) << "*" << endl;
+    cout << "\t*" << setfill('-') << setw(50) << "*" << endl;
+    cout << endl;
+    system("pause");
+    system("cls");
+}
+
 void PrintInTableFormat(){
     // Initialization
     //ResizeWindow();
@@ -99,6 +128,90 @@ void PrintInTableFormat(){
         PrintInItemValue(Products[i]);
     }
     PrintTableDividers();
+}
+void PrintReceipt(){
+        system("cls");
+        cout<<setfill(' ')<<setw(30)<<"Receipt\n";
+        cout<<setfill(' ')<<"Item No"<<setw(15)<<"Name \t"<<setw(8)<<"Quantity"<<setw(8)<<"Price"<<setw(10)<<"Amount\n";
+    for(int i=0;i<NumberofBoughtItems;i++){
+            int N;
+        N=Location[i];
+        cout<<setfill(' ')<<"Item "<<i+1<<": "<<setw(15)<<Products[N].ProductName<<setw(8)<<Quantity[i]<<setw(8)<<Products[N].UnitPrice<<setw(10)<<Quantity[i]*Products[N].UnitPrice<<endl;
+        cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
+    TotalPrice=TotalPrice+(Quantity[i]*Products[N].UnitPrice);
+    }
+
+    cout<<setfill(' ')<<setw(47)<<"Txbl   "<<TotalPrice<<endl;
+    cout<<setfill(' ')<<setw(47)<<"Tax(15%)   "<<0.15*TotalPrice<<endl;
+    TotalPrice=1.15*TotalPrice;
+    cout<<setfill(' ')<<setw(47)<<"TotalPrice  "<<TotalPrice<<endl;
+    cout<<setfill(' ')<<setw(47)<<"Cash: "; cin>>Cash;
+    cout<<setfill(' ')<<setw(47)<<"Change: "<<Cash-TotalPrice<<endl;
+    cout<<setfill(' ')<<setw(30)<<"Thank You For Your Purchase" << endl;
+     for(int i=0;i<NumberofBoughtItems;i++){
+            int N;
+        N=Location[i];
+       Products[N].Quantity=Products[N].Quantity-Quantity[i];
+       Products[N].Sales = Products[N].Sales + Quantity[i];
+    }
+   system("pause");
+   system("cls");
+}
+
+void CashierAccount(){
+    //ProductSampleData();
+    cout<<setfill(' ') << setw(50) <<"Welcome to CartShop\n\n";
+    amount=1000;
+    cout<<"\tEnter The Details of The Items Below \n \tIf You Finish Your Purchase  at Any Time Enter 0 \n";
+    for(int i=0;i<amount;i++){
+        ProductFound=false;
+        MainMenu :
+        cout<<"Item "<<i+1<<":\n";
+        ProductNum:
+        cout<<"\tProduct Number: "; cin>>ProductNo[i];
+        for(int j=0;j<500;j++){
+        switch(ProductNo[i]){
+            case 0:
+                char opt;
+                Finish:
+                NumberofBoughtItems=i;
+                PrintReceipt();
+                cout<<"\tHave You Finished Your Purchase(Y/N)\n";
+                cin>>opt;
+                    opt=(char)toupper(opt);
+                      switch(opt){
+                      case 'N':
+                        system("pause");
+                        goto MainMenu;
+                        break;
+                       case 'Y':
+                        PrintReceipt();
+                        break;
+                     default:
+                          cout<<"\t Error: Invalid Input Try again\n";
+                            goto Finish;
+                            break;
+                      }
+        case 1 ... 9999:
+            if(ProductNo[i]==Products[j].ProductNumber){
+                Location[i]=j;
+                ProductFound=true;
+                NumberofBoughtItems=i+1;
+            }
+            break;
+        default :
+             cout<<"\tInvalid Number. Try Again!\n";
+           goto ProductNum;
+            break;
+        }
+        }
+        if(ProductFound==false){
+                                cout<<"\tCouldn't Find The Product. Try Again!\n";
+                            goto ProductNum;
+                            }
+        cout<<"\t\t Quantity: ";cin>>Quantity[i];
+        cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
+    }
 }
 
 void Search(int SearchedProduct){
@@ -319,7 +432,7 @@ void DeleteItem(){
     Product *Item = &Products[SerialNumber];
     cout << endl << " Are you sure you want to delete this item? (Y/N): ";
     cout<< endl << "1. Yes.";
-    cout<< endl << "2. No.";
+    cout<< endl << "2. No."<<endl;
     system("color 0C");
     int ConfirmDeletion;
     while(!(cin>>ConfirmDeletion)){   // INPUT VALIDATION FOR
@@ -538,15 +651,18 @@ Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,19},{16,12,22},
 }
 
 int main(){
+welcomeScreen();
 ProductSampleData();
 
 int Choice, InvalidChoiceCounter= 0;
+
 Menu:cout<<"1. Print all Products. "<<endl;
        cout<<"2. Search for product. "<<endl;
        cout<<"3. Delete Item from Stock. "<<endl;
        cout<<"4. Edit a Product "<<endl;
-        cout<<"5. Sorting Functions "<<endl;
-        cout<<"6. Exit "<<endl;
+       cout<<"5. Sorting Functions "<<endl;
+       cout<<"6. Sales. "<<endl;
+       cout<<"7. Exit "<<endl;
        cout<<"Choice: ";
 
 while(!(cin>>Choice)){
@@ -724,6 +840,9 @@ ReturnToOrderChoice:
     goto Menu;
 
     case 6:
+    CashierAccount();
+
+    case 7:
         return 0;//We can make it go to the main menu when we merge it all
     break;
     default:
