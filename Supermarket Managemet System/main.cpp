@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
@@ -10,22 +9,25 @@ using namespace std;
 
 // Global Variables
 float Quantity[100],TotalPrice = 0,Cash;
-    int NumberofBoughtItems,ProductNo[100],amount,Location[100];
-    bool ProductFound;
-int NumberOfProducts = 63, FlagDelete = 0, FlagEdit = 0;
+int NumberofBoughtItems,ProductNo[100],amount,Location[100];
+bool ProductFound;
+int NumberOfProducts = 80, FlagDelete = 0, FlagEdit = 0;
 
 // Resizes the console window
-void ResizeWindow(){
+void ResizeWindow()
+{
     HWND console = GetConsoleWindow();
-	RECT ConsoleRect;
-	GetWindowRect(console, &ConsoleRect);
+    RECT ConsoleRect;
+    GetWindowRect(console, &ConsoleRect);
     MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 1600, 800, TRUE);
 }
-struct Date{
+struct Date
+{
     int Day,Month,Year;
 };
 
-struct Product{
+struct Product
+{
     int ProductNumber;
     string ProductName;
     string Category;
@@ -37,9 +39,79 @@ struct Product{
     float UnitPrice;
     float Rating;
     int Sales = 0;
-} Products[9999];
 
-void PrintTableDividers(){
+    //Creation of New Product
+    void CreateProduct(){
+        cout<<"\n Please Enter The Product Number : "<<NumberOfProducts + 1;
+        NumberOfProducts++;
+        ProductNumber = NumberOfProducts;
+        //cin>>ProductNumber;
+
+        cout<<"\n Please Enter The Product Name : ";
+        cin>>ProductName;
+
+        cout<<"\n Please Enter The Category Of The Product : ";
+        cin>>Category;
+
+        cout<<"\n Please Enter The Product Type : ";
+        cin>>ProductType;
+
+        cout<<"\n Please Enter The Production Date : ";
+        cin>>ProductionDate.Day;
+
+        if(ProductionDate.Day == 0){ //In case of  a null value on Production Date
+            ProductionDate.Month=0;
+            ProductionDate.Year=0;
+        }
+
+        else{
+            cin>>ProductionDate.Month;
+            cin>>ProductionDate.Year;
+        }
+
+        cout<<"\n Please Enter The Expired Date : ";
+        cin>>ExpireDate.Day;
+
+        if(ExpireDate.Day == 0){ //In case of  a null value on Expire Date
+            ExpireDate.Month=0;
+            ExpireDate.Year=0;
+        }
+
+
+        else{
+            cin>>ExpireDate.Month;
+            cin>>ExpireDate.Year;
+        }
+
+        cout<<"\n Please Enter The Quantity: ";
+        cin>>Quantity;
+
+        cout<<"\n Please Enter The Measurement Unit: ";
+        cin>>MeasurementUnit;
+
+        cout<<"\n Please Enter The Unit Price: ";
+        cin>>UnitPrice;
+
+        cout<<"\n Please Enter The Rating: ";
+        cin>>Rating;
+
+        cout<<"\n Please Enter The Number of Sales: ";
+        cin>>Sales;
+
+    }
+
+
+} Products[9999];
+void InputProduct(int Count){
+        for(int i=0; i<Count; i++){
+            Products[NumberOfProducts+i].CreateProduct();
+        }
+        NumberOfProducts += Count;
+    }
+
+int MainMenu(void);
+void PrintTableDividers()
+{
     cout << setw(2) << " +---------------+";
     cout << setw(24) << "--------------------------+";
     cout << setw(24) << "--------------------------+";
@@ -53,7 +125,8 @@ void PrintTableDividers(){
     cout << setw(5) << "-------+";
     cout << endl;
 }
-void PrintTableHeader(){
+void PrintTableHeader()
+{
     // Table Headers
     cout << setw(2) << " | Serial Number" << " | ";
     cout << setw(24) << "Product Name" << " | ";
@@ -69,7 +142,8 @@ void PrintTableHeader(){
     cout << endl;
 }
 
-void PrintInItemValue(Product Item) {
+void PrintInItemValue(Product Item)
+{
     // Table Values
     string ProductionDate = to_string(Item.ProductionDate.Day) + "/" + to_string(Item.ProductionDate.Month) + "/" + to_string(Item.ProductionDate.Year);
     cout << " | " << setw(13) << Item.ProductNumber << " | ";
@@ -86,7 +160,8 @@ void PrintInItemValue(Product Item) {
     cout << endl;
 }
 
-void welcomeScreen(){
+void welcomeScreen()
+{
     cout << R"(
 
 
@@ -114,7 +189,8 @@ void welcomeScreen(){
     system("cls");
 }
 
-void PrintInTableFormat(){
+void PrintInTableFormat()
+{
     // Initialization
     //ResizeWindow();
     // Print Full Table For reference to edit
@@ -123,127 +199,151 @@ void PrintInTableFormat(){
     PrintTableDividers();
     PrintTableHeader();
     // Loop Through the samples to print the details in table format
-    for(int i = 0; i < NumberOfProducts; i++){
+    for(int i = 0; i < NumberOfProducts; i++)
+    {
         PrintTableDividers();
         PrintInItemValue(Products[i]);
     }
     PrintTableDividers();
+    system("pause");
 }
-void PrintReceipt(){
-        system("cls");
-        cout<<setfill(' ')<<setw(30)<<"Receipt\n";
-        cout<<setfill(' ')<<"Item No"<<setw(15)<<"Name \t"<<setw(8)<<"Quantity"<<setw(8)<<"Price"<<setw(10)<<"Amount\n";
-    for(int i=0;i<NumberofBoughtItems;i++){
-            int N;
+void PrintReceipt()
+{
+    system("cls");
+    cout<<setfill(' ')<<setw(30)<<"Receipt\n";
+    cout<<setfill(' ')<<"Item No"<<setw(15)<<"Name \t"<<setw(8)<<"Quantity"<<setw(8)<<"Price"<<setw(10)<<"Amount\n";
+    for(int i=0; i<NumberofBoughtItems; i++)
+    {
+        int N;
         N=Location[i];
         cout<<setfill(' ')<<"Item "<<i+1<<": "<<setw(15)<<Products[N].ProductName<<setw(8)<<Quantity[i]<<setw(8)<<Products[N].UnitPrice<<setw(10)<<Quantity[i]*Products[N].UnitPrice<<endl;
         cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
-    TotalPrice=TotalPrice+(Quantity[i]*Products[N].UnitPrice);
+        TotalPrice=TotalPrice+(Quantity[i]*Products[N].UnitPrice);
     }
 
     cout<<setfill(' ')<<setw(47)<<"Txbl   "<<TotalPrice<<endl;
     cout<<setfill(' ')<<setw(47)<<"Tax(15%)   "<<0.15*TotalPrice<<endl;
     TotalPrice=1.15*TotalPrice;
     cout<<setfill(' ')<<setw(47)<<"TotalPrice  "<<TotalPrice<<endl;
-    cout<<setfill(' ')<<setw(47)<<"Cash: "; cin>>Cash;
+    cout<<setfill(' ')<<setw(47)<<"Cash: ";
+    cin>>Cash;
     cout<<setfill(' ')<<setw(47)<<"Change: "<<Cash-TotalPrice<<endl;
     cout<<setfill(' ')<<setw(30)<<"Thank You For Your Purchase" << endl;
-     for(int i=0;i<NumberofBoughtItems;i++){
-            int N;
+    for(int i=0; i<NumberofBoughtItems; i++)
+    {
+        int N;
         N=Location[i];
-       Products[N].Quantity=Products[N].Quantity-Quantity[i];
-       Products[N].Sales = Products[N].Sales + Quantity[i];
+        Products[N].Quantity=Products[N].Quantity-Quantity[i];
+        Products[N].Sales = Products[N].Sales + Quantity[i];
     }
-   system("pause");
-   system("cls");
+    system("pause");
+    system("cls");
+    MainMenu();
 }
 
-void CashierAccount(){
+void CashierAccount()
+{
     //ProductSampleData();
     cout<<setfill(' ') << setw(50) <<"Welcome to CartShop\n\n";
     amount=1000;
     cout<<"\tEnter The Details of The Items Below \n \tIf You Finish Your Purchase  at Any Time Enter 0 \n";
-    for(int i=0;i<amount;i++){
+    for(int i=0; i<amount; i++)
+    {
         ProductFound=false;
-        MainMenu :
+MainMenu:
         cout<<"Item "<<i+1<<":\n";
-        ProductNum:
-        cout<<"\tProduct Number: "; cin>>ProductNo[i];
-        for(int j=0;j<500;j++){
-        switch(ProductNo[i]){
+ProductNum:
+        cout<<"\tProduct Number: ";
+        cin>>ProductNo[i];
+        for(int j=0; j<500; j++)
+        {
+            switch(ProductNo[i])
+            {
             case 0:
                 char opt;
-                Finish:
+Finish:
                 NumberofBoughtItems=i;
                 PrintReceipt();
                 cout<<"\tHave You Finished Your Purchase(Y/N)\n";
                 cin>>opt;
-                    opt=(char)toupper(opt);
-                      switch(opt){
-                      case 'N':
-                        system("pause");
-                        goto MainMenu;
-                        break;
-                       case 'Y':
-                        PrintReceipt();
-                        break;
-                     default:
-                          cout<<"\t Error: Invalid Input Try again\n";
-                            goto Finish;
-                            break;
-                      }
-        case 1 ... 9999:
-            if(ProductNo[i]==Products[j].ProductNumber){
-                Location[i]=j;
-                ProductFound=true;
-                NumberofBoughtItems=i+1;
+                opt=(char)toupper(opt);
+                switch(opt)
+                {
+                case 'N':
+                    system("pause");
+                    goto MainMenu;
+                    break;
+                case 'Y':
+                    system("pause");
+                    PrintReceipt();
+                    break;
+                default:
+                    cout<<"\t Error: Invalid Input Try again\n";
+                    goto Finish;
+                    break;
+                }
+            case 1 ... 9999:
+                if(ProductNo[i]==Products[j].ProductNumber)
+                {
+                    Location[i]=j;
+                    ProductFound=true;
+                    NumberofBoughtItems=i+1;
+                }
+                break;
+            default :
+                cout<<"\tInvalid Number. Try Again!\n";
+                goto ProductNum;
+                break;
             }
-            break;
-        default :
-             cout<<"\tInvalid Number. Try Again!\n";
-           goto ProductNum;
-            break;
         }
+        if(ProductFound==false)
+        {
+            cout<<"\tCouldn't Find The Product. Try Again!\n";
+            goto ProductNum;
         }
-        if(ProductFound==false){
-                                cout<<"\tCouldn't Find The Product. Try Again!\n";
-                            goto ProductNum;
-                            }
-        cout<<"\t\t Quantity: ";cin>>Quantity[i];
+        cout<<"\t\t Quantity: ";
+        cin>>Quantity[i];
         cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
     }
 }
 
-void Search(int SearchedProduct){
+void Search(int SearchedProduct)
+{
 
-int i;
-for( i = 1; i<9999; i++){
+    int i;
+    for( i = 1; i<9999; i++)
+    {
 
-    if( SearchedProduct == Products[i].ProductNumber && Products[i].ProductNumber != 0){
-        cout<<endl<<endl;
-        PrintTableHeader();
-        PrintTableDividers();
-        PrintInItemValue(Products[i]);
-        cout<<endl<<endl;
-        i = 9999;
+        if( SearchedProduct == Products[i].ProductNumber && Products[i].ProductNumber != 0)
+        {
+            cout<<endl<<endl;
+            PrintTableHeader();
+            PrintTableDividers();
+            PrintInItemValue(Products[i]);
+            cout<<endl<<endl;
+            i = 9999;
+        }
+        else if(Products[i].ProductNumber == 0)
+        {
+            i = 9999;
+            FlagDelete = 1;
+            FlagEdit = 1;
+            cout<<"\n**********Product Not found**********\n"<<endl;
+        }
     }
-    else if(Products[i].ProductNumber == 0){
-       i = 9999;
-       FlagDelete = 1; FlagEdit = 1;
-       cout<<"\n**********Product Not found**********\n"<<endl;
-    }
+    system("pause");
 }
 
-}
-
-void EditItem(){
+void EditItem()
+{
     // Print Full Table For reference to edit
     //PrintInTableFormat();
     // Enter Serial Number of a product to edit
     int SerialNumber;
     cout << endl << " Enter Serial Number Of Item you want to edit: ";
 
-    while(!(cin>>SerialNumber)){
+    while(!(cin>>SerialNumber))
+    {
         cout<< "\n**********Invalid input.**********\n";
         cout << endl << " Serial Number : ";
         cin.clear();
@@ -251,31 +351,36 @@ void EditItem(){
     }
     Search(SerialNumber);
 
-    if(!(FlagEdit)){
-    Product *Item = &Products[SerialNumber];
-    // List of options to edit
-    int EditChoice;
-edit:cout << endl << " What would you like to edit?" << endl;
-    cout << "  1. Product Name" << "\t\t  6. Quantity" << endl;
-    cout << "  2. Product Category" << "\t\t  7. Measurement Unit" << endl;
-    cout << "  3. Product Type" << "\t\t  8. Unit Price" << endl;
-    cout << "  4. Production Date" << "\t\t  9. Rating" << endl;
-    cout << "  5. Expire Date" << "\t\t 10. Sales" << endl;
-    cout << endl << " Edit Choice: ";
+    if(!(FlagEdit))
+    {
+        Product *Item = &Products[SerialNumber];
+        // List of options to edit
+        int EditChoice;
+edit:
+        cout << endl << " What would you like to edit?" << endl;
+        cout << "  1. Product Name" << "\t\t  6. Quantity" << endl;
+        cout << "  2. Product Category" << "\t\t  7. Measurement Unit" << endl;
+        cout << "  3. Product Type" << "\t\t  8. Unit Price" << endl;
+        cout << "  4. Production Date" << "\t\t  9. Rating" << endl;
+        cout << "  5. Expire Date" << "\t\t 10. Sales" << endl;
+        cout << endl << " Edit Choice: ";
 
-     while(!(cin>>EditChoice)){
-        cout<< "\n**********Invalid input.**********\n";
-        cout << endl << " Enter Choice( 1 - 10): ";
-        cin.clear();
-        cin.ignore(20, '\n');
-    }
-    if(EditChoice> 10 || EditChoice<1){
-        cout<<" Enter Choice( 1 - 10): ";
-        goto edit;
-    }
-    cout << endl;
-    // Accept new values based on choice
-    switch(EditChoice){
+        while(!(cin>>EditChoice))
+        {
+            cout<< "\n**********Invalid input.**********\n";
+            cout << endl << " Enter Choice( 1 - 10): ";
+            cin.clear();
+            cin.ignore(20, '\n');
+        }
+        if(EditChoice> 10 || EditChoice<1)
+        {
+            cout<<" Enter Choice( 1 - 10): ";
+            goto edit;
+        }
+        cout << endl;
+        // Accept new values based on choice
+        switch(EditChoice)
+        {
         case 1:
             cout << " Enter New Product Name: ";
             cin >> Item->ProductName;
@@ -289,80 +394,106 @@ edit:cout << endl << " What would you like to edit?" << endl;
             cin >> Item->ProductName;
             break;
         case 4:
-        date:cout << " Enter New Production Date" << endl;
+date:
+            cout << " Enter New Production Date" << endl;
             cout << "\t New Day: ";
-            while(!( cin >> Item->ProductionDate.Day)){  // INPUT VALIDATION FOR DATE EDITING
-            cout<< "\n**********Invalid input.**********\n";
-            cin.clear();
-            cin.ignore(20, '\n');
-            goto date;
+            while(!( cin >> Item->ProductionDate.Day))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\n**********Invalid input.**********\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
             }
-            if( Item->ProductionDate.Day>30 || Item->ProductionDate.Day<1){
-                cout<<" **********Invalid Day.********** \n"; goto date;
+            if( Item->ProductionDate.Day<1 || Item->ProductionDate.Day>30)
+            {
+                cout<<" **********Invalid Day.********** \n";
+                goto date;
             }
 
             cout << "\t New Month: ";
-            cin >> Item->ProductionDate.Month;
-            while(!( cin >> Item->ProductionDate.Month)){  // INPUT VALIDATION FOR DATE EDITING
-            cout<< "\nInvalid input.\n";
-            cin.clear();
-            cin.ignore(20, '\n');
-            goto date;
+
+            while(!( cin >> Item->ProductionDate.Month))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\nInvalid input.\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
             }
-            if( Item->ProductionDate.Month<1 || Item->ProductionDate.Month>12){
-                cout<<" Invalid Day. \n"; goto date;
+            if( Item->ProductionDate.Month<1 || Item->ProductionDate.Month>12)
+            {
+                cout<<" Invalid Day. \n";
+                goto date;
             }
             cout << "\t New Year: ";
-            while(!( cin >> Item->ProductionDate.Year)){  // INPUT VALIDATION FOR DATE EDITING
-            cout<< "\n**********Invalid input.**********\n";
-            cin.clear();
-            cin.ignore(20, '\n');
-            goto date;
+            while(!( cin >> Item->ProductionDate.Year))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\n**********Invalid input.**********\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
             }
-            if( Item->ProductionDate.Year<2015 || Item->ProductionDate.Year>2021){
-                cout<<"**********Invalid Day.**********\n"; goto date;
+            if( Item->ProductionDate.Year<2015 || Item->ProductionDate.Year>2021)
+            {
+                cout<<"**********Invalid Year.**********\n";
+                goto date;
             }
             break;
         case 5:
             cout << " Enter New Expire Date: ";
             cout << "\t New Day: ";
-            cin >> Item->ExpireDate.Day;
-            while(!( cin >> Item->ExpireDate.Day)){  // INPUT VALIDATION FOR DATE EDITING
-            cout<< "\n**********Invalid input.**********\n";
-            cin.clear();
-            cin.ignore(20, '\n');
-            goto date;
+
+            while(!( cin >> Item->ExpireDate.Day))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\n**********Invalid input.**********\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
             }
-            if( Item->ExpireDate.Day<2015 || Item->ExpireDate.Day>2021){
-                cout<<"**********Invalid Day.**********\n"; goto date;
+            if( Item->ExpireDate.Day<1 || Item->ExpireDate.Day>30)
+            {
+                cout<<"**********Invalid Day.**********\n";
+                goto date;
             }
 
             cout << "\t New Month: ";
-            while(!( cin >> Item->ExpireDate.Month)){  // INPUT VALIDATION FOR DATE EDITING
-            cout<< "\n**********Invalid input.**********\n";
-            cin.clear();
-            cin.ignore(20, '\n');
-            goto date;
+            while(!( cin >> Item->ExpireDate.Month))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\n**********Invalid input.**********\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
             }
-            if( Item->ExpireDate.Month<2015 || Item->ExpireDate.Month>2021){
-                cout<<"**********Invalid Day.**********\n"; goto date;
+            if( Item->ExpireDate.Month<1 || Item->ExpireDate.Month>12)
+            {
+                cout<<"**********Invalid Day.**********\n";
+                goto date;
             }
 
             cout << "\t New Year: ";
-            while(!( cin >> Item->ExpireDate.Year)){  // INPUT VALIDATION FOR DATE EDITING
-            cout<< "\n**********Invalid input.**********\n";
-            cin.clear();
-            cin.ignore(20, '\n');
-            goto date;
+            while(!( cin >> Item->ExpireDate.Year))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\n**********Invalid input.**********\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
             }
-            if( Item->ExpireDate.Year<2015 || Item->ExpireDate.Year>2021){
-                cout<<"**********Invalid Day.**********\n"; goto date;
+            if( Item->ExpireDate.Year<2015 || Item->ExpireDate.Year>2021)
+            {
+                cout<<"**********Invalid Day.**********\n";
+                goto date;
             }
 
             break;
         case 6:
             cout << " Enter New Quantity: ";
-            cin >> Item->Quantity;
+
+            while(!( cin >> Item->Quantity))   // INPUT VALIDATION FOR DATE EDITING
+            {
+                cout<< "\n**********Invalid input.**********\n";
+                cin.clear();
+                cin.ignore(20, '\n');
+                goto date;
+            }
             break;
         case 7:
             cout << " Enter New Measurement Unit: ";
@@ -370,39 +501,42 @@ edit:cout << endl << " What would you like to edit?" << endl;
             break;
         case 8:
             cout << " Enter New Unit Price: ";
-            while(!(cin>>Item->UnitPrice)){
-            cout<< "**********Invalid Day.**********\n";
-            cout << " Enter New Unit Price: ";
-            cin.clear();
-            cin.ignore(20, '\n');
+            while(!(cin>>Item->UnitPrice))
+            {
+                cout<< "**********Invalid Day.**********\n";
+                cout << " Enter New Unit Price: ";
+                cin.clear();
+                cin.ignore(20, '\n');
 
             }
 
             break;
         case 9:
             cout << " Enter New Rating: ";
-            while(!(cin>>Item->Rating)){
-            cout<< "**********Invalid Day.**********\n";
-            cout << " Enter New Rating: ";
-            cin.clear();
-            cin.ignore(20, '\n');
+            while(!(cin>>Item->Rating))
+            {
+                cout<< "**********Invalid Day.**********\n";
+                cout << " Enter New Rating: ";
+                cin.clear();
+                cin.ignore(20, '\n');
 
             }
             break;
         case 10:
             cout << " Enter New Sale ";
-            while(!(cin>>Item->Sales)){
-            cout<< "**********Invalid Day.**********\n";
-            cout << " Enter New Rating: ";
-            cin.clear();
-            cin.ignore(20, '\n');
+            while(!(cin>>Item->Sales))
+            {
+                cout<< "**********Invalid Day.**********\n";
+                cout << " Enter New Rating: ";
+                cin.clear();
+                cin.ignore(20, '\n');
 
             }
 
             break;
-    }
-    system("color 0A");
-    cout << endl << " \t ---- \t Item Edited Successfully! \t ----" << endl << endl;
+        }
+        system("color 0A");
+        cout << endl << " \t ---- \t Item Edited Successfully! \t ----" << endl << endl;
     }
     FlagEdit = 0;
     system("pause");
@@ -412,54 +546,63 @@ edit:cout << endl << " What would you like to edit?" << endl;
 }
 
 // This function asks for a serial number of an item and then it allows you to delete it from the stock
-void DeleteItem(){
+void DeleteItem()
+{
     system("cls");
     // Print Full Table For reference to edit
     //PrintInTableFormat();
     // Enter Serial Number of a product to edit
-    AskDeletion:
+AskDeletion:
     int SerialNumber;
     cout << endl << " Enter Serial Number Of Item you want to delete: ";
 
-    while(!(cin>>SerialNumber)){   // INPUT VALIDATION FOR
+    while(!(cin>>SerialNumber))    // INPUT VALIDATION FOR
+    {
         cout<< "\nInvalid input.\n\n";
         cin.clear();
         cin.ignore(20, '\n');
     }
     Search(SerialNumber);
 
-    if( !(FlagDelete)){
-    Product *Item = &Products[SerialNumber];
-    cout << endl << " Are you sure you want to delete this item? (Y/N): ";
-    cout<< endl << "1. Yes.";
-    cout<< endl << "2. No."<<endl;
-    system("color 0C");
-    int ConfirmDeletion;
-    while(!(cin>>ConfirmDeletion)){   // INPUT VALIDATION FOR
-        cout<< "\nInvalid input.\n\n";
-        cin.clear();
-        cin.ignore(20, '\n');
-    }
-    if(ConfirmDeletion == 1){
-        for(int i = SerialNumber; i < NumberOfProducts - 1; i++){
-            Products[i] = Products[i+1];
+    if( !(FlagDelete))
+    {
+        Product *Item = &Products[SerialNumber];
+        cout << endl << " Are you sure you want to delete this item? (Y/N): ";
+        cout<< endl << "1. Yes.";
+        cout<< endl << "2. No."<<endl;
+        system("color 0C");
+        int ConfirmDeletion;
+        while(!(cin>>ConfirmDeletion))    // INPUT VALIDATION FOR
+        {
+            cout<< "\nInvalid input.\n\n";
+            cin.clear();
+            cin.ignore(20, '\n');
         }
-        NumberOfProducts--;
-        for(int i = 0; i < NumberOfProducts; i++){
-            Item = &Products[i];
-            Item->ProductNumber = i;
+        if(ConfirmDeletion == 1)
+        {
+            for(int i = SerialNumber; i < NumberOfProducts - 1; i++)
+            {
+                Products[i] = Products[i+1];
+            }
+            NumberOfProducts--;
+            for(int i = 0; i < NumberOfProducts; i++)
+            {
+                Item = &Products[i];
+                Item->ProductNumber = i;
+            }
+            system("color 0A");
+            cout << endl << " \t ---- \t Item Deleted Successfully! \t ----" << endl << endl;
+            system("pause");
+            system("cls");
         }
-        system("color 0A");
-        cout << endl << " \t ---- \t Item Deleted Successfully! \t ----" << endl << endl;
-        system("pause");
-        system("cls");
-    } else if (ConfirmDeletion == 2){
-        system("color 0E");
-        //goto AskDeletion;
+        else if (ConfirmDeletion == 2)
+        {
+            system("color 0E");
+            //goto AskDeletion;
+        }
     }
-    }
-FlagDelete = 0;
-system("color 0F");
+    FlagDelete = 0;
+    system("color 0F");
 }
 
 bool CompareUsingUnitPriceAscending( Product FirstProduct, Product SecondProduct)
@@ -519,11 +662,11 @@ bool CompareUsingProductionDateDescending( Product FirstProduct, Product SecondP
 bool CompareUsingExpirationDateAscending( Product FirstProduct, Product SecondProduct)
 {
     if((FirstProduct.ExpireDate.Year < SecondProduct.ExpireDate.Year)||
-       ((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&
-        (FirstProduct.ExpireDate.Month < SecondProduct.ExpireDate.Month))||
-       (((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&
-         (FirstProduct.ExpireDate.Month == SecondProduct.ExpireDate.Month))&&
-        (FirstProduct.ExpireDate.Day < SecondProduct.ExpireDate.Day)))
+            ((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&
+             (FirstProduct.ExpireDate.Month < SecondProduct.ExpireDate.Month))||
+            (((FirstProduct.ExpireDate.Year == SecondProduct.ExpireDate.Year)&&
+              (FirstProduct.ExpireDate.Month == SecondProduct.ExpireDate.Month))&&
+             (FirstProduct.ExpireDate.Day < SecondProduct.ExpireDate.Day)))
         return 1;
     else
         return 0;
@@ -574,7 +717,8 @@ bool CompareUsingSalesDescending( Product FirstProduct, Product SecondProduct)
         return 0;
 }
 
-void ProductSampleData(){
+void ProductSampleData()
+{
 //Initializing Bread and Bakery sample data
 Products[1] = {1 ,"Banana Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",22 ,4.9 };
 Products[2] = {2 ,"Whole Wheat ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",3 ,2.5 };
@@ -648,31 +792,56 @@ Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,17},{14,10,20},40,"
 Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,18},{15,11,21},12,"Packages",40.00,4.5};
 Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,19},{16,12,22},10,"Bottle",99.39,5.0};
 
+ //Initializing Cereal sample data
+Products[63] = {63,"Barely","Cereal","Barely",{10,11,2020},{10,9,21},40,"Kg",14.45,3.5};
+Products[64] = {64,"Wheat","Cereal","Wheat",{20,12,2018},{10,9,21},52,"Kg",12.00,4.5};
+Products[65] = {65,"Oats","Cereal","Oats",{30,10,2019},{10,9,21},50,"Kg",120.39,5.0};
+Products[66] = {66,"Sorghum","Cereal","Sorghum",{23,12,2019},{10,9,21},45,"Kg",13,3.0};
+Products[67] = {67,"Millets","Cereal","Millets",{12, 12, 2013},{10,9,21},45,"Kg",25,2.9};
+
+//Initializing Cooking Oils sample data
+Products[68] = {68,"Jazzle Berry","Cooking Oil","Cotton seed",{12, 7, 2018},{12, 7, 2022},90,"Liter",95,2.9};
+Products[69] = {69,"New Star","Cooking Oil","Vegetable Oil",{22, 8, 2018},{27, 9, 2022},120,"Liter",130,4.5};
+Products[70] = {70,"Oracle","Cooking Oil","Peanut Oil",{17, 1, 2018},{12, 5, 2022},100,"Liter",117,5};
+Products[71] = {71,"Tena","Cooking Oil","Sunflower Oil",{1, 1, 2020},{12, 1, 2023},100,"Liter",136,5};
+Products[72] = {72,"Flawless","Cooking Oil","Avocado Oil",{9, 11, 2020},{12, 12, 2022},45,"Liter",200,5};
+
+//Initializing Canned Foods sample data
+Products[73] = {73,"Campell","Canned Foods","Soup",{19, 3, 2020},{19, 3, 2022},100,"Can",85,5};
+Products[74] = {74,"Campell","Canned Foods","Fruits",{21, 5, 2021},{20, 5, 2024},100,"Can",95,4.5};
+Products[75] = {75,"Heinz","Canned Foods","Baked beans",{27, 3, 2022},{29, 3, 2024},100,"Can",80,3.5};
+Products[76] = {76,"American Garden","Canned Foods","Sweet Corn",{1, 1, 2020},{1, 1, 2024},100,"Can",90,3.9};
+Products[77] = {77,"Healthy Choice","Canned Foods","Pasta Sauce",{29, 5, 2020},{1, 6, 2024},100,"Can",75,4.4};
+Products[78] = {78,"Eden Foods","Canned Foods","Mushrooms",{11, 2, 2020},{11, 2, 2024},100,"Can",80,4};
+Products[79] = {79,"Green Giants","Canned Foods","Green Peas",{29, 7, 2020},{29, 7, 2024},100,"Can",80,3.2};
 }
+int MainMenu()
+{
 
-int main(){
-welcomeScreen();
-ProductSampleData();
+    int Choice, InvalidChoiceCounter= 0;
 
-int Choice, InvalidChoiceCounter= 0;
+Menu:
+        system("cls");
+    cout<<"1. Print all Products. "<<endl;
+    cout<<"2. Search for product. "<<endl;
+    cout<<"3. Delete Item from Stock. "<<endl;
+    cout<<"4. Edit a Product "<<endl;
+    cout<<"5. Sorting Functions "<<endl;
+    cout<<"6. Sales. "<<endl;
+    cout<<"7. Enter a new Product. "<<endl;
+    cout<<"8. Exit "<<endl;
+    cout<<"Choice: ";
 
-Menu:cout<<"1. Print all Products. "<<endl;
-       cout<<"2. Search for product. "<<endl;
-       cout<<"3. Delete Item from Stock. "<<endl;
-       cout<<"4. Edit a Product "<<endl;
-       cout<<"5. Sorting Functions "<<endl;
-       cout<<"6. Sales. "<<endl;
-       cout<<"7. Exit "<<endl;
-       cout<<"Choice: ";
-
-while(!(cin>>Choice)){
+    while(!(cin>>Choice))
+    {
         cout<< "Invalid input.\n\n";
         cin.clear();
         cin.ignore(20, '\n');
         goto Menu;
-}
+    }
 
-switch(Choice){
+    switch(Choice)
+    {
     case 1:
         system("cls");
         PrintInTableFormat();
@@ -681,178 +850,193 @@ switch(Choice){
     case 2:
         system("cls");
         int ProductNumberSearch;//Search Key
-       cout<<"Enter the Product number of the item you would like to search."<<endl;
-       cout<<"Product Number: ";
+        cout<<"Enter the Product number of the item you would like to search."<<endl;
+        cout<<"Product Number: ";
 
-       while(!(cin>>ProductNumberSearch)){
-        cout<< "\nInvalid input.\n\n";
-        cin.clear();
-        cin.ignore(20, '\n');
-        cout<<"Re-enter Product Number: ";
+        while(!(cin>>ProductNumberSearch))
+        {
+            cout<< "\nInvalid input.\n\n";
+            cin.clear();
+            cin.ignore(20, '\n');
+            cout<<"Re-enter Product Number: ";
 
-        InvalidChoiceCounter++;
-        if(InvalidChoiceCounter >= 3){
-        InvalidChoiceCounter = 0;
-        goto Menu;//We can make it go to the main menu when we merge it all
-       }
-       }
+            InvalidChoiceCounter++;
+            if(InvalidChoiceCounter >= 3)
+            {
+                InvalidChoiceCounter = 0;
+                goto Menu;//We can make it go to the main menu when we merge it all
+            }
+        }
 
-    Search(ProductNumberSearch);//Calling Search function
-    goto Menu;
-    break;
+        Search(ProductNumberSearch);//Calling Search function
+        goto Menu;
+        break;
 
     case 3:
-    DeleteItem();
-    goto Menu;
+        DeleteItem();
+        goto Menu;
 
     case 4:
-    system("cls");
-    EditItem();
-    goto Menu;
-    case 5:
-    system("cls");
-    ReturnToChoice:
-    cout<<"Choose how you want to sort: "<<endl;
-    cout<<"1. Unit Price"<<endl;
-    cout<<"2. Rating"<<endl;
-    cout<<"3. Production date"<<endl;
-    cout<<"4. Expire date"<<endl;
-    cout<<"5. Quantity"<<endl;
-    cout<<"6. Sales"<<endl;
-    int Choice,OrderChoice;
-    cout<<"Your choice: ";
-    cin>>Choice;
-ReturnToOrderChoice:
-    cout<<"Choose Order"<<endl;
-    cout<<"1. Ascending Order"<<endl;
-    cout<<"2. Descending Order"<<endl;
-    cout<<"Your choice: ";
-    cin>>OrderChoice;
-        switch(Choice)
-    {
-    case 1:
-        if(OrderChoice == 1)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceAscending);
-            PrintInTableFormat();
-        }
-        else if(OrderChoice == 2)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceDescending);
-            PrintInTableFormat();
-        }
-        else
-        {
-            cout<<"Invalid Choice! Try Again";
-            goto ReturnToOrderChoice;
-        }
-        break;
-    case 2:
-        if(OrderChoice == 1)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingRatingAscending);
-            PrintInTableFormat();
-        }
-        else if(OrderChoice == 2)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingRatingDescending);
-            PrintInTableFormat();
-        }
-        else
-        {
-            cout<<"Invalid Choice! Try Again";
-            goto ReturnToOrderChoice;
-        }
-        break;
-    case 3:
-        if(OrderChoice == 1)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingProductionDateAscending);
-            PrintInTableFormat();
-        }
-        else if(OrderChoice == 2)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingProductionDateDescending);
-            PrintInTableFormat();
-        }
-        else
-        {
-            cout<<"Invalid Choice! Try Again";
-            goto ReturnToOrderChoice;
-        }
-        break;
-    case 4:
-        if(OrderChoice == 1)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateAscending);
-            PrintInTableFormat();
-        }
-        else if(OrderChoice == 2)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateDescending);
-            PrintInTableFormat();
-        }
-        else
-        {
-            cout<<"Invalid Choice! Try Again";
-            goto ReturnToOrderChoice;
-        }
-        break;
-    case 5:
-        if(OrderChoice == 1)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingQuantityAscending);
-            PrintInTableFormat();
-        }
-        else if(OrderChoice == 2)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingQuantityDescending);
-            PrintInTableFormat();
-        }
-        else
-        {
-            cout<<"Invalid Choice! Try Again";
-            goto ReturnToOrderChoice;
-        }
-        break;
-    case 6:
-        if(OrderChoice == 1)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingSalesAscending);
-            PrintInTableFormat();
-        }
-        else if(OrderChoice == 2)
-        {
-            sort(Products, Products+NumberOfProducts, CompareUsingSalesDescending);
-            PrintInTableFormat();
-        }
-        else
-        {
-            cout<<"Invalid Choice! Try Again";
-            goto ReturnToOrderChoice;
-        }
-        break;
-    default:
-        cout<<"Invalid Choice! Try Again";
         system("cls");
-        goto ReturnToChoice;
-    }
-    goto Menu;
+        EditItem();
+        goto Menu;
+    case 5:
+        system("cls");
+ReturnToChoice:
+        cout<<"Choose how you want to sort: "<<endl;
+        cout<<"1. Unit Price"<<endl;
+        cout<<"2. Rating"<<endl;
+        cout<<"3. Production date"<<endl;
+        cout<<"4. Expire date"<<endl;
+        cout<<"5. Quantity"<<endl;
+        cout<<"6. Sales"<<endl;
+        int Choice,OrderChoice;
+        cout<<"Your choice: ";
+        cin>>Choice;
+ReturnToOrderChoice:
+        cout<<"Choose Order"<<endl;
+        cout<<"1. Ascending Order"<<endl;
+        cout<<"2. Descending Order"<<endl;
+        cout<<"Your choice: ";
+        cin>>OrderChoice;
+        switch(Choice)
+        {
+        case 1:
+            if(OrderChoice == 1)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 2:
+            if(OrderChoice == 1)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingRatingAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingRatingDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 3:
+            if(OrderChoice == 1)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingProductionDateAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingProductionDateDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 4:
+            if(OrderChoice == 1)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 5:
+            if(OrderChoice == 1)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingQuantityAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingQuantityDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 6:
+            if(OrderChoice == 1)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingSalesAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products, Products+NumberOfProducts, CompareUsingSalesDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        default:
+            cout<<"Invalid Choice! Try Again";
+            system("cls");
+            goto ReturnToChoice;
+        }
+        goto Menu;
 
     case 6:
-    CashierAccount();
-
+        CashierAccount();
     case 7:
+         system("cls");
+            int Amount;
+            cout<<"Enter the amount you want to input:";
+            cin>>Amount;
+            InputProduct(Amount);
+            goto Menu;
+
+
+    case 8:
         return 0;//We can make it go to the main menu when we merge it all
-    break;
+        break;
     default:
-    cout<<"\nInvalid Choice."<<endl;
-    system("pause");
-    system("cls");
-    goto Menu;
+        cout<<"\nInvalid Choice."<<endl;
+        system("pause");
+        system("cls");
+        goto Menu;
+    }
 }
 
-
+int main()
+{
+    welcomeScreen();
+    ProductSampleData();
+    MainMenu();
 }
 
 
