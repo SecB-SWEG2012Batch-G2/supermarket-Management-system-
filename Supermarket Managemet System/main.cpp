@@ -821,7 +821,8 @@ void ProductSampleData()
 /// Welcome Screen
 /*
     This function contains a simple ASCII art generated from
-    ___ website along with a simple welcome header.
+    PatorJK.com specifically used the Text 2 ASCII generator app (https://patorjk.com/software/taag/#p=display&f=Univers&t=CartShop)
+    website along with a simple welcome header.
 */
 void welcomeScreen()
 {
