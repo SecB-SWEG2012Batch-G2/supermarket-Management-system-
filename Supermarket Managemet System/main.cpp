@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include <algorithm>
-#include <cctype>
+#include <winuser.h>
 
 /// N A M E S P A C E
 using namespace std;
@@ -15,27 +15,11 @@ float Quantity[100], TotalPrice = 0, Cash;
 int NumberofBoughtItems, ProductNo[100], amount, Location[100];
 bool ProductFound;
 int NumberOfProducts = 80, FlagDelete = 0, FlagEdit = 0;
-string ThemeColor = "color 0b";
+string ThemeColor = "0E";
 
 /// Prototype functions
 int MainMenu(void);
-
-/// Theming Functions
-// Resizes the console window
-void ThemeColorChanger(string color)
-{
-    string ThemeColor = "color " + color;
-    system(ThemeColor.c_str());
-}
-void ResizeWindow()
-{
-    system("mode 650");
-    /*HWND console = GetConsoleWindow();
-    RECT ConsoleRect;
-    GetWindowRect(console, &ConsoleRect);
-    MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 1600, 800, TRUE);
-    */
-}
+string Capitalize(string);
 
 /// Structures
 // A date structure to contain all dates used in the program
@@ -135,6 +119,30 @@ void InputProduct(int Count)
 
 
 /// UI Components
+// Resizes the console window
+void ThemeColorChanger(string color)
+{
+    string ThemeColor = "color " + color;
+    system(ThemeColor.c_str());
+}
+void ChangeLineColor(int Color)
+{
+    /*
+        Color 10 - Light Green
+        Color 12 - Light Red
+    */
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, Color);
+}
+void ResizeWindow()
+{
+    system("mode 650");
+    /*HWND console = GetConsoleWindow();
+    RECT ConsoleRect;
+    GetWindowRect(console, &ConsoleRect);
+    MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 1600, 800, TRUE);
+    */
+}
 // Welcome Screen
 /*
     This function contains a simple ASCII art generated from
@@ -143,20 +151,29 @@ void InputProduct(int Count)
 */
 void welcomeScreen()
 {
-    //system("cls");
     cout << "\n\n" << endl;
+    ChangeLineColor(10);
     cout << R"(
                         ,ad8888ba,                                     ad88888ba   88
-                       d8"'    `"8b                            ,d     d8"     "8b  88
+                       d8"'    `"8b                            ,d     d8"     "8b  88)";
+    ChangeLineColor(11);
+    cout << R"(
                       d8'                                      88     Y8,          88
-                      88             ,adPPYYba,  8b,dPPYba,  MM88MMM  `Y8aaaaa,    88,dPPYba,    ,adPPYba,   8b,dPPYba,
+                      88             ,adPPYYba,  8b,dPPYba,  MM88MMM  `Y8aaaaa,    88,dPPYba,    ,adPPYba,   8b,dPPYba,)";
+    ChangeLineColor(12);
+    cout << R"(
                       88             ""     `Y8  88P'   "Y8    88       `"""""8b,  88P'    "8a  a8"     "8a  88P'    "8a
-                      Y8,            ,adPPPPP88  88            88             `8b  88       88  8b       d8  88       d8
+                      Y8,            ,adPPPPP88  88            88             `8b  88       88  8b       d8  88       d8)";
+    ChangeLineColor(13);
+    cout << R"(
                        Y8a.    .a8P  88,    ,88  88            88,    Y8a     a8P  88       88  "8a,   ,a8"  88b,   ,a8"
-                        `"Y8888Y"'   `"8bbdP"Y8  88            "Y888   "Y88888P"   88       88   `"YbbdP"'   88`YbbdP"'
+                        `"Y8888Y"'   `"8bbdP"Y8  88            "Y888   "Y88888P"   88       88   `"YbbdP"'   88`YbbdP"' )";
+    ChangeLineColor(14);
+    cout << R"(
                                                                                                              88
                                                                                                              88
     )" << endl;
+    ChangeLineColor(14);
     cout << endl;
     cout << "\t\t\t\t\t\t*" << setfill('*') << setw(50) << "*" << endl;
     cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(50) << "*" << endl;
@@ -164,38 +181,51 @@ void welcomeScreen()
     cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(50) << "*" << endl;
     cout << "\t\t\t\t\t\t*" << setfill('-') << setw(50) << "*" << endl;
     cout << endl;
-    //system("pause");
-    //system("cls");
 }
 
 // Progress Indicating Functions
-// Success Message
-void SuccessMessage(string successMessage)
+void FeedBackMessage(string Message, int LineColor)
 {
-    cout << endl << "\n\n\t\t\t\t\t --------- \t " << successMessage << "! \t --------" << endl << endl;
+    /*
+        LineColor options:
+        10 - Light Green
+        11 - Light Aqua
+        12 - Light Red
+        13 - Light Pink
+        14 - Light Yellow
+        15 - Light White
+    */
+    ChangeLineColor(LineColor);
+    cout << "\n\t\t\t\t\t\t\t " << Capitalize(Message) << "!" << endl << endl;
+    ChangeLineColor(14);
 }
 
-// Failure Message
-void FailureMessage(string failureMessage)
+// Capitalize a given text
+string Capitalize(string Text)
 {
-    cout << endl << "\n\n\t\t\t\t\t\t U+2713 \t " << failureMessage << "! \t U+2713" << endl << endl;
-}
-// App header
-void AppHeader(string title)
-{
-    // Convert given title to capital
-    for_each(title.begin(), title.end(), [](char & c){
+    for_each(Text.begin(), Text.end(), [](char & c){
         c = ::toupper(c);
     });
+    return Text;
+}
+
+// App header
+void AppHeader(string Title)
+{
+    ChangeLineColor(14);
     cout << "\n" << setw(200) << setfill('_')  << "\n" << endl;
-    cout << "\t\t\t\t\t\t\t\t" << title << "\n" << setw(200) << setfill('_')  << "\n" << endl;
+    ChangeLineColor(15);
+    cout << "\t\t\t\t\t\t\t\t" << Capitalize(Title) << endl;
+    ChangeLineColor(7);
+    cout << setw(200) << setfill('_')  << "\n" << endl;
+    ChangeLineColor(14);
 }
 // App footer
 void AppFooter()
 {
     cout << "\n" << setfill(' ');
+    ChangeLineColor(14);
     cout << "\n" << setw(200) << setfill('=')  << "\n" << endl;
-    cout << "\n" << setfill(' ');
     system("pause");
     system("cls");
 }
@@ -391,6 +421,8 @@ void Search(int SearchedProduct)
     {
         if( SearchedProduct == Products[i].ProductNumber && Products[i].ProductNumber != 0)
         {
+            FeedBackMessage("Product Found",10);
+            cout << "\t\t\t\t\t\t\t    Result";
             cout << endl << endl;
             PrintTableDividers();
             PrintTableHeader();
@@ -402,10 +434,11 @@ void Search(int SearchedProduct)
         }
         else if(Products[i].ProductNumber == 0)
         {
+            cout << "\n\t\t\t\t\t\t\t\tResult \n";
             i = 9999;
             FlagDelete = 1;
             FlagEdit = 1;
-            cout<<"\n**********Product Not found**********\n"<<endl;
+            FeedBackMessage("Product Not Found",12);
         }
     }
 }
@@ -631,7 +664,7 @@ void DeleteItem()
 
     while(!(cin>>SerialNumber))    // Error handling for serial number input
     {
-        cout << "\n\t\t\t\t\t\t\t\tInvalid input.\n\n";
+        FeedBackMessage("Invalid Input", 15);
         cin.clear();
         cin.ignore(20, '\n');
     }
@@ -640,15 +673,19 @@ void DeleteItem()
     if( !(FlagDelete))
     {
         Product *Item = &Products[SerialNumber];
+        ChangeLineColor(12);
         cout << endl << "\t\t\t\t\t\tAre you sure you want to delete this item? (Y/N)";
+        ChangeLineColor(12);
         cout<< endl << "\n\t\t\t\t\t\t\t\t1. Yes";
+        ChangeLineColor(12);
         cout<< endl << "\t\t\t\t\t\t\t\t2. No"<<endl;
-        system("color 0C");
+
+        ChangeLineColor(12);
         cout << "\n\n\t\t\t\t\t\t\t   Confirm Delete : ";
         int ConfirmDeletion;
         while(!(cin>>ConfirmDeletion))    // Error handling for confirm deletion choice
         {
-            cout << "\n\t\t\t\t\t\t\t\tInvalid input.\n\n";
+            FeedBackMessage("Invalid Input", 15);
             cin.clear();
             cin.ignore(20, '\n');
         }
@@ -664,14 +701,12 @@ void DeleteItem()
                 Item = &Products[i];
                 Item->ProductNumber = i;
             }
-            system("color 0A");
-            SuccessMessage("Item Deleted Successfully");
+            FeedBackMessage("Item Deleted Successfully", 10);
         }
         else if (ConfirmDeletion == 2)
         {
-            ThemeColorChanger("0b");
-            SuccessMessage("Item Not Deleted");
-            //goto AskDeletion;
+            FeedBackMessage("Item Not Deleted", 15);
+            goto AskDeletion;
         }
     }
     FlagDelete = 0;
@@ -905,8 +940,6 @@ int MainMenu()
 {
     int Choice, InvalidChoiceCounter= 0;
     Menu:
-    string themeColor = "color 0b";
-    system(themeColor.c_str());
     welcomeScreen();
     //system("cls");
     cout<<"\t\t\t\t\t\t\t 1. Print all Products. "<<endl;
@@ -925,7 +958,7 @@ int MainMenu()
     // Error handling for main menu choice
     while(!(cin>>Choice))
     {
-        cout<< "\n\t\t\t\t\t\t\tInvalid input.\n\n";
+        FeedBackMessage("Invalid Input", 15);
         cin.clear();
         cin.ignore(20, '\n');
         system("pause");
@@ -951,10 +984,10 @@ int MainMenu()
             // Error handling for product numbers
             while(!(cin >> ProductNumberSearch))
             {
-                cout << "\n\t\t\t\t\t\t\tInvalid input.\n\n";
+                FeedBackMessage("Invalid Input", 7);
                 cin.clear();
                 cin.ignore(20, '\n');
-                cout << "Re-enter Product Number: ";
+                cout << "\t\t\t\t\t\t\t\Re-enter Product Number: ";
 
                 InvalidChoiceCounter++;
                 if(InvalidChoiceCounter >= 3)
@@ -963,8 +996,8 @@ int MainMenu()
                     goto Menu; //We can make it go to the main menu when we merge it all
                 }
             }
-            cout << "\n\t\t\t\t\t\t\t\tResult";
             Search(ProductNumberSearch); //Calling Search function
+            //FeedBackMessage("Item Found!", 10);
             AppFooter();
             goto Menu;
             break;
@@ -1131,7 +1164,7 @@ int MainMenu()
             break;
         // Error handling for all other options
         default:
-            cout<<"\n\t\t\t\t\t\t\tInvalid Choice."<<endl;
+            FeedBackMessage("Invalid Input", 15);
             system("pause");
             system("cls");
             goto Menu;
@@ -1143,10 +1176,10 @@ int MainMenu()
 void InitializeSystemVariables()
 {
     ResizeWindow();
-    ThemeColorChanger("0e");
-    //system(ThemeColor.c_str());
+    ThemeColorChanger(ThemeColor);
     ProductSampleData();
 }
+
 
 
 /// M A I N
