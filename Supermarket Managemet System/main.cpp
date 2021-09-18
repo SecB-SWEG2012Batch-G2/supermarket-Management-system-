@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include <algorithm>
+#include <cctype>
 
 /// N A M E S P A C E
 using namespace std;
@@ -853,8 +854,11 @@ void welcomeScreen()
 
 void appHeader(string title)
 {
-    char capitalTitle = (char)toupper(title);
-    cout << "\t\t" << capitalTitle << "\n" << setw(180) << setfill('-')  << "\n" << endl;
+    //char capitalTitle = title;
+    for_each(title.begin(), title.end(), [](char & c){
+        c = ::toupper(c);
+    });
+    cout << "\t" << title << "\n" << setw(180) << setfill('-')  << "\n" << endl;
 }
 
 /// Main Menu
