@@ -6,6 +6,9 @@
 #include <string>
 #include <algorithm>
 #include <winuser.h>
+#include <sstream>
+#include <vector>
+#include <fstream>
 
 /// N A M E S P A C E
 using namespace std;
@@ -14,13 +17,13 @@ using namespace std;
 float Quantity[100], TotalPrice = 0, Cash;
 int NumberofBoughtItems, ProductNo[100], amount, Location[100];
 bool ProductFound;
-int NumberOfProducts = 80, FlagDelete = 0, FlagEdit = 0;
+int NumberOfProducts=79, FlagDelete = 0, FlagEdit = 0;
 string ThemeColor = "0E";
 
 /// Prototype functions
 int MainMenu(void);
 string Capitalize(string);
-
+void NumberOfProductsCounter(void);
 /// Structures
 // A date structure to contain all dates used in the program
 struct Date
@@ -46,75 +49,176 @@ struct Product
     float Rating;
     int Sales = 0;
 
-    //Creation of New Product
-    void CreateProduct(){
-        cout<<"\n Please Enter The Product Number : "<<NumberOfProducts + 1;
-        NumberOfProducts++;
-        ProductNumber = NumberOfProducts;
-        //cin>>ProductNumber;
+};
+//Declaration of Products Using Vector
+vector<Product> Products;
 
-        cout<<"\n Please Enter The Product Name : ";
-        cin>>ProductName;
+// Function to remove all spaces from a given string
+string removeSpaces(string str)
+{
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    return str;
+}
+//Function to count Product Size
+void NumberOfProductsCounter()
+{
+    NumberOfProducts = Products.size();
+}
+//Creation of New Product
+void CreateProduct()
+{
+    Product temporary;
+    NumberOfProductsCounter();
+    cout<<"\n Please Enter The Product Number : "<<NumberOfProducts + 1;
+    NumberOfProducts++;
+    temporary.ProductNumber = NumberOfProducts;
+    //cin>>ProductNumber;
 
-        cout<<"\n Please Enter The Category Of The Product : ";
-        cin>>Category;
+    cout<<"\n Please Enter The Product Name : ";
+    cin>>temporary.ProductName;
 
-        cout<<"\n Please Enter The Product Type : ";
-        cin>>ProductType;
+    cout<<"\n Please Enter The Category Of The Product : ";
+    cin>>temporary.Category;
 
-        cout<<"\n Please Enter The Production Date : ";
-        cin>>ProductionDate.Day;
+    cout<<"\n Please Enter The Product Type : ";
+    cin>>temporary.ProductType;
 
-        if(ProductionDate.Day == 0){ //In case of  a null value on Production Date
-            ProductionDate.Month=0;
-            ProductionDate.Year=0;
-        }
+    cout<<"\n Please Enter The Production Date(Use space like this DD MM YY) : ";
+    cin>>temporary.ProductionDate.Day;
 
-        else{
-            cin>>ProductionDate.Month;
-            cin>>ProductionDate.Year;
-        }
-
-        cout<<"\n Please Enter The Expired Date : ";
-        cin>>ExpireDate.Day;
-
-        if(ExpireDate.Day == 0){ //In case of  a null value on Expire Date
-            ExpireDate.Month=0;
-            ExpireDate.Year=0;
-        }
-
-
-        else{
-            cin>>ExpireDate.Month;
-            cin>>ExpireDate.Year;
-        }
-
-        cout<<"\n Please Enter The Quantity: ";
-        cin>>Quantity;
-
-        cout<<"\n Please Enter The Measurement Unit: ";
-        cin>>MeasurementUnit;
-
-        cout<<"\n Please Enter The Unit Price: ";
-        cin>>UnitPrice;
-
-        cout<<"\n Please Enter The Rating: ";
-        cin>>Rating;
-
-        cout<<"\n Please Enter The Number of Sales: ";
-        cin>>Sales;
-
+    if(temporary.ProductionDate.Day == 0)  //In case of  a null value on Production Date
+    {
+        temporary.ProductionDate.Month=0;
+        temporary.ProductionDate.Year=0;
     }
 
-} Products[9999];
+    else
+    {
+        cin>>temporary.ProductionDate.Month;
+        cin>>temporary.ProductionDate.Year;
+    }
+
+    cout<<"\n Please Enter The Expired Date(Use space like this DD MM YY) : ";
+    cin>>temporary.ExpireDate.Day;
+
+    if(temporary.ExpireDate.Day == 0)  //In case of  a null value on Expire Date
+    {
+        temporary.ExpireDate.Month=0;
+        temporary.ExpireDate.Year=0;
+    }
+
+
+    else
+    {
+        cin>>temporary.ExpireDate.Month;
+        cin>>temporary.ExpireDate.Year;
+    }
+
+    cout<<"\n Please Enter The Quantity: ";
+    cin>>temporary.Quantity;
+
+    cout<<"\n Please Enter The Measurement Unit: ";
+    cin>>temporary.MeasurementUnit;
+
+    cout<<"\n Please Enter The Unit Price: ";
+    cin>>temporary.UnitPrice;
+
+    cout<<"\n Please Enter The Rating: ";
+    cin>>temporary.Rating;
+
+    cout<<"\n Please Enter The Number of Sales: ";
+    cin>>temporary.Sales;
+    Products.push_back(temporary);
+    //Save new product detail into file
+    fstream fout("Products.txt", ios::app);
+    fout << endl << temporary.ProductNumber << ',' <<
+         temporary.ProductName << ',' <<
+         temporary.Category << ',' <<
+         temporary.ProductType << ',' <<
+         temporary.ProductionDate.Day << ',' <<
+         temporary.ProductionDate.Month << ',' <<
+         temporary.ProductionDate.Year << ',' <<
+         temporary.ExpireDate.Day << ',' <<
+         temporary.ExpireDate.Month << ',' <<
+         temporary.ExpireDate.Year << ',' <<
+         temporary.Quantity << ',' <<
+         temporary.MeasurementUnit << ',' <<
+         temporary.UnitPrice << ',' <<
+         temporary.Rating << ',' <<
+         temporary.Sales;
+    fout.close();
+}
+//A function to load Products from file
+void LoadProduct()
+{
+    // define variables
+    string tempString;
+    Product temp;
+    //number of lines
+    int i = 0;
+
+    fstream SuperMarket;
+    SuperMarket.open("Products.txt", ios::app | ios::out | ios::in ); //opening the file.
+    if (SuperMarket.is_open()) //if the file is open
+    {
+        //ignore first line
+
+        while (!SuperMarket.eof()) //while the end of file is NOT reached
+        {
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ProductNumber= stoi(tempString);
+            getline(SuperMarket, temp.ProductName, ',');
+            getline(SuperMarket, temp.Category, ',');
+            getline(SuperMarket, temp.ProductType, ',');
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ProductionDate.Day = stoi(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ProductionDate.Month=stoi(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ProductionDate.Year=stoi(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ExpireDate.Day= stoi(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ExpireDate.Month= stoi(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.ExpireDate.Year= stoi(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.Quantity = stof(tempString);
+            getline(SuperMarket, temp.MeasurementUnit, ',');
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.UnitPrice= stof(tempString);
+            getline(SuperMarket, tempString, ',');
+            tempString= removeSpaces(tempString);
+            temp.Rating= stof(tempString);
+            getline(SuperMarket, tempString, '\n');
+            tempString= removeSpaces(tempString);
+            temp.Sales = stoi(tempString);
+            Products.push_back(temp);
+            i++; //increment number of lines
+        }
+        SuperMarket.close(); //closing the file
+    }
+    else cout << "Unable to open file"; //if the file is not open output
+}
 
 // A function to create a new product
 void InputProduct(int Count)
 {
-    for(int i = 0; i < Count; i++){
-        Products[NumberOfProducts + i].CreateProduct();
+    NumberOfProductsCounter();
+    for(int i = 0; i < Count; i++)
+    {
+        CreateProduct();
     }
-    NumberOfProducts += Count;
+    NumberOfProductsCounter();
 }
 
 
@@ -203,7 +307,8 @@ void FeedBackMessage(string Message, int LineColor)
 // Capitalize a given text
 string Capitalize(string Text)
 {
-    for_each(Text.begin(), Text.end(), [](char & c){
+    for_each(Text.begin(), Text.end(), [](char & c)
+    {
         c = ::toupper(c);
     });
     return Text;
@@ -304,6 +409,7 @@ void PrintInTableFormat()
     // Print In Table Format Function
     PrintTableDividers();
     PrintTableHeader();
+    NumberOfProductsCounter();
     // Loop Through the samples to print the details in table format
     for(int i = 0; i < NumberOfProducts; i++)
     {
@@ -417,7 +523,7 @@ Finish:
 void Search(int SearchedProduct)
 {
     int i;
-    for( i = 1; i < 9999; i++)
+    for( i = 1; i < Products.size(); i++)
     {
         if( SearchedProduct == Products[i].ProductNumber && Products[i].ProductNumber != 0)
         {
@@ -657,7 +763,7 @@ date:
 // This function asks for a serial number of an item and then it allows you to delete it from the stock
 void DeleteItem()
 {
-    AskDeletion:
+AskDeletion:
     // Enter Serial Number of a product to edit
     int SerialNumber;
     cout << endl << "\t\t\t\t\t\tEnter Serial Number Of Item you want to delete: ";
@@ -691,6 +797,7 @@ void DeleteItem()
         }
         if(ConfirmDeletion == 1)
         {
+            NumberOfProductsCounter();
             for(int i = SerialNumber; i < NumberOfProducts - 1; i++)
             {
                 Products[i] = Products[i+1];
@@ -824,112 +931,14 @@ bool CompareUsingSalesDescending( Product FirstProduct, Product SecondProduct)
         return 0;
 }
 
-// Initialize product sample to show demo
-void ProductSampleData()
-{
-    //Initializing Bread and Bakery sample data
-    Products[1] = {1 ,"Banana Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs ",22 ,4.9 };
-    Products[2] = {2 ,"Whole Wheat ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",3 ,2.5 };
-    Products[3] = {3 ,"Sourdough ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs",4 ,4.7 };
-    Products[4] = {4 ,"Baguette ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",10 ,3 };
-    Products[5] = {5 ,"Difo Dabo ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",20 ,4.9 };
-    Products[6] = {6 ,"White Bread ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200,"Loafs",3 ,2.8 };
-    Products[7] = {7 ,"Carrot Cake ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21},200 ,"Loafs",20 ,4.1 };
-    Products[8] = {8 ,"Bagels ", "Bread and Bakery", "Bread ",{6,9,21}, {10,9,21}, 200," Loafs",12 ,3.9 };
-    Products[9] = {9 ,"Chocolate Chip ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",30 ,4.8 };
-    Products[10] = {10 ,"Shortbread Cookie ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21}, 200,"Kilogram ",28 ,4 };
-    Products[11] = {11 ,"Peanut Butter ", "Bread and Bakery", "Cookies ",{6,9,21}, {10,9,21},200 ,"Kilogram ",28 ,2.5 };
-
-    //Initializing Pasta and rice sample data
-    Products[12] = {12,"Short Pasta ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
-    Products[13] = {13,"Long Pasta ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",25 ,4.3 };
-    Products[14] = {14,"Macaroni ", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",24 ,4 };
-    Products[15] = {15,"Fettuccine", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21},100 ,"Kilogram ",28 ,2.5 };
-    Products[16] = {16,"Lasagna", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100,"Kilogram ",32 ,5 };
-    Products[17] = {17,"Spaghetti", "Pasta and Rice", "Pasta ",{6,9,21}, {10,9,21}, 100," Kilogram",30 ,4.9 };
-    Products[18] = {18,"Brown Rice ", "Pasta and Rice", "Rice ",{6,9,21}, {10,9,21}, 100,"Kilogram ",30 ,4.7 };
-    Products[19] = {19,"White Rice ", "Pasta and Rice", "Rice ",{6,9,21}, {10,9,21},100 ," Kilogram",27 ,2.5 };
-
-    //Initializing Dairy and meat sample data
-    Products[20] = {20 ,"Beef ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",250 ,4.9 };
-    Products[21] = {21 ,"Pork ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ", 200,2.5 };
-    Products[22] = {22 ,"Mutton ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",260 , 4.4};
-    Products[23] = {23 ,"Chicken ", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
-    Products[24] = {24 ,"Turkey", "Dairy and Meat", "Meat ",{6,9,21}, {10,9,21},100 ,"Kilogram ",280 ,3.9 };
-    Products[25] = {25 ,"Butter ", "Dairy and Meat", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",450 ,5 };
-    Products[26] = {26 ,"Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21}, 100,"Liters ",40 ,4.9 };
-    Products[27] = {27 ,"Mozzarella ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",320 ,4.5 };
-    Products[28] = {28 ,"Cheddar ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,4.9 };
-    Products[29] = {29 ,"Parmesan ", "Dairy and Meat", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",360 ,4.4 };
-    Products[30] = {30 ,"Gouda ", "Dairy and Meat ", "Cheese ",{6,9,21}, {10,9,21},100 ,"Kilogram ",380 ,5 };
-    Products[31] = {31 ,"Yoghurt ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Liters ",60 ,4.9 };
-    Products[32] = {32 ,"Powdered Milk ", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",1200 ,4.6 };
-    Products[33] = {33 ,"Ice Cream", "Dairy and Meat ", "Dairy ",{6,9,21}, {10,9,21},100 ,"Kilogram ",300 ,5 };
-
-     //Initializing Beverages and Drinkssample data
-    Products[34] = {34,"Beer ", "Beverages and Drinks", "Beverage ",{6,9,21}, {0,0,0},103,"Milliliter ", 200,2.5 };
-    Products[35] = {35,"Cider ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,21},103,"Milliliter ",260, 4.4};
-    Products[36] = {36,"Hard Soda ", "Beverages and Drinks", "Beverage ",{3,12,21}, {10,9,21},100,"Milliliter ",300,4.9 };
-    Products[37] = {37,"Wine", "Beverages and Drinks", "Beverage ",{10,12,21}, {10,9,21},102,"Milliliter ",280,3.9 };
-    Products[38] = {38,"Barley ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,26},101,"Milliliters ",450,5 };
-    Products[39] = {39,"Turkish ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,27}, 106,"Liters ",40,4.9 };
-    Products[40] = {40,"Moka ", "Beverages and Drinks", "Beverage ",{6,9,21}, {10,9,25},100,"Milliliter ",320,4.5 };
-    Products[41] = {41,"Kamora ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},107,"Milliliter ",300,4.9 };
-    Products[42] = {42,"Amarula ", "Beverages and Drinks", "Soft Drinks ",{6,9,20}, {10,9,21},108,"Milliliter ",360,4.4 };
-    Products[43] = {43,"Carolans ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},109,"Milliliter ",380,5 };
-    Products[44] = {44,"Rosolio ", "Beverages and Drinks", "Soft Drinks ",{3,9,21}, {10,9,21},234,"Litres ",60,4.9 };
-    Products[45] = {45,"Aurum ", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},257,"Milliliter ",1200,4.6 };
-    Products[46] = {46,"Cointreau", "Beverages and Drinks", "Soft Drinks ",{6,9,21}, {10,9,21},234,"Milliliter ",300,5};
-    //Initializing Snacks sample data
-    Products[47] = {47,"Milky Way ", "Snack ", "Snack ",{6,9,21}, {10,9,17},100,"Milliliter ", 270,2.5 };
-    Products[48] = {48,"Sun Chips ", "Snack ", "Snack ",{1,9,21}, {10,9,21},100,"Milliliter ",290, 4.4};
-    Products[49] = {49,"Suncake ", "Snack ", "Snack ",{6,9,20}, {10,9,15},100,"Milliliter ",700,4.9 };
-    Products[50] = {50,"Vadai", "Snack ", "Snack ",{6,9,19}, {10,9,21},100,"Milliliter ",340,3.9 };
-    Products[51] = {51,"Popcorn ", "Snack ", "Snack ",{10,9,17}, {10,9,13},100,"Milliliters ",240,5 };
-    Products[52] = {52,"Candy ", "Snack ", "Snack ",{6,9,19}, {10,9,24}, 100,"Liters ",40,4.9 };
-    Products[53] = {53,"Fruit ", "Snack ", "Snack ",{6,9,18}, {10,9,21},100,"Milliliter ",30,4.5 };
-    Products[54] = {54,"Pretzels ", "Snack ", "Snack ",{7,9,21}, {10,9,21},100,"Milliliter ",10,4.9 };
-    Products[55] = {55,"Doughnuts ", "Snack ", "Snack ",{6,9,21}, {10,9,15},100,"Milliliter ",30,4.4 };
-    Products[56] = {56,"Peanuts ", "Snack ", "Snack ",{6,9,21}, {10,9,16},100,"Milliliter ",40,5 };
-    Products[57] = {57,"Poha ", "Snack ", "Snack ",{2,9,21}, {10,9,20},100,"Litres ",60,4.9 };
-    Products[58] = {58,"Momos ", "Snack ", "Snack ",{9,9,21}, {10,9,21},100,"Milliliter ",120,4.6 };
-    Products[59] = {59,"Khaman", "Snack ", "Snack ",{8,9,21}, {10,9,21},100,"Milliliter ",15,5 };
-
-    //Utensils
-    Products[60] = {60,"Spoon","Kitchen Utensils","Spoon",{10,11,17},{14,10,20},40,"Items",30.45,2.5};
-    Products[61] = {61,"Napkins","Sanitary","Baby Wipes",{20,12,18},{15,11,21},12,"Packages",40.00,4.5};
-    Products[62] = {62,"Lotion","Health And Bodycare","Nivea",{30,10,19},{16,12,22},10,"Bottle",99.39,5.0};
-
-     //Initializing Cereal sample data
-    Products[63] = {63,"Barely","Cereal","Barely",{10,11,2020},{10,9,21},40,"Kg",14.45,3.5};
-    Products[64] = {64,"Wheat","Cereal","Wheat",{20,12,2018},{10,9,21},52,"Kg",12.00,4.5};
-    Products[65] = {65,"Oats","Cereal","Oats",{30,10,2019},{10,9,21},50,"Kg",120.39,5.0};
-    Products[66] = {66,"Sorghum","Cereal","Sorghum",{23,12,2019},{10,9,21},45,"Kg",13,3.0};
-    Products[67] = {67,"Millets","Cereal","Millets",{12, 12, 2013},{10,9,21},45,"Kg",25,2.9};
-
-    //Initializing Cooking Oils sample data
-    Products[68] = {68,"Jazzle Berry","Cooking Oil","Cotton seed",{12, 7, 2018},{12, 7, 2022},90,"Liter",95,2.9};
-    Products[69] = {69,"New Star","Cooking Oil","Vegetable Oil",{22, 8, 2018},{27, 9, 2022},120,"Liter",130,4.5};
-    Products[70] = {70,"Oracle","Cooking Oil","Peanut Oil",{17, 1, 2018},{12, 5, 2022},100,"Liter",117,5};
-    Products[71] = {71,"Tena","Cooking Oil","Sunflower Oil",{1, 1, 2020},{12, 1, 2023},100,"Liter",136,5};
-    Products[72] = {72,"Flawless","Cooking Oil","Avocado Oil",{9, 11, 2020},{12, 12, 2022},45,"Liter",200,5};
-
-    //Initializing Canned Foods sample data
-    Products[73] = {73,"Campell","Canned Foods","Soup",{19, 3, 2020},{19, 3, 2022},100,"Can",85,5};
-    Products[74] = {74,"Campell","Canned Foods","Fruits",{21, 5, 2021},{20, 5, 2024},100,"Can",95,4.5};
-    Products[75] = {75,"Heinz","Canned Foods","Baked beans",{27, 3, 2022},{29, 3, 2024},100,"Can",80,3.5};
-    Products[76] = {76,"American Garden","Canned Foods","Sweet Corn",{1, 1, 2020},{1, 1, 2024},100,"Can",90,3.9};
-    Products[77] = {77,"Healthy Choice","Canned Foods","Pasta Sauce",{29, 5, 2020},{1, 6, 2024},100,"Can",75,4.4};
-    Products[78] = {78,"Eden Foods","Canned Foods","Mushrooms",{11, 2, 2020},{11, 2, 2024},100,"Can",80,4};
-    Products[79] = {79,"Green Giants","Canned Foods","Green Peas",{29, 7, 2020},{29, 7, 2024},100,"Can",80,3.2};
-}
 
 /// Developers
 void Developers()
 {
     string ListOfDevNames[5] = {"Brook Feleke  ","Dagmawi Esayas", "Dawit Getachew","Ebenezer Yonas","Melat Gizachew"};
     string ListOfDevIDs[5] = {"ETS 1234/12","ETS 1234/12", "ETS 1234/12","ETS 1234/12","ETS 1234/12"};
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 5; i++)
+    {
         cout << "\t\t\t\t\t\t\t" << i + 1 << ". " << ListOfDevNames[i] << "\t" << ListOfDevIDs[i] << endl;
     }
 }
@@ -939,7 +948,7 @@ void Developers()
 int MainMenu()
 {
     int Choice, InvalidChoiceCounter= 0;
-    Menu:
+Menu:
     welcomeScreen();
     //system("cls");
     cout<<"\t\t\t\t\t\t\t 1. Print all Products. "<<endl;
@@ -968,207 +977,207 @@ int MainMenu()
 
     switch(Choice)
     {
-        // Print all data in table format
-        case 1:
-            AppHeader("Print All");
-            PrintInTableFormat();
-            AppFooter();
-            goto Menu;
-        // Search for an item in stock
-        case 2:
-            AppHeader("Search Items");
-            int ProductNumberSearch; // Search Key
-            cout << "\n\t\t\t\t\tEnter the Product number of the item you would like to search." << endl;
-            cout << "\n\t\t\t\t\t\t\tProduct Number: ";
+    // Print all data in table format
+    case 1:
+        AppHeader("Print All");
+        PrintInTableFormat();
+        AppFooter();
+        goto Menu;
+    // Search for an item in stock
+    case 2:
+        AppHeader("Search Items");
+        int ProductNumberSearch; // Search Key
+        cout << "\n\t\t\t\t\tEnter the Product number of the item you would like to search." << endl;
+        cout << "\n\t\t\t\t\t\t\tProduct Number: ";
 
-            // Error handling for product numbers
-            while(!(cin >> ProductNumberSearch))
+        // Error handling for product numbers
+        while(!(cin >> ProductNumberSearch))
+        {
+            FeedBackMessage("Invalid Input", 7);
+            cin.clear();
+            cin.ignore(20, '\n');
+            cout << "\t\t\t\t\t\t\t\Re-enter Product Number: ";
+
+            InvalidChoiceCounter++;
+            if(InvalidChoiceCounter >= 3)
             {
-                FeedBackMessage("Invalid Input", 7);
-                cin.clear();
-                cin.ignore(20, '\n');
-                cout << "\t\t\t\t\t\t\t\Re-enter Product Number: ";
-
-                InvalidChoiceCounter++;
-                if(InvalidChoiceCounter >= 3)
-                {
-                    InvalidChoiceCounter = 0;
-                    goto Menu; //We can make it go to the main menu when we merge it all
-                }
+                InvalidChoiceCounter = 0;
+                goto Menu; //We can make it go to the main menu when we merge it all
             }
-            Search(ProductNumberSearch); //Calling Search function
-            //FeedBackMessage("Item Found!", 10);
-            AppFooter();
-            goto Menu;
-            break;
-        // Delete an item from stock
-        case 3:
-            AppHeader("Delete Items");
-            DeleteItem();
-            AppFooter();
-            goto Menu;
-        // Edit an item from stock
-        case 4:
-            EditItem();
-            goto Menu;
-        // Sort items in stock
-        case 5:
-            //system("cls");
-            ReturnToChoice:
-                cout<<"Choose how you want to sort: "<<endl;
-                cout<<"1. Unit Price"<<endl;
-                cout<<"2. Rating"<<endl;
-                cout<<"3. Production date"<<endl;
-                cout<<"4. Expire date"<<endl;
-                cout<<"5. Quantity"<<endl;
-                cout<<"6. Sales"<<endl;
-                int Choice,OrderChoice;
-                cout<<"Your choice: ";
-                cin>>Choice;
-            ReturnToOrderChoice:
-                cout<<"Choose Order"<<endl;
-                cout<<"1. Ascending Order"<<endl;
-                cout<<"2. Descending Order"<<endl;
-                cout<<"Your choice: ";
-                cin>>OrderChoice;
-                switch(Choice)
-                {
-                case 1:
-                    if(OrderChoice == 1)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceAscending);
-                        PrintInTableFormat();
-                    }
-                    else if(OrderChoice == 2)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingUnitPriceDescending);
-                        PrintInTableFormat();
-                    }
-                    else
-                    {
-                        cout<<"Invalid Choice! Try Again";
-                        goto ReturnToOrderChoice;
-                    }
-                    break;
-                case 2:
-                    if(OrderChoice == 1)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingRatingAscending);
-                        PrintInTableFormat();
-                    }
-                    else if(OrderChoice == 2)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingRatingDescending);
-                        PrintInTableFormat();
-                    }
-                    else
-                    {
-                        cout<<"Invalid Choice! Try Again";
-                        goto ReturnToOrderChoice;
-                    }
-                    break;
-                case 3:
-                    if(OrderChoice == 1)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingProductionDateAscending);
-                        PrintInTableFormat();
-                    }
-                    else if(OrderChoice == 2)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingProductionDateDescending);
-                        PrintInTableFormat();
-                    }
-                    else
-                    {
-                        cout<<"Invalid Choice! Try Again";
-                        goto ReturnToOrderChoice;
-                    }
-                    break;
-                case 4:
-                    if(OrderChoice == 1)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateAscending);
-                        PrintInTableFormat();
-                    }
-                    else if(OrderChoice == 2)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingExpirationDateDescending);
-                        PrintInTableFormat();
-                    }
-                    else
-                    {
-                        cout<<"Invalid Choice! Try Again";
-                        goto ReturnToOrderChoice;
-                    }
-                    break;
-                case 5:
-                    if(OrderChoice == 1)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingQuantityAscending);
-                        PrintInTableFormat();
-                    }
-                    else if(OrderChoice == 2)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingQuantityDescending);
-                        PrintInTableFormat();
-                    }
-                    else
-                    {
-                        cout<<"Invalid Choice! Try Again";
-                        goto ReturnToOrderChoice;
-                    }
-                    break;
-                case 6:
-                    if(OrderChoice == 1)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingSalesAscending);
-                        PrintInTableFormat();
-                    }
-                    else if(OrderChoice == 2)
-                    {
-                        sort(Products, Products+NumberOfProducts, CompareUsingSalesDescending);
-                        PrintInTableFormat();
-                    }
-                    else
-                    {
-                        cout<<"Invalid Choice! Try Again";
-                        goto ReturnToOrderChoice;
-                    }
-                    break;
-                default:
-                    cout<<"Invalid Choice! Try Again";
-                    system("cls");
-                    goto ReturnToChoice;
-                }
-            goto Menu;
-        // Sales
-        case 6:
-            CashierAccount();
-        // Enter a new product into stock
-        case 7:
-            system("cls");
-            int Amount;
-            cout<<"Enter the amount you want to input:";
-            cin>>Amount;
-            InputProduct(Amount);
-            goto Menu;
-        // Developers
-        case 10:
-            AppHeader("Developers Info");
-            Developers();
-            AppFooter();
-            goto Menu;
-        // Exit
-        case 11:
-            return 0; //We can make it go to the main menu when we merge it all
-            break;
-        // Error handling for all other options
-        default:
-            FeedBackMessage("Invalid Input", 15);
-            system("pause");
-            system("cls");
-            goto Menu;
         }
+        Search(ProductNumberSearch); //Calling Search function
+        //FeedBackMessage("Item Found!", 10);
+        AppFooter();
+        goto Menu;
+        break;
+    // Delete an item from stock
+    case 3:
+        AppHeader("Delete Items");
+        DeleteItem();
+        AppFooter();
+        goto Menu;
+    // Edit an item from stock
+    case 4:
+        EditItem();
+        goto Menu;
+    // Sort items in stock
+    case 5:
+        //system("cls");
+ReturnToChoice:
+        cout<<"Choose how you want to sort: "<<endl;
+        cout<<"1. Unit Price"<<endl;
+        cout<<"2. Rating"<<endl;
+        cout<<"3. Production date"<<endl;
+        cout<<"4. Expire date"<<endl;
+        cout<<"5. Quantity"<<endl;
+        cout<<"6. Sales"<<endl;
+        int Choice,OrderChoice;
+        cout<<"Your choice: ";
+        cin>>Choice;
+ReturnToOrderChoice:
+        cout<<"Choose Order"<<endl;
+        cout<<"1. Ascending Order"<<endl;
+        cout<<"2. Descending Order"<<endl;
+        cout<<"Your choice: ";
+        cin>>OrderChoice;
+        switch(Choice)
+        {
+        case 1:
+            if(OrderChoice == 1)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingUnitPriceAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingUnitPriceDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 2:
+            if(OrderChoice == 1)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingRatingAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingRatingDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 3:
+            if(OrderChoice == 1)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingProductionDateAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingProductionDateDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 4:
+            if(OrderChoice == 1)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingExpirationDateAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingExpirationDateDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 5:
+            if(OrderChoice == 1)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingQuantityAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingQuantityDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        case 6:
+            if(OrderChoice == 1)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingSalesAscending);
+                PrintInTableFormat();
+            }
+            else if(OrderChoice == 2)
+            {
+                sort(Products.begin(), Products.end(), CompareUsingSalesDescending);
+                PrintInTableFormat();
+            }
+            else
+            {
+                cout<<"Invalid Choice! Try Again";
+                goto ReturnToOrderChoice;
+            }
+            break;
+        default:
+            cout<<"Invalid Choice! Try Again";
+            system("cls");
+            goto ReturnToChoice;
+        }
+        goto Menu;
+    // Sales
+    case 6:
+        CashierAccount();
+    // Enter a new product into stock
+    case 7:
+        system("cls");
+        int Amount;
+        cout<<"Enter the amount you want to input:";
+        cin>>Amount;
+        InputProduct(Amount);
+        goto Menu;
+    // Developers
+    case 10:
+        AppHeader("Developers Info");
+        Developers();
+        AppFooter();
+        goto Menu;
+    // Exit
+    case 11:
+        return 0; //We can make it go to the main menu when we merge it all
+        break;
+    // Error handling for all other options
+    default:
+        FeedBackMessage("Invalid Input", 15);
+        system("pause");
+        system("cls");
+        goto Menu;
+    }
 }
 
 /// Initialization
@@ -1177,7 +1186,6 @@ void InitializeSystemVariables()
 {
     ResizeWindow();
     ThemeColorChanger(ThemeColor);
-    ProductSampleData();
 }
 
 
@@ -1185,8 +1193,8 @@ void InitializeSystemVariables()
 /// M A I N
 int main()
 {
+    //Calls function to load products from file
+    LoadProduct();
     InitializeSystemVariables();
     MainMenu();
 }
-
-
