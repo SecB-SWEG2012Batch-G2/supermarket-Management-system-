@@ -15,18 +15,26 @@ float Quantity[100], TotalPrice = 0, Cash;
 int NumberofBoughtItems, ProductNo[100], amount, Location[100];
 bool ProductFound;
 int NumberOfProducts = 80, FlagDelete = 0, FlagEdit = 0;
+string ThemeColor = "color 0b";
 
 /// Prototype functions
 int MainMenu(void);
 
 /// Theming Functions
 // Resizes the console window
+void ThemeColorChanger(string color)
+{
+    string ThemeColor = "color " + color;
+    system(ThemeColor.c_str());
+}
 void ResizeWindow()
 {
-    HWND console = GetConsoleWindow();
+    system("mode 650");
+    /*HWND console = GetConsoleWindow();
     RECT ConsoleRect;
     GetWindowRect(console, &ConsoleRect);
     MoveWindow(console, ConsoleRect.left, ConsoleRect.top, 1600, 800, TRUE);
+    */
 }
 
 /// Structures
@@ -125,6 +133,73 @@ void InputProduct(int Count)
     NumberOfProducts += Count;
 }
 
+
+/// UI Components
+// Welcome Screen
+/*
+    This function contains a simple ASCII art generated from
+    PatorJK.com specifically used the Text 2 ASCII generator app (https://patorjk.com/software/taag/#p=display&f=Univers&t=CartShop)
+    website along with a simple welcome header.
+*/
+void welcomeScreen()
+{
+    //system("cls");
+    cout << "\n\n" << endl;
+    cout << R"(
+                        ,ad8888ba,                                     ad88888ba   88
+                       d8"'    `"8b                            ,d     d8"     "8b  88
+                      d8'                                      88     Y8,          88
+                      88             ,adPPYYba,  8b,dPPYba,  MM88MMM  `Y8aaaaa,    88,dPPYba,    ,adPPYba,   8b,dPPYba,
+                      88             ""     `Y8  88P'   "Y8    88       `"""""8b,  88P'    "8a  a8"     "8a  88P'    "8a
+                      Y8,            ,adPPPPP88  88            88             `8b  88       88  8b       d8  88       d8
+                       Y8a.    .a8P  88,    ,88  88            88,    Y8a     a8P  88       88  "8a,   ,a8"  88b,   ,a8"
+                        `"Y8888Y"'   `"8bbdP"Y8  88            "Y888   "Y88888P"   88       88   `"YbbdP"'   88`YbbdP"'
+                                                                                                             88
+                                                                                                             88
+    )" << endl;
+    cout << endl;
+    cout << "\t\t\t\t\t\t*" << setfill('*') << setw(50) << "*" << endl;
+    cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(50) << "*" << endl;
+    cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(32) << "W E L C O M E !" << setfill(' ') << setw(18) << "*" << endl;
+    cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(50) << "*" << endl;
+    cout << "\t\t\t\t\t\t*" << setfill('-') << setw(50) << "*" << endl;
+    cout << endl;
+    //system("pause");
+    //system("cls");
+}
+
+// Progress Indicating Functions
+// Success Message
+void SuccessMessage(string successMessage)
+{
+    cout << endl << "\n\n\t\t\t\t\t --------- \t " << successMessage << "! \t --------" << endl << endl;
+}
+
+// Failure Message
+void FailureMessage(string failureMessage)
+{
+    cout << endl << "\n\n\t\t\t\t\t\t U+2713 \t " << failureMessage << "! \t U+2713" << endl << endl;
+}
+// App header
+void AppHeader(string title)
+{
+    // Convert given title to capital
+    for_each(title.begin(), title.end(), [](char & c){
+        c = ::toupper(c);
+    });
+    cout << "\n" << setw(200) << setfill('_')  << "\n" << endl;
+    cout << "\t\t\t\t\t\t\t\t" << title << "\n" << setw(200) << setfill('_')  << "\n" << endl;
+}
+// App footer
+void AppFooter()
+{
+    cout << "\n" << setfill(' ');
+    cout << "\n" << setw(200) << setfill('=')  << "\n" << endl;
+    cout << "\n" << setfill(' ');
+    system("pause");
+    system("cls");
+}
+
 /// Displaying Functions
 /*
     The Following three functions are made to show the data in a table format
@@ -195,7 +270,7 @@ void PrintInTableFormat()
     // Initialization
     //ResizeWindow();
     // Print Full Table For reference to edit
-    cout << endl << " Here's a list of all products... " << endl << endl;
+    cout << endl << "\t\t\t\t\t\t\t Here's a list of all products... " << endl << endl;
     // Print In Table Format Function
     PrintTableDividers();
     PrintTableHeader();
@@ -206,7 +281,6 @@ void PrintInTableFormat()
         PrintInItemValue(Products[i]);
     }
     PrintTableDividers();
-    system("pause");
 }
 
 // This functions prints a receipt for the cashier to show/print/give to the customer once a purchase has been made
@@ -334,7 +408,6 @@ void Search(int SearchedProduct)
             cout<<"\n**********Product Not found**********\n"<<endl;
         }
     }
-    system("pause");
 }
 
 void EditItem()
@@ -551,16 +624,14 @@ date:
 // This function asks for a serial number of an item and then it allows you to delete it from the stock
 void DeleteItem()
 {
-    // Print Full Table For reference to edit
-    //PrintInTableFormat();
+    AskDeletion:
     // Enter Serial Number of a product to edit
-AskDeletion:
     int SerialNumber;
-    cout << endl << " Enter Serial Number Of Item you want to delete: ";
+    cout << endl << "\t\t\t\t\t\tEnter Serial Number Of Item you want to delete: ";
 
-    while(!(cin>>SerialNumber))    // INPUT VALIDATION FOR
+    while(!(cin>>SerialNumber))    // Error handling for serial number input
     {
-        cout<< "\nInvalid input.\n\n";
+        cout << "\n\t\t\t\t\t\t\t\tInvalid input.\n\n";
         cin.clear();
         cin.ignore(20, '\n');
     }
@@ -569,14 +640,15 @@ AskDeletion:
     if( !(FlagDelete))
     {
         Product *Item = &Products[SerialNumber];
-        cout << endl << " Are you sure you want to delete this item? (Y/N): ";
-        cout<< endl << "1. Yes.";
-        cout<< endl << "2. No."<<endl;
+        cout << endl << "\t\t\t\t\t\tAre you sure you want to delete this item? (Y/N)";
+        cout<< endl << "\n\t\t\t\t\t\t\t\t1. Yes";
+        cout<< endl << "\t\t\t\t\t\t\t\t2. No"<<endl;
         system("color 0C");
+        cout << "\n\n\t\t\t\t\t\t\t   Confirm Delete : ";
         int ConfirmDeletion;
-        while(!(cin>>ConfirmDeletion))    // INPUT VALIDATION FOR
+        while(!(cin>>ConfirmDeletion))    // Error handling for confirm deletion choice
         {
-            cout<< "\nInvalid input.\n\n";
+            cout << "\n\t\t\t\t\t\t\t\tInvalid input.\n\n";
             cin.clear();
             cin.ignore(20, '\n');
         }
@@ -593,18 +665,16 @@ AskDeletion:
                 Item->ProductNumber = i;
             }
             system("color 0A");
-            cout << endl << " \t ---- \t Item Deleted Successfully! \t ----" << endl << endl;
-            system("pause");
-            system("cls");
+            SuccessMessage("Item Deleted Successfully");
         }
         else if (ConfirmDeletion == 2)
         {
-            system("color 0E");
+            ThemeColorChanger("0b");
+            SuccessMessage("Item Not Deleted");
             //goto AskDeletion;
         }
     }
     FlagDelete = 0;
-    system("color 0F");
 }
 
 bool CompareUsingUnitPriceAscending( Product FirstProduct, Product SecondProduct)
@@ -819,46 +889,14 @@ void ProductSampleData()
     Products[79] = {79,"Green Giants","Canned Foods","Green Peas",{29, 7, 2020},{29, 7, 2024},100,"Can",80,3.2};
 }
 
-/// Welcome Screen
-/*
-    This function contains a simple ASCII art generated from
-    PatorJK.com specifically used the Text 2 ASCII generator app (https://patorjk.com/software/taag/#p=display&f=Univers&t=CartShop)
-    website along with a simple welcome header.
-*/
-void welcomeScreen()
+/// Developers
+void Developers()
 {
-    //system("cls");
-    cout << "\n\n" << endl;
-    cout << R"(
-                        ,ad8888ba,                                     ad88888ba   88
-                       d8"'    `"8b                            ,d     d8"     "8b  88
-                      d8'                                      88     Y8,          88
-                      88             ,adPPYYba,  8b,dPPYba,  MM88MMM  `Y8aaaaa,    88,dPPYba,    ,adPPYba,   8b,dPPYba,
-                      88             ""     `Y8  88P'   "Y8    88       `"""""8b,  88P'    "8a  a8"     "8a  88P'    "8a
-                      Y8,            ,adPPPPP88  88            88             `8b  88       88  8b       d8  88       d8
-                       Y8a.    .a8P  88,    ,88  88            88,    Y8a     a8P  88       88  "8a,   ,a8"  88b,   ,a8"
-                        `"Y8888Y"'   `"8bbdP"Y8  88            "Y888   "Y88888P"   88       88   `"YbbdP"'   88`YbbdP"'
-                                                                                                             88
-                                                                                                             88
-    )" << endl;
-    cout << endl;
-    cout << "\t\t\t\t\t\t*" << setfill('*') << setw(50) << "*" << endl;
-    cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(50) << "*" << endl;
-    cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(32) << "W E L C O M E !" << setfill(' ') << setw(18) << "*" << endl;
-    cout << "\t\t\t\t\t\t*" << setfill(' ') << setw(50) << "*" << endl;
-    cout << "\t\t\t\t\t\t*" << setfill('-') << setw(50) << "*" << endl;
-    cout << endl;
-    //system("pause");
-    //system("cls");
-}
-
-void appHeader(string title)
-{
-    //char capitalTitle = title;
-    for_each(title.begin(), title.end(), [](char & c){
-        c = ::toupper(c);
-    });
-    cout << "\t" << title << "\n" << setw(180) << setfill('-')  << "\n" << endl;
+    string ListOfDevNames[5] = {"Brook Feleke  ","Dagmawi Esayas", "Dawit Getachew","Ebenezer Yonas","Melat Gizachew"};
+    string ListOfDevIDs[5] = {"ETS 1234/12","ETS 1234/12", "ETS 1234/12","ETS 1234/12","ETS 1234/12"};
+    for(int i = 0; i < 5; i++){
+        cout << "\t\t\t\t\t\t\t" << i + 1 << ". " << ListOfDevNames[i] << "\t" << ListOfDevIDs[i] << endl;
+    }
 }
 
 /// Main Menu
@@ -867,17 +905,22 @@ int MainMenu()
 {
     int Choice, InvalidChoiceCounter= 0;
     Menu:
+    string themeColor = "color 0b";
+    system(themeColor.c_str());
     welcomeScreen();
     //system("cls");
-    cout<<"\t\t\t\t\t\t\t1. Print all Products. "<<endl;
-    cout<<"\t\t\t\t\t\t\t2. Search for product. "<<endl;
-    cout<<"\t\t\t\t\t\t\t3. Delete Item from Stock. "<<endl;
-    cout<<"\t\t\t\t\t\t\t4. Edit a Product "<<endl;
-    cout<<"\t\t\t\t\t\t\t5. Sorting Functions "<<endl;
-    cout<<"\t\t\t\t\t\t\t6. Sales. "<<endl;
-    cout<<"\t\t\t\t\t\t\t7. Enter a new Product. "<<endl;
-    cout<<"\t\t\t\t\t\t\t8. Exit "<<endl;
-    cout<<"\n\n\t\t\t\t\t\t\tChoice: ";
+    cout<<"\t\t\t\t\t\t\t 1. Print all Products. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 2. Search for product. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 3. Delete Item from Stock. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 4. Edit a Product "<<endl;
+    cout<<"\t\t\t\t\t\t\t 5. Sorting Functions "<<endl;
+    cout<<"\t\t\t\t\t\t\t 6. Sell "<<endl;
+    cout<<"\t\t\t\t\t\t\t 7. Enter a new Product. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 8. Settings. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 9. Introduction/Usage. "<<endl;
+    cout<<"\t\t\t\t\t\t\t10. Developers. "<<endl;
+    cout<<"\t\t\t\t\t\t\t11. Exit "<<endl;
+    cout<<"\n\n\t\t\t\t\t\t\t\tChoice: ";
 
     // Error handling for main menu choice
     while(!(cin>>Choice))
@@ -894,13 +937,13 @@ int MainMenu()
     {
         // Print all data in table format
         case 1:
+            AppHeader("Print All");
             PrintInTableFormat();
-            cout << endl << endl << endl;
-            system("cls");
+            AppFooter();
             goto Menu;
         // Search for an item in stock
         case 2:
-            appHeader("Search");
+            AppHeader("Search Items");
             int ProductNumberSearch; // Search Key
             cout << "\n\t\t\t\t\tEnter the Product number of the item you would like to search." << endl;
             cout << "\n\t\t\t\t\t\t\tProduct Number: ";
@@ -920,18 +963,19 @@ int MainMenu()
                     goto Menu; //We can make it go to the main menu when we merge it all
                 }
             }
-
+            cout << "\n\t\t\t\t\t\t\t\tResult";
             Search(ProductNumberSearch); //Calling Search function
-            system("cls");
+            AppFooter();
             goto Menu;
             break;
         // Delete an item from stock
         case 3:
+            AppHeader("Delete Items");
             DeleteItem();
+            AppFooter();
             goto Menu;
         // Edit an item from stock
         case 4:
-            //system("cls");
             EditItem();
             goto Menu;
         // Sort items in stock
@@ -1075,8 +1119,14 @@ int MainMenu()
             cin>>Amount;
             InputProduct(Amount);
             goto Menu;
+        // Developers
+        case 10:
+            AppHeader("Developers Info");
+            Developers();
+            AppFooter();
+            goto Menu;
         // Exit
-        case 8:
+        case 11:
             return 0; //We can make it go to the main menu when we merge it all
             break;
         // Error handling for all other options
@@ -1090,10 +1140,11 @@ int MainMenu()
 
 /// Initialization
 // A simple function to call and initiate system variables to help in demo and general settings
-void initializeSystemVariables()
+void InitializeSystemVariables()
 {
-    //system("color 0b");
-    //system("cls");
+    ResizeWindow();
+    ThemeColorChanger("0e");
+    //system(ThemeColor.c_str());
     ProductSampleData();
 }
 
@@ -1101,7 +1152,7 @@ void initializeSystemVariables()
 /// M A I N
 int main()
 {
-    initializeSystemVariables();
+    InitializeSystemVariables();
     MainMenu();
 }
 
