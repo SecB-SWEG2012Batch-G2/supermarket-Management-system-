@@ -214,6 +214,29 @@ void LoadProduct()
     }
     else cout << "Unable to open file"; //if the file is not open output
 }
+//Writes to File When Exiting
+void WriteToFile(){
+     fstream file("Products.txt", ios::trunc | ios::out);
+for(int i = 0; i <Products.size(); i++){
+      file << Products[i].ProductNumber << ',' <<
+         Products[i].ProductName << ',' <<
+         Products[i].Category << ',' <<
+         Products[i].ProductType << ',' <<
+         Products[i].ProductionDate.Day << ',' <<
+         Products[i].ProductionDate.Month << ',' <<
+         Products[i].ProductionDate.Year << ',' <<
+         Products[i].ExpireDate.Day << ',' <<
+         Products[i].ExpireDate.Month << ',' <<
+         Products[i].ExpireDate.Year << ',' <<
+         Products[i].Quantity << ',' <<
+         Products[i].MeasurementUnit << ',' <<
+         Products[i].UnitPrice << ',' <<
+         Products[i].Rating << ',' <<
+         Products[i].Sales << endl;
+}
+file.close();
+}
+
 //Structure for storing Account Details
 struct Account{
     string Name,userName,password,position;
@@ -600,6 +623,7 @@ void PrintReceipt()
             MainScreen();
             break;
         case 3:
+          WriteToFile();
          exit(0);
          break;
          default:
@@ -740,27 +764,7 @@ bool Search(int SearchedProduct)
         return false;
     }
 }
-void WriteToFile(){
-     fstream file("Products.txt", ios::trunc | ios::out);
-for(int i = 0; i <Products.size(); i++){
-      file << Products[i].ProductNumber << ',' <<
-         Products[i].ProductName << ',' <<
-         Products[i].Category << ',' <<
-         Products[i].ProductType << ',' <<
-         Products[i].ProductionDate.Day << ',' <<
-         Products[i].ProductionDate.Month << ',' <<
-         Products[i].ProductionDate.Year << ',' <<
-         Products[i].ExpireDate.Day << ',' <<
-         Products[i].ExpireDate.Month << ',' <<
-         Products[i].ExpireDate.Year << ',' <<
-         Products[i].Quantity << ',' <<
-         Products[i].MeasurementUnit << ',' <<
-         Products[i].UnitPrice << ',' <<
-         Products[i].Rating << ',' <<
-         Products[i].Sales << endl;
-}
-file.close();
-}
+
 
 //function to calculate profit
 void ProfitCalc(){
@@ -1250,7 +1254,7 @@ int MainScreen(){
         cin.clear();
         cin.ignore(20, '\n');
         system("pause");
-        system("cls");
+        //system("cls");
     }
 
     switch(choice)
@@ -1265,7 +1269,9 @@ int MainScreen(){
     case 3:
         modifyAccount();
     case 4:
-        return 0;
+        WriteToFile();
+        //return 0;
+        exit(0);
         break;
 }
 }
