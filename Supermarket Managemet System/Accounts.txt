@@ -1,0 +1,7 @@
+user1,Cashier,user,user123
+user2,Manager,guest,guest
+user3,Cashier,user,guest
+user,Cashier,guest,password
+newUser,Manager,user,password
+admin,Manager,admin,admin
+cashier,Cashier,cashierAdmin,cashierAdmin

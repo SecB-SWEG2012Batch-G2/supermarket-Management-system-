@@ -14,7 +14,7 @@
 using namespace std;
 
 /// Global Variables
-float Quantity[100], TotalPrice = 0, Cash;
+float Quantity[100], TotalPrice = 0, Cash, ProfitMarigin = 0.3;
 int NumberofBoughtItems, ProductNo[100], amount, Location[100];
 bool ProductFound;
 int NumberOfProducts=79, FlagDelete = 0, FlagEdit = 0;
@@ -22,6 +22,10 @@ string ThemeColor = "0E";
 
 /// Prototype functions
 int MainMenu(void);
+int MainScreen(void);
+void CashierAccount(void);
+void login(void);
+void signUp(void);
 string Capitalize(string);
 void NumberOfProductsCounter(void);
 /// Structures
@@ -152,7 +156,7 @@ void CreateProduct()
 void LoadProduct()
 {
     // define variables
-    string tempString;
+    string tempString,line;
     Product temp;
     //number of lines
     int i = 0;
@@ -163,43 +167,44 @@ void LoadProduct()
     {
         //ignore first line
 
-        while (!SuperMarket.eof()) //while the end of file is NOT reached
+        while (getline(SuperMarket,line)) //while the end of file is NOT reached
         {
-            getline(SuperMarket, tempString, ',');
+            stringstream ss(line);
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ProductNumber= stoi(tempString);
-            getline(SuperMarket, temp.ProductName, ',');
-            getline(SuperMarket, temp.Category, ',');
-            getline(SuperMarket, temp.ProductType, ',');
-            getline(SuperMarket, tempString, ',');
+            getline(ss, temp.ProductName, ',');
+            getline(ss, temp.Category, ',');
+            getline(ss, temp.ProductType, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ProductionDate.Day = stoi(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ProductionDate.Month=stoi(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ProductionDate.Year=stoi(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ExpireDate.Day= stoi(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ExpireDate.Month= stoi(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.ExpireDate.Year= stoi(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.Quantity = stof(tempString);
-            getline(SuperMarket, temp.MeasurementUnit, ',');
-            getline(SuperMarket, tempString, ',');
+            getline(ss, temp.MeasurementUnit, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.UnitPrice= stof(tempString);
-            getline(SuperMarket, tempString, ',');
+            getline(ss, tempString, ',');
             tempString= removeSpaces(tempString);
             temp.Rating= stof(tempString);
-            getline(SuperMarket, tempString, '\n');
+            getline(ss, tempString, '\n');
             tempString= removeSpaces(tempString);
             temp.Sales = stoi(tempString);
             Products.push_back(temp);
@@ -208,6 +213,122 @@ void LoadProduct()
         SuperMarket.close(); //closing the file
     }
     else cout << "Unable to open file"; //if the file is not open output
+}
+//Structure for storing Account Details
+struct Account{
+    string Name,userName,password,position;
+    void accountPosition(){
+        up:
+        cout<<"Your Position in the organization? "<<endl;
+        cout<<"1. Manager"<<endl;
+        cout<<"2. Cashier"<<endl;
+        cout<<"Your Answer: ";
+        int choice;
+        cin>>choice;
+        if(choice==1){
+            position="Manager";
+        }else if(choice==2){
+        position="Cashier";
+        }else{
+            cout<<"Invalid Answer!!";
+            goto up;
+        }
+    }
+};
+vector<Account> Accounts;
+
+//Function for loading Account from file
+void loadAccount()
+{
+    // define variables
+    string line;
+    Account temp;
+    //number of lines
+    fstream AccountDetail;
+    AccountDetail.open("Accounts.txt", ios::app | ios::out | ios::in ); //opening the file.
+    if (AccountDetail.is_open()) //if the file is open
+    {
+        //ignore first line
+        while (getline(AccountDetail,line)) //while the end of file is NOT reached
+        {
+            stringstream ss(line);
+            getline(ss,temp.Name,',');
+            getline(ss,temp.position,',');
+            getline(ss,temp.userName,',');
+            getline(ss,temp.password);
+            Accounts.push_back(temp);
+        }
+        AccountDetail.close(); //closing the file
+    }
+    else cout << "Unable to open file"; //if the file is not open output
+}
+//Function for creating Accounts
+string accountCreation(){
+    Account temp;
+    cout<<"Enter Your Name: ";
+    cin.clear();
+    cin.ignore();
+    getline(cin,temp.Name);
+    temp.accountPosition();
+    cout<<"Set user name: ";
+    cin>>temp.userName;
+    cout<<"Set Password: ";
+    cin>>temp.password;
+    Accounts.push_back(temp);
+    fstream file("Accounts.txt", ios::out | ios::in | ios::app);
+    if(!(file.is_open())){
+    cout<<"Failed to open file!!";
+    }
+    file<<endl<<temp.Name<<','<<temp.position<<','<<temp.userName<<','<<temp.password;
+    file.close();
+    return temp.position;
+}
+//Function for modifying Account details
+void modifyAccount(){
+    cout<<"Enter User name to change: ";
+    string userSearch;
+    cin>>userSearch;
+    for(int i=0;i<Accounts.size();i++){
+        if(Accounts[i].userName==userSearch){
+            cout<<"What do you want to change"<<endl;
+            cout<<"1. Account holder name"<<endl;
+            cout<<"2. Password"<<endl;
+            cout<<"3. Position in Organization"<<endl;
+            cout<<"Your choice: ";
+            int choice;
+            cin>>choice;
+            if(choice==1){
+            cout<<"Enter your name: ";
+            cin.clear();
+            cin.ignore();
+            getline(cin,Accounts[i].Name);
+            }else if(choice==2){
+            cout<<"Enter new password to change: ";
+            cin.clear();
+            cin.ignore();
+            getline(cin,Accounts[i].password);
+            }else if(choice==3){
+            cout<<"Enter New Position: ";
+            Accounts[i].accountPosition();
+            }
+        if(Accounts[i].position=="Manager"){
+        system("pause");
+        system("cls");
+        MainMenu();
+        }else{
+            CashierAccount();
+        }
+        }
+    }
+        fstream file("Accounts.txt", ios::out | ios::in | ios::trunc);
+    if(!(file.is_open())){
+    cout<<"Failed to open file!!";
+    }
+    for(int i=0;i<Accounts.size();i++){
+    file<<Accounts[i].Name<<','<<Accounts[i].position<<','<<Accounts[i].userName<<','<<Accounts[i].password<<endl;
+    }
+    file.close();
+
 }
 
 // A function to create a new product
@@ -220,7 +341,6 @@ void InputProduct(int Count)
     }
     NumberOfProductsCounter();
 }
-
 
 /// UI Components
 // Resizes the console window
@@ -422,15 +542,22 @@ void PrintInTableFormat()
 // This functions prints a receipt for the cashier to show/print/give to the customer once a purchase has been made
 void PrintReceipt()
 {
+    int Choice;
     system("cls");
+    ChangeLineColor(14);
     cout<<setfill(' ')<<setw(30)<<"Receipt\n";
     cout<<setfill(' ')<<"Item No"<<setw(15)<<"Name \t"<<setw(8)<<"Quantity"<<setw(8)<<"Price"<<setw(10)<<"Amount\n";
+    ChangeLineColor(15);
+        cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
+        ChangeLineColor(14);
     for(int i=0; i<NumberofBoughtItems; i++)
     {
         int N;
         N=Location[i];
         cout<<setfill(' ')<<"Item "<<i+1<<": "<<setw(15)<<Products[N].ProductName<<setw(8)<<Quantity[i]<<setw(8)<<Products[N].UnitPrice<<setw(10)<<Quantity[i]*Products[N].UnitPrice<<endl;
+        ChangeLineColor(15);
         cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
+        ChangeLineColor(14);
         TotalPrice=TotalPrice+(Quantity[i]*Products[N].UnitPrice);
     }
 
@@ -441,7 +568,6 @@ void PrintReceipt()
     cout<<setfill(' ')<<setw(47)<<"Cash: ";
     cin>>Cash;
     cout<<setfill(' ')<<setw(47)<<"Change: "<<Cash-TotalPrice<<endl;
-    cout<<setfill(' ')<<setw(30)<<"Thank You For Your Purchase" << endl;
     for(int i=0; i<NumberofBoughtItems; i++)
     {
         int N;
@@ -449,26 +575,69 @@ void PrintReceipt()
         Products[N].Quantity=Products[N].Quantity-Quantity[i];
         Products[N].Sales = Products[N].Sales + Quantity[i];
     }
-    system("pause");
-    system("cls");
-    MainMenu();
+     cout<<setfill(' ')<<setw(30)<<"Thank You For Your Purchase" << endl;
+     system("pause");
+      cout<<setfill(' ')<<setw(30)<<"To Perform another Sales Press 1, To Return to MainMenu Press 2, To exit Press 3;" << endl;
+      Menu:
+      cout<<setfill(' ')<<setw(30)<<"Choice: ";
+      while(!(cin>>Choice))
+    {
+        ChangeLineColor(12);
+        cout<<"Error! Invalid Input\n";
+        cin.clear();
+        cin.ignore(20, '\n');
+        ChangeLineColor(14);
+        goto Menu;
+    }
+    switch(Choice)
+    {
+        case 1:
+            system("cls");
+            CashierAccount();
+            break;
+        case 2:
+            system("cls");
+            MainScreen();
+            break;
+        case 3:
+         exit(0);
+         break;
+         default:
+            ChangeLineColor(12);
+            cout<<"Error!Choose a Correct Number\n";
+            system("pause");
+            system("cls");
+            ChangeLineColor(14);
+            goto Menu;
+            break;
+
+
+    }
+
 }
 
 void CashierAccount()
 {
-    //ProductSampleData();
+    ChangeLineColor(14);
     cout<<setfill(' ') << setw(50) <<"Welcome to CartShop\n\n";
-    amount=1000;
     cout<<"\tEnter The Details of The Items Below \n \tIf You Finish Your Purchase  at Any Time Enter 0 \n";
-    for(int i=0; i<amount; i++)
+    for(int i=0; i<1000; i++)
     {
         ProductFound=false;
 MainMenu:
         cout<<"Item "<<i+1<<":\n";
 ProductNum:
         cout<<"\tProduct Number: ";
-        cin>>ProductNo[i];
-        for(int j=0; j<500; j++)
+        while(!(cin>>ProductNo[i]))
+                {
+                    ChangeLineColor(12);
+                    cout<<"Error! Invalid Input\n";
+                    cin.clear();
+                    cin.ignore(' ', '\n');
+                    ChangeLineColor(14);
+                    goto ProductNum;
+                }
+        for(int j=0; j<Products.size(); j++)
         {
             switch(ProductNo[i])
             {
@@ -476,26 +645,33 @@ ProductNum:
                 char opt;
 Finish:
                 NumberofBoughtItems = i;
-                PrintReceipt();
+
                 cout << "\tHave You Finished Your Purchase(Y/N)\n";
                 cin >> opt;
                 opt = (char)toupper(opt);
-                switch(opt)
-                {
-                case 'N':
-                    system("pause");
-                    goto MainMenu;
-                    break;
-                case 'Y':
-                    system("pause");
-                    PrintReceipt();
-                    break;
-                default:
+
+                if(opt=='N')
+                    {
+                        system("pause");
+                        goto MainMenu;
+                        break;
+                    }
+                    if(opt=='Y')
+                    {
+                        system("pause");
+                        PrintReceipt();
+                        break;
+                    }
+                    else
+                        {
+                    ChangeLineColor(12);
                     cout<<"\t Error: Invalid Input Try again\n";
+                    ChangeLineColor(14);
                     goto Finish;
                     break;
-                }
-            case 1 ... 9999:
+                    }
+
+            case 1 ... 999999:
                 if(ProductNo[i] == Products[j].ProductNumber)
                 {
                     Location[i] = j;
@@ -514,13 +690,24 @@ Finish:
             cout<<"\tCouldn't Find The Product. Try Again!\n";
             goto ProductNum;
         }
+        Quant:
         cout << "\t\t Quantity: ";
-        cin >> Quantity[i];
+        while(!(cin>>Quantity[i]))
+                {
+                    ChangeLineColor(12);
+                    cout<<"Error! Invalid Input\n";
+                    cin.clear();
+                    cin.ignore(' ', '\n');
+                    ChangeLineColor(14);
+                    goto Quant;
+                }
+        ChangeLineColor(15);
         cout << "\t-" << setfill('-') << setw(50) << "-" << endl;
+        ChangeLineColor(14);
     }
 }
 
-void Search(int SearchedProduct)
+bool Search(int SearchedProduct)
 {
     int i;
     for( i = 1; i < Products.size(); i++)
@@ -536,27 +723,121 @@ void Search(int SearchedProduct)
             PrintInItemValue(Products[i]);
             PrintTableDividers();
             cout << endl << endl;
-            i = 9999;
+            i = 1 + Products.size();
+            return true;
         }
         else if(Products[i].ProductNumber == 0)
         {
             cout << "\n\t\t\t\t\t\t\t\tResult \n";
-            i = 9999;
+            i = 1 + Products.size();
             FlagDelete = 1;
             FlagEdit = 1;
             FeedBackMessage("Product Not Found",12);
+            return false;
         }
     }
+    if(FlagEdit==1&&FlagDelete==1){
+        return false;
+    }
 }
+void WriteToFile(){
+     fstream file("Products.txt", ios::trunc | ios::out);
+for(int i = 0; i <Products.size(); i++){
+      file << Products[i].ProductNumber << ',' <<
+         Products[i].ProductName << ',' <<
+         Products[i].Category << ',' <<
+         Products[i].ProductType << ',' <<
+         Products[i].ProductionDate.Day << ',' <<
+         Products[i].ProductionDate.Month << ',' <<
+         Products[i].ProductionDate.Year << ',' <<
+         Products[i].ExpireDate.Day << ',' <<
+         Products[i].ExpireDate.Month << ',' <<
+         Products[i].ExpireDate.Year << ',' <<
+         Products[i].Quantity << ',' <<
+         Products[i].MeasurementUnit << ',' <<
+         Products[i].UnitPrice << ',' <<
+         Products[i].Rating << ',' <<
+         Products[i].Sales << endl;
+}
+file.close();
+}
+
+//function to calculate profit
+void ProfitCalc(){
+ProfitMenu:cout<<endl<<"\t\t\t\t\t\t\t PROFIT PAGE "<<endl;
+    float ProfitInBirr = 0;
+    float GrossIncome = 0;
+    float SingleProductIncome = 0;
+    float SingleProductProfit = 0;
+    int ProfitChoice;
+for(int i = 0; i <Products.size(); i++){
+       GrossIncome += float(Products[i].Sales*Products[i].UnitPrice);
+
+}
+cout<<"\t\t\t\t\t\t\t1. Single Product."<<endl;
+cout<<"\t\t\t\t\t\t\t2. Total Products Profit."<<endl;
+cout<<"\t\t\t\t\t\t\t3. Main Menu."<<endl;
+cout<<"Choice: ";
+cin>>ProfitChoice;
+switch(ProfitChoice){
+case 1:
+cout<<" Enter Product Number: ";
+int ProfitProductSearch;
+cin>>ProfitProductSearch;
+ for(int i = 1; i < Products.size(); i++)
+    {
+        if( ProfitProductSearch == Products[i].ProductNumber && Products[i].ProductNumber != 0){
+            SingleProductIncome = float(Products[i].UnitPrice*Products[i].Sales);
+            SingleProductProfit = float(ProfitMarigin*SingleProductIncome);
+             FeedBackMessage("Product Found",10);
+            cout << "\t\t\t\t\t\t\t    Result";
+            cout << endl << endl;
+            PrintTableDividers();
+            PrintTableHeader();
+            PrintTableDividers();
+            PrintInItemValue(Products[i]);
+            PrintTableDividers();
+            cout << endl << endl;
+            cout<< "\t\t\t\t\t\t\tIncome From Product: "<<SingleProductIncome<<" Birr"<<endl;
+            cout<< "\t\t\t\t\t\t\tIncome From Product: "<<SingleProductProfit<<" Birr"<<endl;
+            i = 1 + Products.size();
+
+        }
+         else if(ProfitProductSearch>Products.size()){
+            cout << "\n\t\t\t\t\t\t\t\tResult \n";
+            i = 1 + Products.size();
+            FeedBackMessage(" Product Not Found ",12);
+            system("pause");
+            system("cls");
+            goto ProfitMenu;
+        }
+    }
+    break;
+case 2:
+ProfitInBirr = float(GrossIncome*ProfitMarigin);
+cout<<"\t\t\t\t\t\t\t Total Income: "<<GrossIncome<<" Birr"<<endl;
+cout<<"\t\t\t\t\t\t\t Profit :"<<ProfitInBirr<<" Birr"<<endl;
+break;
+case 3:
+    system("cls");
+    MainMenu();
+break;
+default:
+    FeedBackMessage(" Invalid Choice ", 12);
+    system("cls");
+    goto ProfitMenu;
+
+}
+}
+
 
 void EditItem()
 {
     // Print Full Table For reference to edit
     //PrintInTableFormat();
     // Enter Serial Number of a product to edit
-    int SerialNumber;
+            int SerialNumber;
     cout << endl << " Enter Serial Number Of Item you want to edit: ";
-
     while(!(cin>>SerialNumber))
     {
         cout<< "\n**********Invalid input.**********\n";
@@ -564,11 +845,9 @@ void EditItem()
         cin.clear();
         cin.ignore(20, '\n');
     }
-    Search(SerialNumber);
-
-    if(!(FlagEdit))
+    bool flag=Search(SerialNumber);
+    if(flag)
     {
-        Product *Item = &Products[SerialNumber];
         // List of options to edit
         int EditChoice;
 edit:
@@ -598,28 +877,34 @@ edit:
         {
         case 1:
             cout << " Enter New Product Name: ";
-            cin >> Item->ProductName;
+            cin.clear();
+            cin.ignore(20, '\n');
+            getline(cin,Products[SerialNumber].ProductName);
             break;
         case 2:
+            cin.clear();
+            cin.ignore(20, '\n');
             cout << " Enter New Product Category: ";
-            cin >> Item->ProductName;
+            getline(cin,Products[SerialNumber].Category);
             break;
         case 3:
+            cin.clear();
+            cin.ignore(20, '\n');
             cout << "Enter New Product Type: ";
-            cin >> Item->ProductName;
+            getline(cin,Products[SerialNumber].ProductType);
             break;
         case 4:
 date:
             cout << " Enter New Production Date" << endl;
             cout << "\t New Day: ";
-            while(!( cin >> Item->ProductionDate.Day))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].ProductionDate.Day))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\n**********Invalid input.**********\n";
                 cin.clear();
                 cin.ignore(20, '\n');
                 goto date;
             }
-            if( Item->ProductionDate.Day<1 || Item->ProductionDate.Day>30)
+            if( Products[SerialNumber].ProductionDate.Day<1 || Products[SerialNumber].ProductionDate.Day>30)
             {
                 cout<<" **********Invalid Day.********** \n";
                 goto date;
@@ -627,27 +912,27 @@ date:
 
             cout << "\t New Month: ";
 
-            while(!( cin >> Item->ProductionDate.Month))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].ProductionDate.Month))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\nInvalid input.\n";
                 cin.clear();
                 cin.ignore(20, '\n');
                 goto date;
             }
-            if( Item->ProductionDate.Month<1 || Item->ProductionDate.Month>12)
+            if( Products[SerialNumber].ProductionDate.Month<1 || Products[SerialNumber].ProductionDate.Month>12)
             {
                 cout<<" Invalid Day. \n";
                 goto date;
             }
             cout << "\t New Year: ";
-            while(!( cin >> Item->ProductionDate.Year))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].ProductionDate.Year))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\n**********Invalid input.**********\n";
                 cin.clear();
                 cin.ignore(20, '\n');
                 goto date;
             }
-            if( Item->ProductionDate.Year<2015 || Item->ProductionDate.Year>2021)
+            if( Products[SerialNumber].ProductionDate.Year<2015 || Products[SerialNumber].ProductionDate.Year>2021)
             {
                 cout<<"**********Invalid Year.**********\n";
                 goto date;
@@ -657,42 +942,42 @@ date:
             cout << " Enter New Expire Date: ";
             cout << "\t New Day: ";
 
-            while(!( cin >> Item->ExpireDate.Day))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].ExpireDate.Day))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\n**********Invalid input.**********\n";
                 cin.clear();
                 cin.ignore(20, '\n');
                 goto date;
             }
-            if( Item->ExpireDate.Day<1 || Item->ExpireDate.Day>30)
+            if( Products[SerialNumber].ExpireDate.Day<1 || Products[SerialNumber].ExpireDate.Day>30)
             {
                 cout<<"**********Invalid Day.**********\n";
                 goto date;
             }
 
             cout << "\t New Month: ";
-            while(!( cin >> Item->ExpireDate.Month))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].ExpireDate.Month))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\n**********Invalid input.**********\n";
                 cin.clear();
                 cin.ignore(20, '\n');
                 goto date;
             }
-            if( Item->ExpireDate.Month<1 || Item->ExpireDate.Month>12)
+            if( Products[SerialNumber].ExpireDate.Month<1 || Products[SerialNumber].ExpireDate.Month>12)
             {
                 cout<<"**********Invalid Day.**********\n";
                 goto date;
             }
 
             cout << "\t New Year: ";
-            while(!( cin >> Item->ExpireDate.Year))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].ExpireDate.Year))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\n**********Invalid input.**********\n";
                 cin.clear();
                 cin.ignore(20, '\n');
                 goto date;
             }
-            if( Item->ExpireDate.Year<2015 || Item->ExpireDate.Year>2021)
+            if( Products[SerialNumber].ExpireDate.Year<2015 || Products[SerialNumber].ExpireDate.Year>2021)
             {
                 cout<<"**********Invalid Day.**********\n";
                 goto date;
@@ -702,7 +987,7 @@ date:
         case 6:
             cout << " Enter New Quantity: ";
 
-            while(!( cin >> Item->Quantity))   // INPUT VALIDATION FOR DATE EDITING
+            while(!( cin >> Products[SerialNumber].Quantity))   // INPUT VALIDATION FOR DATE EDITING
             {
                 cout<< "\n**********Invalid input.**********\n";
                 cin.clear();
@@ -712,23 +997,25 @@ date:
             break;
         case 7:
             cout << " Enter New Measurement Unit: ";
-            getline(cin,Item->MeasurementUnit);
+            cin.clear();
+            cin.ignore(20, '\n');
+            getline(cin,Products[SerialNumber].MeasurementUnit);
             break;
         case 8:
             cout << " Enter New Unit Price: ";
-            while(!(cin>>Item->UnitPrice))
+            while(!(cin>>Products[SerialNumber].UnitPrice))
             {
                 cout<< "**********Invalid Day.**********\n";
                 cout << " Enter New Unit Price: ";
-                cin.clear();
-                cin.ignore(20, '\n');
+            cin.clear();
+            cin.ignore(20, '\n');
 
             }
 
             break;
         case 9:
             cout << " Enter New Rating: ";
-            while(!(cin>>Item->Rating))
+            while(!(cin>>Products[SerialNumber].Rating))
             {
                 cout<< "**********Invalid Day.**********\n";
                 cout << " Enter New Rating: ";
@@ -739,7 +1026,7 @@ date:
             break;
         case 10:
             cout << " Enter New Sale ";
-            while(!(cin>>Item->Sales))
+            while(!(cin>>Products[SerialNumber].Sales))
             {
                 cout<< "**********Invalid Day.**********\n";
                 cout << " Enter New Rating: ";
@@ -752,6 +1039,8 @@ date:
         }
         system("color 0A");
         cout << endl << " \t ---- \t Item Edited Successfully! \t ----" << endl << endl;
+    }else{
+        FeedBackMessage("Product Not Found",12);
     }
     FlagEdit = 0;
     system("pause");
@@ -759,6 +1048,8 @@ date:
     system("cls");
 
 }
+
+
 
 // This function asks for a serial number of an item and then it allows you to delete it from the stock
 void DeleteItem()
@@ -774,9 +1065,9 @@ AskDeletion:
         cin.clear();
         cin.ignore(20, '\n');
     }
-    Search(SerialNumber);
+    bool flag = Search(SerialNumber);
 
-    if( !(FlagDelete))
+    if(flag)
     {
         Product *Item = &Products[SerialNumber];
         ChangeLineColor(12);
@@ -945,6 +1236,39 @@ void Developers()
 
 /// Main Menu
 // Main Menu to allow navigation
+int MainScreen(){
+    welcomeScreen();
+    cout<<"\t\t\t\t\t\t\t 1. Login. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 2. Sign Up. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 3. Modify Account. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 4. Exit. "<<endl;
+    cout<<"\n\n\t\t\t\t\t\t\t\tChoice: ";
+    int choice;
+    while(!(cin>>choice))
+    {
+        FeedBackMessage("Invalid Input", 15);
+        cin.clear();
+        cin.ignore(20, '\n');
+        system("pause");
+        system("cls");
+    }
+
+    switch(choice)
+    {
+    // Print all data in table format
+    case 1:
+        login();
+        break;
+    case 2:
+        signUp();
+        break;
+    case 3:
+        modifyAccount();
+    case 4:
+        return 0;
+        break;
+}
+}
 int MainMenu()
 {
     int Choice, InvalidChoiceCounter= 0;
@@ -958,10 +1282,12 @@ Menu:
     cout<<"\t\t\t\t\t\t\t 5. Sorting Functions "<<endl;
     cout<<"\t\t\t\t\t\t\t 6. Sell "<<endl;
     cout<<"\t\t\t\t\t\t\t 7. Enter a new Product. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 8. Settings. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 9. Introduction/Usage. "<<endl;
-    cout<<"\t\t\t\t\t\t\t10. Developers. "<<endl;
-    cout<<"\t\t\t\t\t\t\t11. Exit "<<endl;
+    cout<<"\t\t\t\t\t\t\t 8. Profit Information. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 9. Settings. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 10. Introduction/Usage. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 11. Developers. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 12. Logout "<<endl;
+    cout<<"\t\t\t\t\t\t\t 13. Exit "<<endl;
     cout<<"\n\n\t\t\t\t\t\t\t\tChoice: ";
 
     // Error handling for main menu choice
@@ -1024,21 +1350,21 @@ Menu:
     case 5:
         //system("cls");
 ReturnToChoice:
-        cout<<"Choose how you want to sort: "<<endl;
-        cout<<"1. Unit Price"<<endl;
-        cout<<"2. Rating"<<endl;
-        cout<<"3. Production date"<<endl;
-        cout<<"4. Expire date"<<endl;
-        cout<<"5. Quantity"<<endl;
-        cout<<"6. Sales"<<endl;
+        cout<<"\t\t\t\t\t\t\tChoose how you want to sort: "<<endl;
+        cout<<"\t\t\t\t\t\t\t1. Unit Price"<<endl;
+        cout<<"\t\t\t\t\t\t\t2. Rating"<<endl;
+        cout<<"\t\t\t\t\t\t\t3. Production date"<<endl;
+        cout<<"\t\t\t\t\t\t\t4. Expire date"<<endl;
+        cout<<"\t\t\t\t\t\t\t5. Quantity"<<endl;
+        cout<<"\t\t\t\t\t\t\t6. Sales"<<endl;
         int Choice,OrderChoice;
-        cout<<"Your choice: ";
+        cout<<"\t\t\t\t\t\t\tYour choice: ";
         cin>>Choice;
 ReturnToOrderChoice:
-        cout<<"Choose Order"<<endl;
-        cout<<"1. Ascending Order"<<endl;
-        cout<<"2. Descending Order"<<endl;
-        cout<<"Your choice: ";
+        cout<<"\t\t\t\t\t\t\tChoose Order"<<endl;
+        cout<<"\t\t\t\t\t\t\t1. Ascending Order"<<endl;
+        cout<<"\t\t\t\t\t\t\t2. Descending Order"<<endl;
+        cout<<"\t\t\t\t\t\t\tYour choice: ";
         cin>>OrderChoice;
         switch(Choice)
         {
@@ -1161,17 +1487,31 @@ ReturnToOrderChoice:
         cin>>Amount;
         InputProduct(Amount);
         goto Menu;
+      case 8:
+        system("cls");
+        AppHeader("Profit Information");
+        ProfitCalc();
+        AppFooter();
+        system("pause");
+        goto Menu;
     // Developers
-    case 10:
+    case 11:
         AppHeader("Developers Info");
         Developers();
         AppFooter();
         goto Menu;
+    // Logout
+    case 12:
+        system("cls");
+        MainScreen();
+        break;
     // Exit
-    case 11:
+    case 13:
+        WriteToFile();
         return 0; //We can make it go to the main menu when we merge it all
         break;
     // Error handling for all other options
+
     default:
         FeedBackMessage("Invalid Input", 15);
         system("pause");
@@ -1187,14 +1527,62 @@ void InitializeSystemVariables()
     ResizeWindow();
     ThemeColorChanger(ThemeColor);
 }
-
-
-
+void login(){
+    up:
+        int counter=0;
+    string username,password;
+    cout<<"Enter Detail to Login (For trial use \n1.Manager (Username: admin and Password: admin) \n2. Cashier (Username: cashierAdmin and Password: cashierAdmin))"<<endl;
+    cout<<"Username: ";
+    cin>>username;
+    for(int i=0;i<Accounts.size();i++){
+    if(username==Accounts[i].userName){
+    upPass:
+    cout<<"Password: ";
+    cin>>password;
+    if(password==Accounts[i].password){
+        cout<<"Login Successful"<<endl;
+        if(Accounts[i].position=="Manager"){
+        system("pause");
+        system("cls");
+        MainMenu();
+        }else{
+            CashierAccount();
+        }
+    }else{
+        cout<<"Password does not match!!"<<endl;
+        system("pause");
+        system("cls");
+        goto upPass;
+    }
+    }else{
+        counter++;
+    }
+    }
+    if(counter==Accounts.size()){
+        cout<<"Account does not exist!!"<<endl;
+        system("pause");
+        system("cls");
+        goto up;
+    }
+}
+void signUp(){
+    string position = accountCreation();
+    system("cls");
+    if(position=="Manager"){
+        system("pause");
+        system("cls");
+        MainMenu();
+        }else{
+            CashierAccount();
+        }
+    MainMenu();
+}
 /// M A I N
 int main()
 {
     //Calls function to load products from file
     LoadProduct();
+    loadAccount();
     InitializeSystemVariables();
-    MainMenu();
+    MainScreen();
 }
