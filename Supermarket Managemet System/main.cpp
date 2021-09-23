@@ -19,6 +19,7 @@ int NumberofBoughtItems, ProductNo[100], amount, Location[100];
 bool ProductFound;
 int NumberOfProducts=79, FlagDelete = 0, FlagEdit = 0;
 string ThemeColor = "0E";
+int IsFullScreenMode = 1;
 
 /// Prototype functions
 int MainMenu(void);
@@ -59,7 +60,7 @@ vector<Product> Products;
 
 // Function to remove all spaces from a given string
 string removeSpaces(string str)
-{
+    {
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
     return str;
 }
@@ -415,7 +416,7 @@ void welcomeScreen()
     cout << R"(
                        Y8a.    .a8P  88,    ,88  88            88,    Y8a     a8P  88       88  "8a,   ,a8"  88b,   ,a8"
                         `"Y8888Y"'   `"8bbdP"Y8  88            "Y888   "Y88888P"   88       88   `"YbbdP"'   88`YbbdP"' )";
-    ChangeLineColor(14);
+    ChangeLineColor(13);
     cout << R"(
                                                                                                              88
                                                                                                              88
@@ -567,6 +568,7 @@ void PrintReceipt()
 {
     int Choice;
     system("cls");
+    welcomeScreen();
     ChangeLineColor(14);
     cout<<setfill(' ')<<setw(30)<<"Receipt\n";
     cout<<setfill(' ')<<"Item No"<<setw(15)<<"Name \t"<<setw(8)<<"Quantity"<<setw(8)<<"Price"<<setw(10)<<"Amount\n";
@@ -1226,27 +1228,190 @@ bool CompareUsingSalesDescending( Product FirstProduct, Product SecondProduct)
         return 0;
 }
 
+// A function to display the CPP version of the program
+void VersionOfCPP(){
+    cout << "\n\t\t\t\t\t\tThe version of CPP used in the making of this program is ";
+    if (__cplusplus == 201703L) std::cout << "C++17\n";
+    else if (__cplusplus == 201402L) std::cout << "C++14\n";
+    else if (__cplusplus == 201103L) std::cout << "C++11\n";
+    else if (__cplusplus == 199711L) std::cout << "C++98\n";
+    else std::cout << "pre-standard C++\n";
+}
+
+//
+void SaveSettings()
+{
+    fstream SettingsFile;
+    SettingsFile.open("Settings.txt", ios::out);
+    if(SettingsFile.is_open()){
+        SettingsFile << IsFullScreenMode;
+        SettingsFile.close();
+    }
+}
+
+void LoadSettings()
+{
+    fstream SettingsFile;
+    SettingsFile.open("Settings.txt", ios::in);
+    if(SettingsFile.is_open()){
+        string line;
+        while(getline(SettingsFile, line)){
+            IsFullScreenMode = stoi(line);
+        }
+        SettingsFile.close();
+    }
+}
 
 /// Developers
 void Developers()
 {
     string ListOfDevNames[5] = {"Brook Feleke  ","Dagmawi Esayas", "Dawit Getachew","Ebenezer Yonas","Melat Gizachew"};
-    string ListOfDevIDs[5] = {"ETS 1234/12","ETS 1234/12", "ETS 1234/12","ETS 1234/12","ETS 1234/12"};
+    string ListOfDevIDs[5] = {"ETS 0184/12","ETS 0204/12", "ETS 0214/12","ETS 0226/12","ETS 1020/12"};
     for(int i = 0; i < 5; i++)
     {
         cout << "\t\t\t\t\t\t\t" << i + 1 << ". " << ListOfDevNames[i] << "\t" << ListOfDevIDs[i] << endl;
     }
 }
+void About()
+{
+    cout<<"\t\t\t\t\t\t\tThe project is a Supermarket Management System. \n\t\t\t\t\t\t\tA system placed in hopes of making the daily purchase and transaction easier. \n\t\t\t\t\t\t\tThe main advantage of this system will be to convert the manual work such as billing calculations, organizing stock items data and employee management."<<endl;
+
+}
+void ChangeFullScreenMode()
+{
+    LoadSettings();
+    if(IsFullScreenMode == 1){
+        int DisableFullScreenModeChoice;
+        cout << endl << "\t\t\t\t\t\tDo you want to disable full screen mode?" << endl << endl;
+        cout << "\t\t\t\t\t\t\t\t 1. Yes" << endl;
+        cout << "\t\t\t\t\t\t\t\t 2. No" << endl << endl;
+        cout << "\t\t\t\t\t\t\t\tChoice: ";
+        cin >> DisableFullScreenModeChoice;
+        if(DisableFullScreenModeChoice == 1){
+            IsFullScreenMode = 0;
+            SaveSettings();
+            FeedBackMessage("Full Screen Mode Disabled!", 10);
+            ChangeLineColor(15);
+            cout << endl << "\t\t\t\t\t\tChanges will take effect on the next start of the app!" << endl << endl;
+        } else if(DisableFullScreenModeChoice == 2) {
+            FeedBackMessage("No Changes Have Been Made", 15);
+        }
+    } else {
+        int EnableFullScreenModeChoice;
+        cout << endl << "\t\t\t\t\t\tDo you want to enable full screen mode?" << endl << endl;
+        cout << "\t\t\t\t\t\t\t\t 1. Yes" << endl;
+        cout << "\t\t\t\t\t\t\t\t 2. No" << endl << endl;
+        cout << "\t\t\t\t\t\t\t\tChoice: ";
+        cin >> EnableFullScreenModeChoice;
+        if(EnableFullScreenModeChoice == 1){
+            IsFullScreenMode = 1;
+            SaveSettings();
+            ChangeLineColor(10);
+            cout << endl << endl;
+            FeedBackMessage("Full Screen Mode Enabled!", 10);
+            ResizeWindow();
+        } else if(EnableFullScreenModeChoice == 2) {
+            FeedBackMessage("No Changes Have Been Made", 15);
+        }
+    }
+}
+
+/// Settings
+void Settings()
+{
+    int SettingChoice, ResetChoice;
+    cout << "\t\t\t\t\t\t\t What would you like to do? " << endl << endl;
+    cout << "\t\t\t\t\t\t\t 1. Fullscreen Mode" << endl;
+    cout << "\t\t\t\t\t\t\t 2. Reload Product Sample" << endl;
+    cout << "\t\t\t\t\t\t\t 3. CPP Version" << endl << endl;
+    cout << "\t\t\t\t\t\t\t\tChoice: ";
+    cin >> SettingChoice;
+    switch(SettingChoice){
+    // Full Screen Mode
+    case 1:
+        ChangeFullScreenMode();
+        break;
+    case 2:
+        ChangeLineColor(12);
+        cout << "\t\t\t\tAre you sure you want to reload product samples?" << endl;
+        ChangeLineColor(12);
+        cout << "\t\t\t\t\t\t\t1. Yes" << endl;
+        ChangeLineColor(12);
+        cout << "\t\t\t\t\t\t\t2. No" << endl;
+        cin >> ResetChoice;
+        if(ResetChoice == 1){
+            //LoadProduct("ProductsSample.txt");
+            LoadProduct();
+            FeedBackMessage("Database Reloaded Successfully", 10);
+        } else {
+            FeedBackMessage("Database Remains Unchanged", 15);
+        }
+        break;
+    case 3:
+        VersionOfCPP();
+        break;
+    }
+
+}
+
+
+void AccountManagment()
+{
+    AccountManagement:
+    cout<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(18) <<"1. Sign Up. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(25) <<"2. Modify Account. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(23) <<"3. Back to Menu. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(15) <<"4. Exit. "<<endl<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(14) <<"Choice: ";
+    int choice;
+    while(!(cin>>choice))
+    {
+        FeedBackMessage("Invalid Input", 15);
+        cin.clear();
+        cin.ignore(20, '\n');
+        system("pause");
+        //system("cls");
+    }
+
+    switch(choice)
+    {
+    // Print all data in table format
+    case 1:
+        signUp();
+        break;
+    case 2:
+      modifyAccount();
+        break;
+    case 3:
+        system("cls");
+        MainMenu();
+        break;
+    case 4:
+        WriteToFile();
+        //return 0;
+        exit(0);
+        break;
+    default:
+        cout << "invalid Input";
+        system("cls");
+        goto AccountManagement;
+        break;
+}
+
+}
 
 /// Main Menu
 // Main Menu to allow navigation
 int MainScreen(){
+    Menu:
     welcomeScreen();
-    cout<<"\t\t\t\t\t\t\t 1. Login. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 2. Sign Up. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 3. Modify Account. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 4. Exit. "<<endl;
-    cout<<"\n\n\t\t\t\t\t\t\t\tChoice: ";
+     cout<<"\t "<<setfill('\t')<<setw(17) <<"1. Login. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(17) <<"2. About. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(22) <<"3. Developers. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(19) <<"4. Setting. "<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(16) <<"5. Exit. "<<endl<<endl;
+    cout<<"\t "<<setfill('\t')<<setw(15) <<"Choice: ";
     int choice;
     while(!(cin>>choice))
     {
@@ -1264,11 +1429,23 @@ int MainScreen(){
         login();
         break;
     case 2:
-        signUp();
-        break;
+        AppHeader("About");
+        About();
+        AppFooter();
+        goto Menu;
     case 3:
-        modifyAccount();
+        AppHeader("Developers Info");
+        Developers();
+        AppFooter();
+        goto Menu;
+        break;
     case 4:
+        AppHeader("Setting");
+        Settings();
+        AppFooter();
+        goto Menu;
+        break;
+    case 5:
         WriteToFile();
         //return 0;
         exit(0);
@@ -1291,9 +1468,9 @@ Menu:
     cout<<"\t\t\t\t\t\t\t 8. Profit Information. "<<endl;
     cout<<"\t\t\t\t\t\t\t 9. Settings. "<<endl;
     cout<<"\t\t\t\t\t\t\t 10. Introduction/Usage. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 11. Developers. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 11. Account Managment. "<<endl;
     cout<<"\t\t\t\t\t\t\t 12. Logout "<<endl;
-    cout<<"\t\t\t\t\t\t\t 13. Exit "<<endl;
+    cout<<"\t\t\t\t\t\t\t 14. Exit "<<endl;
     cout<<"\n\n\t\t\t\t\t\t\t\tChoice: ";
 
     // Error handling for main menu choice
@@ -1502,9 +1679,7 @@ ReturnToOrderChoice:
         goto Menu;
     // Developers
     case 11:
-        AppHeader("Developers Info");
-        Developers();
-        AppFooter();
+        AccountManagment();
         goto Menu;
     // Logout
     case 12:
@@ -1556,8 +1731,6 @@ void login(){
         }
     }else{
         cout<<"Password does not match!!"<<endl;
-        system("pause");
-        system("cls");
         goto upPass;
     }
     }else{
@@ -1566,8 +1739,6 @@ void login(){
     }
     if(counter==Accounts.size()){
         cout<<"Account does not exist!!"<<endl;
-        system("pause");
-        system("cls");
         goto up;
     }
 }

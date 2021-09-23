@@ -1,79 +1,79 @@
-0,Banana Bread ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs ,22,4.9,0
-1,Whole Wheat ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,3,2.5,0
-2,Sourdough ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,4,4.7,0
-3,Baguette ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,10,3,0
-4,Difo Dabo ,Bread and Bakery,Bread ,6,9,21,10,9,21,154, Loafs,20,4.9,46
-5,White Bread ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,3,2.8,0
-6,Carrot Cake ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,20,4.1,0
-7,Bagels ,Bread and Bakery,Bread ,6,9,21,10,9,21,200, Loafs,12,3.9,0
-8,Chocolate Chip ,Bread and Bakery,Cookies ,6,9,21,10,9,21,200,Kilogram ,30,4.8,0
-9,Shortbread Cookie ,Bread and Bakery,Cookies ,6,9,21,10,9,21,200,Kilogram ,28,4,0
-10,Peanut Butter ,Bread and Bakery,Cookies ,6,9,21,10,9,21,200,Kilogram ,28,2.5,0
-11,Short Pasta ,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,25,4.3,0
-12,Long Pasta ,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,25,4.3,0
-13,Macaroni ,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,24,4,0
-14,Fettuccine,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,28,2.5,0
-15,Lasagna,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,32,5,0
-16,Spaghetti,Pasta and Rice,Pasta ,6,9,21,10,9,21,100, Kilogram,30,4.9,0
-17,Brown Rice ,Pasta and Rice,Rice ,6,9,21,10,9,21,100,Kilogram ,30,4.7,0
-18,White Rice ,Pasta and Rice,Rice ,6,9,21,10,9,21,100, Kilogram,27,2.5,0
-19,Beef ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,250,4.9,0
-20,Pork ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,200,2.5,0
-21,Mutton ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,260,4.4,0
-22,Chicken ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,300,4.9,0
-23,Turkey,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,280,3.9,0
-24,Butter ,Dairy and Meat,Dairy ,6,9,21,10,9,21,100,Kilogram ,450,5,0
-25,Milk ,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Liters ,40,4.9,0
-26,Mozzarella ,Dairy and Meat ,Cheese ,6,9,21,10,9,21,100,Kilogram ,320,4.5,0
-27,Cheddar ,Dairy and Meat ,Cheese ,6,9,21,10,9,21,100,Kilogram ,300,4.9,0
-28,Parmesan ,Dairy and Meat,Cheese ,6,9,21,10,9,21,100,Kilogram ,360,4.4,0
-29,Gouda ,Dairy and Meat ,Cheese ,6,9,21,10,9,21,100,Kilogram ,380,5,0
-30,Yoghurt ,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Liters ,60,4.9,0
-31,Powdered Milk ,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Kilogram ,1200,4.6,0
-32,Ice Cream,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Kilogram ,300,5,0
-33,Beer ,Beverages and Drinks,Beverage ,6,9,21,0,0,0,103,Milliliter ,200,2.5,0
-34,Cider ,Beverages and Drinks,Beverage ,6,9,21,10,9,21,103,Milliliter ,260,4.4,0
-35,Hard Soda ,Beverages and Drinks,Beverage ,3,12,21,10,9,21,100,Milliliter ,300,4.9,0
-36,Wine,Beverages and Drinks,Beverage ,10,12,21,10,9,21,102,Milliliter ,280,3.9,0
-37,Barley ,Beverages and Drinks,Beverage ,6,9,21,10,9,26,101,Milliliters ,450,5,0
-38,Turkish ,Beverages and Drinks,Beverage ,6,9,21,10,9,27,106,Liters ,40,4.9,0
-39,Moka ,Beverages and Drinks,Beverage ,6,9,21,10,9,25,100,Milliliter ,320,4.5,0
-40,Kamora ,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,107,Milliliter ,300,4.9,0
-41,Amarula ,Beverages and Drinks,Soft Drinks ,6,9,20,10,9,21,108,Milliliter ,360,4.4,0
-42,Carolans ,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,109,Milliliter ,380,5,0
-43,Rosolio ,Beverages and Drinks,Soft Drinks ,3,9,21,10,9,21,234,Litres ,60,4.9,0
-44,Aurum ,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,257,Milliliter ,1200,4.6,0
-45,Cointreau,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,234,Milliliter ,300,5,0
-46,Milky Way ,Snack ,Snack ,6,9,21,10,9,17,100,Milliliter ,270,2.5,0
-47,Sun Chips ,Snack ,Snack ,1,9,21,10,9,21,100,Milliliter ,290,4.4,0
-48,Suncake ,Snack ,Snack ,6,9,20,10,9,15,100,Milliliter ,700,4.9,0
-49,Vadai,Snack ,Snack ,6,9,19,10,9,21,100,Milliliter ,340,3.9,0
-50,Popcorn ,Snack ,Snack ,10,9,17,10,9,13,100,Milliliters ,240,5,0
-51,Candy ,Snack ,Snack ,6,9,19,10,9,24,100,Liters ,40,4.9,0
-52,Fruit ,Snack ,Snack ,6,9,18,10,9,21,100,Milliliter ,30,4.5,0
-53,Pretzels ,Snack ,Snack ,7,9,21,10,9,21,100,Milliliter ,10,4.9,0
-54,Doughnuts ,Snack ,Snack ,6,9,21,10,9,15,100,Milliliter ,30,4.4,0
-55,Peanuts ,Snack ,Snack ,6,9,21,10,9,16,100,Milliliter ,40,5,0
-56,Poha ,Snack ,Snack ,2,9,21,10,9,20,90,Litres ,60,4.9,10
-57,Momos ,Snack ,Snack ,9,9,21,10,9,21,100,Milliliter ,120,4.6,0
-58,Khaman,Snack ,Snack ,8,9,21,10,9,21,100,Milliliter ,15,5,0
-59,Spoon,Kitchen Utensils,Spoon,10,11,17,14,10,20,40,Items,30.45,2.5,0
-60,Napkins,Sanitary,Baby Wipes,20,12,18,15,11,21,12,Packages,40,4.5,0
-61,Lotion,Health And Bodycare,Nivea,30,10,19,16,12,22,10,Bottle,99.39,5,0
-62,Barely,Cereal,Barely,10,11,2020,10,9,21,40,Kg,14.45,3.5,0
-63,Wheat,Cereal,Wheat,20,12,2018,10,9,21,52,Kg,12,4.5,0
-64,Oats,Cereal,Oats,30,10,2019,10,9,21,50,Kg,120.39,5,0
-65,Sorghum,Cereal,Sorghum,23,12,2019,10,9,21,45,Kg,13,3,0
-66,Millets,Cereal,Millets,12,12,2013,10,9,21,45,Kg,25,2.9,0
-67,Jazzle Berry,Cooking Oil,Cotton seed,12,7,2018,12,7,2022,-20,Liter,95,2.9,110
-68,New Star,Cooking Oil,Vegetable Oil,22,8,2018,27,9,2022,120,Liter,130,4.5,0
-69,Oracle,Cooking Oil,Peanut Oil,17,1,2018,12,5,2022,100,Liter,117,5,0
-70,Tena,Cooking Oil,Sunflower Oil,1,1,2020,12,1,2023,100,Liter,136,5,0
-71,Flawless,Cooking Oil,Avocado Oil,9,11,2020,12,12,2022,45,Liter,200,5,0
-72,Campell,Canned Foods,Soup,19,3,2020,19,3,2022,100,Can,85,5,0
-73,Campell,Canned Foods,Fruits,21,5,2021,20,5,2024,100,Can,95,4.5,0
-74,Heinz,Canned Foods,Baked beans,27,3,2022,29,3,2024,100,Can,80,3.5,0
-75,American Garden,Canned Foods,Sweet Corn,1,1,2020,1,1,2024,100,Can,90,3.9,0
-76,Healthy Choice,Canned Foods,Pasta Sauce,29,5,2020,1,6,2024,100,Can,75,4.4,0
-77,Eden Foods,Canned Foods,Mushrooms,11,2,2020,11,2,2024,100,Can,80,4,0
-78,Healthy Snack,Canned Foods,Green Peas,29,7,2020,29,7,2024,100,Can,80,3.2,0
+1,Banana Bread ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs ,22,4.9,0
+2,Whole Wheat ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,3,2.5,0
+3,Sourdough ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,4,4.7,0
+4,Baguette ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,10,3,0
+5,Difo Dabo ,Bread and Bakery,Bread ,6,9,21,10,9,21,200, Loafs,20,4.9,0
+6,White Bread ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,3,2.8,0
+7,Carrot Cake ,Bread and Bakery,Bread ,6,9,21,10,9,21,200,Loafs,20,4.1,0
+8,Bagels ,Bread and Bakery,Bread ,6,9,21,10,9,21,200, Loafs,12,3.9,0
+9,Chocolate Chip ,Bread and Bakery,Cookies ,6,9,21,10,9,21,200,Kilogram ,30,4.8,0
+10,Shortbread Cookie ,Bread and Bakery,Cookies ,6,9,21,10,9,21,200,Kilogram ,28,4,0
+11,Peanut Butter ,Bread and Bakery,Cookies ,6,9,21,10,9,21,200,Kilogram ,28,2.5,0
+12,Short Pasta ,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,25,4.3,0
+13,Long Pasta ,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,25,4.3,0
+14,Macaroni ,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,24,4,0
+15,Fettuccine,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,28,2.5,0
+16,Lasagna,Pasta and Rice,Pasta ,6,9,21,10,9,21,100,Kilogram ,32,5,0
+17,Spaghetti,Pasta and Rice,Pasta ,6,9,21,10,9,21,100, Kilogram,30,4.9,0
+18,Brown Rice ,Pasta and Rice,Rice ,6,9,21,10,9,21,100,Kilogram ,30,4.7,0
+19,White Rice ,Pasta and Rice,Rice ,6,9,21,10,9,21,100, Kilogram,27,2.5,0
+20,Beef ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,250,4.9,0
+21,Pork ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,200,2.5,0
+22,Mutton ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,260,4.4,0
+23,Chicken ,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,300,4.9,0
+24,Turkey,Dairy and Meat,Meat ,6,9,21,10,9,21,100,Kilogram ,280,3.9,0
+25,Butter ,Dairy and Meat,Dairy ,6,9,21,10,9,21,100,Kilogram ,450,5,0
+26,Milk ,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Liters ,40,4.9,0
+27,Mozzarella ,Dairy and Meat ,Cheese ,6,9,21,10,9,21,100,Kilogram ,320,4.5,0
+28,Cheddar ,Dairy and Meat ,Cheese ,6,9,21,10,9,21,100,Kilogram ,300,4.9,0
+29,Parmesan ,Dairy and Meat,Cheese ,6,9,21,10,9,21,100,Kilogram ,360,4.4,0
+30,Gouda ,Dairy and Meat ,Cheese ,6,9,21,10,9,21,100,Kilogram ,380,5,0
+31,Yoghurt ,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Liters ,60,4.9,0
+32,Powdered Milk ,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Kilogram ,1200,4.6,0
+33,Ice Cream,Dairy and Meat ,Dairy ,6,9,21,10,9,21,100,Kilogram ,300,5,0
+34,Beer ,Beverages and Drinks,Beverage ,6,9,21,0,0,0,103,Milliliter ,200,2.5,0
+35,Cider ,Beverages and Drinks,Beverage ,6,9,21,10,9,21,103,Milliliter ,260,4.4,0
+36,Hard Soda ,Beverages and Drinks,Beverage ,3,12,21,10,9,21,100,Milliliter ,300,4.9,0
+37,Wine,Beverages and Drinks,Beverage ,10,12,21,10,9,21,102,Milliliter ,280,3.9,0
+38,Barley ,Beverages and Drinks,Beverage ,6,9,21,10,9,26,101,Milliliters ,450,5,0
+39,Turkish ,Beverages and Drinks,Beverage ,6,9,21,10,9,27,106,Liters ,40,4.9,0
+40,Moka ,Beverages and Drinks,Beverage ,6,9,21,10,9,25,100,Milliliter ,320,4.5,0
+41,Kamora ,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,107,Milliliter ,300,4.9,0
+42,Amarula ,Beverages and Drinks,Soft Drinks ,6,9,20,10,9,21,108,Milliliter ,360,4.4,0
+43,Carolans ,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,109,Milliliter ,380,5,0
+44,Rosolio ,Beverages and Drinks,Soft Drinks ,3,9,21,10,9,21,234,Litres ,60,4.9,0
+45,Aurum ,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,257,Milliliter ,1200,4.6,0
+46,Cointreau,Beverages and Drinks,Soft Drinks ,6,9,21,10,9,21,234,Milliliter ,300,5,0
+47,Milky Way ,Snack ,Snack ,6,9,21,10,9,17,100,Milliliter ,270,2.5,0
+48,Sun Chips ,Snack ,Snack ,1,9,21,10,9,21,100,Milliliter ,290,4.4,0
+49,Suncake ,Snack ,Snack ,6,9,20,10,9,15,100,Milliliter ,700,4.9,0
+50,Vadai,Snack ,Snack ,6,9,19,10,9,21,100,Milliliter ,340,3.9,0
+51,Popcorn ,Snack ,Snack ,10,9,17,10,9,13,100,Milliliters ,240,5,0
+52,Candy ,Snack ,Snack ,6,9,19,10,9,24,100,Liters ,40,4.9,0
+53,Fruit ,Snack ,Snack ,6,9,18,10,9,21,100,Milliliter ,30,4.5,0
+54,Pretzels ,Snack ,Snack ,7,9,21,10,9,21,100,Milliliter ,10,4.9,0
+55,Doughnuts ,Snack ,Snack ,6,9,21,10,9,15,100,Milliliter ,30,4.4,0
+56,Peanuts ,Snack ,Snack ,6,9,21,10,9,16,100,Milliliter ,40,5,0
+57,Poha ,Snack ,Snack ,2,9,21,10,9,20,100,Litres ,60,4.9,0
+58,Momos ,Snack ,Snack ,9,9,21,10,9,21,100,Milliliter ,120,4.6,0
+59,Khaman,Snack ,Snack ,8,9,21,10,9,21,100,Milliliter ,15,5,0
+60,Spoon,Kitchen Utensils,Spoon,10,11,17,14,10,20,40,Items,30.45,2.5,0
+61,Napkins,Sanitary,Baby Wipes,20,12,18,15,11,21,12,Packages,40,4.5,0
+62,Lotion,Health And Bodycare,Nivea,30,10,19,16,12,22,10,Bottle,99.39,5,0
+63,Barely,Cereal,Barely,10,11,2020,10,9,21,40,Kg,14.45,3.5,0
+64,Wheat,Cereal,Wheat,20,12,2018,10,9,21,52,Kg,12,4.5,0
+65,Oats,Cereal,Oats,30,10,2019,10,9,21,50,Kg,120.39,5,0
+66,Sorghum,Cereal,Sorghum,23,12,2019,10,9,21,45,Kg,13,3,0
+67,Millets,Cereal,Millets,12,12,2013,10,9,21,45,Kg,25,2.9,0
+68,Jazzle Berry,Cooking Oil,Cotton seed,12,7,2018,12,7,2022,90,Liter,95,2.9,0
+69,New Star,Cooking Oil,Vegetable Oil,22,8,2018,27,9,2022,120,Liter,130,4.5,0
+70,Oracle,Cooking Oil,Peanut Oil,17,1,2018,12,5,2022,100,Liter,117,5,0
+71,Tena,Cooking Oil,Sunflower Oil,1,1,2020,12,1,2023,100,Liter,136,5,0
+72,Flawless,Cooking Oil,Avocado Oil,9,11,2020,12,12,2022,45,Liter,200,5,0
+73,Campell,Canned Foods,Soup,19,3,2020,19,3,2022,100,Can,85,5,0
+74,Campell,Canned Foods,Fruits,21,5,2021,20,5,2024,100,Can,95,4.5,0
+75,Heinz,Canned Foods,Baked beans,27,3,2022,29,3,2024,100,Can,80,3.5,0
+76,American Garden,Canned Foods,Sweet Corn,1,1,2020,1,1,2024,100,Can,90,3.9,0
+77,Healthy Choice,Canned Foods,Pasta Sauce,29,5,2020,1,6,2024,100,Can,75,4.4,0
+78,Eden Foods,Canned Foods,Mushrooms,11,2,2020,11,2,2024,100,Can,80,4,0
+79,Green Giants,Canned Foods,Green Peas,29,7,2020,29,7,2024,100,Can,80,3.2,0
