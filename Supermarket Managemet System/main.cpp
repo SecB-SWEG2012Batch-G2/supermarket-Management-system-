@@ -1466,11 +1466,9 @@ Menu:
     cout<<"\t\t\t\t\t\t\t 6. Sell "<<endl;
     cout<<"\t\t\t\t\t\t\t 7. Enter a new Product. "<<endl;
     cout<<"\t\t\t\t\t\t\t 8. Profit Information. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 9. Settings. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 10. Introduction/Usage. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 11. Account Managment. "<<endl;
-    cout<<"\t\t\t\t\t\t\t 12. Logout "<<endl;
-    cout<<"\t\t\t\t\t\t\t 14. Exit "<<endl;
+    cout<<"\t\t\t\t\t\t\t 9. Manage Account. "<<endl;
+    cout<<"\t\t\t\t\t\t\t 10. Logout "<<endl;
+    cout<<"\t\t\t\t\t\t\t 11. Exit "<<endl;
     cout<<"\n\n\t\t\t\t\t\t\t\tChoice: ";
 
     // Error handling for main menu choice
@@ -1678,16 +1676,16 @@ ReturnToOrderChoice:
         system("pause");
         goto Menu;
     // Developers
-    case 11:
+    case 9:
         AccountManagment();
         goto Menu;
     // Logout
-    case 12:
+    case 10:
         system("cls");
         MainScreen();
         break;
     // Exit
-    case 13:
+    case 11:
         WriteToFile();
         return 0; //We can make it go to the main menu when we merge it all
         break;

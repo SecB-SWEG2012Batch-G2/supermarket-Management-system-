@@ -6,3 +6,5 @@ newUser,Manager,user,password
 admin,Manager,admin,admin
 cashier,Cashier,cashierAdmin,cashierAdmin
 DagmawiBabi,Manager,DagmawiBabi1,123456
+1,Manager,1,1
+1,Manager,3,4
